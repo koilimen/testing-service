@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<th:block layout:fragment="content">
+    <ul>
+        <li th:each="test : ${tests}">
+            <div th:text="${test.questionsNumber}"></div>
+            <div th:text="${test.title}"></div>
+            <div th:text="${test.description}"></div>
+        </li>
+    </ul>
+</th:block>
+</html>

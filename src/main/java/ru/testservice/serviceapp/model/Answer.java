@@ -1,10 +1,9 @@
 package ru.testservice.serviceapp.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "answers", schema = "public")
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,8 @@ package ru.testservice.serviceapp.model;
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "questions", schema = "public")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

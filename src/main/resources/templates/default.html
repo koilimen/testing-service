@@ -4,9 +4,20 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Сервис тестирования</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<th:block layout:fragment="content"></th:block>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 col-lg-2"></div>
+        <div class="col-md-10 col-lg-10">
+            <th:block layout:fragment="content"></th:block>
+        </div>
+    </div>
+</div>
+<script type="application/javascript" src="/js/bootstrap.js"></script>
 </body>
 </html>

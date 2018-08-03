@@ -1,6 +1,7 @@
 package ru.testservice.serviceapp.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tests", schema = "public")
@@ -14,6 +15,8 @@ public class Test {
     private String description;
     @Column
     private short questionsNumber;
+    @OneToMany(mappedBy = "id")
+    private List<Question> questionList;
 
     public Test(String title, String description, short questionsNumber) {
         this.title = title;
@@ -22,6 +25,14 @@ public class Test {
     }
 
     public Test() {
+    }
+
+    public List<Question> getQuestionList() {
+        return questionList;
+    }
+
+    public void setQuestionList(List<Question> questionList) {
+        this.questionList = questionList;
     }
 
     public Long getId() {

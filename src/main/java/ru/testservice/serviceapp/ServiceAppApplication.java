@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @PropertySources({
         @PropertySource(value = "classpath:/application.properties"),
-        @PropertySource(value = "classpath:/application-${spring.profiles.active}.properties")
+        @PropertySource(value = "classpath:/application-${spring.profiles.active}.properties", ignoreResourceNotFound = true)
 } )
 public class ServiceAppApplication extends SpringBootServletInitializer{
 
@@ -24,6 +24,7 @@ public class ServiceAppApplication extends SpringBootServletInitializer{
 //	public DataSource dataSource(){
 //        return DataSourceBuilder.create().type(HikariDataSource.class).build();
 //	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceAppApplication.class, args);

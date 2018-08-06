@@ -1,6 +1,9 @@
 package ru.testservice.serviceapp.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -10,11 +13,18 @@ public class Test {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
+    @NotNull
+    @Pattern(regexp = "[а-яА-Я0-9\\s-_\\.]+", message = "Для ввода допустимы символы А-Я, цифры, пробел, точка, _ -")
+    @NotEmpty(message = "Название не может быть пустым.")
     private String title;
     @Column
+    @NotNull
+    @Pattern(regexp = "[а-яА-Я0-9\\s-_\\.]+", message = "Для ввода допустимы символы А-Я, цифры, пробел, точка, _ -")
+    @NotEmpty(message = "Описание не может быть пустым.")
     private String description;
     @Column
     private short questionsNumber;
+
     @OneToMany(mappedBy = "id")
     private List<Question> questionList;
 

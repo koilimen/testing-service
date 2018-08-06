@@ -19,11 +19,19 @@ public class TestService {
 
     @PostConstruct
     public void onInit(){
-        repository.save(new Test("title", "description", (short)12));
-        repository.save(new Test("title2", "description2", (short)15));
-        repository.save(new Test("title3", "description3", (short)11));
+        repository.save(new Test("Тест 1", "Описание теста 1", (short)12));
+        repository.save(new Test("Тест 2", "Описание теста 2", (short)15));
+        repository.save(new Test("Тест 3", "Описание теста 3", (short)11));
     }
     public Iterable<Test> getTests(){
         return repository.findAll();
+    }
+
+    public Test save(Test test) {
+        return repository.save(test);
+    }
+
+    public void remove(Long testId) {
+        repository.deleteById(testId);
     }
 }

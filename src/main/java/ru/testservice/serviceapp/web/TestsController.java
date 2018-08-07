@@ -1,7 +1,6 @@
 package ru.testservice.serviceapp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.testservice.serviceapp.model.Test;
 import ru.testservice.serviceapp.service.TestService;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/tests")
@@ -23,9 +22,11 @@ public class TestsController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getPage(Model model) {
+    public String getPage(Model model, @RequestParam(required = false) Long editId) {
         model.addAttribute("newTest", new Test());
-        model.addAttribute("tests", ts.getTests());
+        List<Test> tests = (List<Test>) ts.getTests();
+        model.addAttribute("tests", tests);
+            model.addAttribute("editableTest", tests.stream().filter(t -> t.getId().equals(editId)).findFirst().orElseGet(Test::new));
         return "tests";
     }
 
@@ -40,12 +41,13 @@ public class TestsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String updateTest(@ModelAttribute @Valid Test test, BindingResult result, Model model) {
+    public String updateTest(@ModelAttribute("editableTest") @Valid Test test, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             ts.save(test);
         }
         model.addAttribute("tests", ts.getTests());
         model.addAttribute("newTest", new Test());
+        model.addAttribute("editableTest", new Test());
         return "tests";
     }
 

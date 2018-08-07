@@ -5,36 +5,50 @@
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
     <ul class="tests-list">
-        <li th:each="test : ${tests}" class="tests-list__item">
-            <div class=" field tests-list__item-qn">
-                Вопросов: <span th:text="${test.questionsNumber}">0</span>
-            </div>
-            <div th:text="${test.title}" class="field tests-list__item-title"></div>
-            <div th:text="${test.description}" class="field tests-list__item-description"></div>
-            <form th:action="@{/tests}" method="post" style="display:none">
-                <input type="hidden" name="id" th:value="${test.id}">
-                <input type="text" class="form-control" th:value="${test.title}"
-                       name="title"
-                       placeholder="Новый тест"/>
-
-                <textarea name="description" class="form-control" th:text="${test.description}"
-
-                          placeholder="Новое описание"></textarea>
-
-                <button type="submit" class="tests-list__item-link btn btn-link add-test">Сохранить</button>
-                <div class="tests-list__item-link tests-list__item-edit-cancel-link btn btn-link" >
-                    Отмена
+        <li th:each="test : ${tests}" class="tests-list__item"
+            >
+            <th:block th:if="${editableTest == null || editableTest.id != test.id}">
+                <div class=" field tests-list__item-qn">
+                    Вопросов: <span th:text="${test.questionsNumber}">0</span>
                 </div>
-            </form>
-            <a th:href="@{/tests/{testId}(testId=${test.id})}" class="tests-list__item-link  btn btn-link">Перейти</a>
-            <a th:href="@{/tests/{testId}(testId=${test.id})}"
-               class="tests-list__item-link tests-list__item-remove-link  btn btn-link">Удалить</a>
-            <div class="tests-list__item-link tests-list__item-edit-link  btn btn-link">Редактировать</div>
+                <div th:text="${test.title}" class="field tests-list__item-title"></div>
+                <div th:text="${test.description}" class="field tests-list__item-description"></div>
+                <a th:href="@{/tests/{testId}(testId=${test.id})}"
+                   class="tests-list__item-link  btn btn-link">Перейти</a>
+                <a th:href="@{/tests/{testId}(testId=${test.id})}"
+                   class="tests-list__item-link tests-list__item-remove-link  btn btn-link">Удалить</a>
+                <a th:href="@{/tests(editId=${test.id})}" class="tests-list__item-link tests-list__item-edit-link  btn btn-link">Редактировать</a>
+            </th:block>
+            <th:block th:if="${editableTest != null && editableTest.id == test.id}">
+                <!--/*@thymesVar id="editableTest" type="ru.testservice.serviceapp.model.Test"*/-->
+                <form action="#" th:action="@{/tests}" th:object="${editableTest}" method="post">
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="text" class="form-control" th:field="*{title}"
+                           th:classappend="${#fields.hasErrors('title')} ? 'is-invalid': 'is-valid'"
+                           placeholder="Новый тест"/>
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                        Title errors
+                    </div>
+                    <textarea name="description" class="form-control" th:field="*{description}"
+                              th:classappend="${#fields.hasErrors('description')} ? 'is-invalid': 'is-valid'"
+                              placeholder="Новое описание"></textarea>
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                        Description errors
+                    </div>
+                    <button type="submit" class="tests-list__item-link btn btn-link add-test">Сохранить</button>
+                    <a href="/tests" class="tests-list__item-link tests-list__item-edit-cancel-link btn btn-link">
+                        Отмена
+                    </a>
+                </form>
+
+            </th:block>
 
         </li>
         <li class="tests-list__item">
             <!--/*@thymesVar id="newTest" type="ru.testservice.serviceapp.model.Test"*/-->
-            <form action="#" th:action="@{/tests}" th:object="${newTest}" method="put">
+            <form action="#" th:action="@{/tests}" th:object="${newTest}" th:method="put" >
 
                 <input type="text" class="form-control" th:field="*{title}"
                        th:classappend="${#fields.hasErrors('title')} ? 'is-invalid': 'is-valid'"

@@ -27,8 +27,8 @@ public class TestService {
         return repository.findAll();
     }
 
-    public Test save(Test test) {
-        return repository.save(test);
+    public void save(Test test) {
+         repository.save(test);
     }
 
     public void remove(Long testId) {

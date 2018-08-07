@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default.html}">
+<th:block layout:fragment="content">
+    <h2 >
+        <th:block th:text="${test.title}"></th:block>
+        <span class="badge badge-secondary" style="float:right" th:text="'Вопросов: '+${test.questionsNumber}">Вопросов: 0</span>
+    </h2>
+    <p>
+        <a th:href="@{/tests/{id}(id=${test.id})}">Назад</a>
+    </p>
+    <p th:text="${test.description}"></p>
+    <div class="list-group">
+        <div class="list-group-item " th:each="i : ${#numbers.sequence( 1, 5)}">
+            <table>
+                <thead>
+                <tr>
+                    <th>Вопрос</th>
+                    <th>Ответ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="3">В чем сила брат?</td>
+                    <td> <input type="radio" th:name="'question'+${i}" th:id="'1question'+${i}"/> <label th:for="'1question'+${i}" >В деньгах</label></td>
+                </tr>
+                <tr>
+                    <td> <input type="radio" th:name="'question'+${i}" th:id="'2question'+${i}"/> <label th:for="'2question'+${i}" >В правде</label></td>
+                </tr>
+                <tr>
+                    <td> <input type="radio" th:name="'question'+${i}" th:id="'3question'+${i}"/> <label th:for="'3question'+${i}" >В ньютонах</label></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Назад</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Вперед</a>
+            </li>
+        </ul>
+    </nav>
+    <!--<div class="question">-->
+        <!--<form action="">-->
+            <!--<div class="question__text">This is a question text/</div>-->
+            <!--<div class="question__type">-->
+                <!--<div class="form-group form-check">-->
+                    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-false"/>-->
+                    <!--<label for="multianswered-false" class="form-check-label">Один ответ</label>-->
+                <!--</div>-->
+                <!--<div class="form-group form-check">-->
+                    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-true">-->
+                    <!--<label for="multianswered-true" class="form-check-label">Несколько ответов</label>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
+</th:block>
+</html>

@@ -34,4 +34,8 @@ public class TestService {
     public void remove(Long testId) {
         repository.deleteById(testId);
     }
+
+    public Test getTest(Long id) {
+        return repository.findById(id).orElse(null);
+    }
 }

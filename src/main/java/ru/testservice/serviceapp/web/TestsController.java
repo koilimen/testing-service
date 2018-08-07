@@ -30,6 +30,18 @@ public class TestsController {
         return "tests";
     }
 
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+    public String getTestEditPage(Model model, @PathVariable Long id) {
+        model.addAttribute("test", ts.getTest(id));
+        return "test-edit-page";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String getTestPage(Model model, @PathVariable Long id) {
+        model.addAttribute("test", ts.getTest(id));
+        return "test-page";
+    }
+
     @RequestMapping(method = RequestMethod.PUT)
     public String addTest(@ModelAttribute("newTest") @Valid Test test, BindingResult result, Model model) {
         if (!result.hasErrors()) {

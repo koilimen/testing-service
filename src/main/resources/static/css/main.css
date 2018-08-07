@@ -1,10 +1,10 @@
+
 .tests-list__item{
     background: #eeeeee;
     display: block;
     list-style: none;
     margin-top: 10px;
     border-top: 5px solid #007bff;
-    width: 400px;
     padding: 5px ;
     position:relative;
 }
@@ -18,4 +18,7 @@
 
 .tests-list__item-title{
     font-size: 20px;
+}
+td{
+    padding-right: 5px;
 }

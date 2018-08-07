@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default.html}">
+<th:block layout:fragment="content">
+    <h2 >
+        <th:block th:text="${test.title}"></th:block>
+        <span class="badge badge-secondary" style="float:right" th:text="'Вопросов: '+${test.questionsNumber}">Вопросов: 0</span>
+    </h2>
+    <p>
+        <a th:href="@{/tests/{id}/edit(id=${test.id})}">Редактировать</a>
+    </p>
+    <p th:text="${test.description}"></p>
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action" th:each="i : ${#numbers.sequence( 1, 15)}">
+            Билет № <th:block th:text="${i}"></th:block>
+        </a>
+    </div>
+    <br>
+    <br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Назад</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Вперед</a>
+            </li>
+        </ul>
+    </nav>
+    <!--<div class="question">-->
+        <!--<form action="">-->
+            <!--<div class="question__text">This is a question text/</div>-->
+            <!--<div class="question__type">-->
+                <!--<div class="form-group form-check">-->
+                    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-false"/>-->
+                    <!--<label for="multianswered-false" class="form-check-label">Один ответ</label>-->
+                <!--</div>-->
+                <!--<div class="form-group form-check">-->
+                    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-true">-->
+                    <!--<label for="multianswered-true" class="form-check-label">Несколько ответов</label>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
+</th:block>
+</html>

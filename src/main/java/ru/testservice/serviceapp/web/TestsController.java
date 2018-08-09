@@ -5,10 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.testservice.serviceapp.model.Answer;
+import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.model.Test;
 import ru.testservice.serviceapp.service.TestService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,6 +36,12 @@ public class TestsController {
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     public String getTestEditPage(Model model, @PathVariable Long id) {
         model.addAttribute("test", ts.getTest(id));
+        Question newQuestion = new Question();
+        newQuestion.setAnswers(new ArrayList<>());
+        newQuestion.getAnswers().add(new Answer());
+        newQuestion.getAnswers().add(new Answer());
+        newQuestion.getAnswers().add(new Answer());
+        model.addAttribute("newQuestion", newQuestion);
         return "test-edit-page";
     }
 

@@ -19,4 +19,10 @@ $(document).ready(function () {
             }
         })
     })
+
+    $('body').on('click', '.add-answer', function(e){
+        e.preventDefault();
+        $(" <div class=\"form-group row\"  class=\"answer-group\"><label for=\"answer{}\" class=\"col-sm-2 col-form-label\">Ответ {}</label><div class=\"col-sm-5\"><input type='text' class=\"form-control\" id=\"answer{}\" named=\"answers[{}].answerText}\"></input></div><div class=\"col-sm-5\"><label for=\"answer{}-correct\" class=\"form-check-label\"><input type='checkbox' class=\"form-check-input\" id=\"answer{}-correct\" name=\"answers[{}].correct\"></input>Верный ответ</label></div></div>".replace(/^\{\}$/g, '10'))
+        .insertBefore($(this).parent());
+    });
 });

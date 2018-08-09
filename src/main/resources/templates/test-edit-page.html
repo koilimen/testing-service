@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
-    <h2 >
+    <h2>
         <th:block th:text="${test.title}"></th:block>
         <span class="badge badge-secondary" style="float:right" th:text="'Вопросов: '+${test.questionsNumber}">Вопросов: 0</span>
     </h2>
@@ -12,7 +12,52 @@
         <a th:href="@{/tests/{id}(id=${test.id})}">Назад</a>
     </p>
     <p th:text="${test.description}"></p>
+
     <div class="list-group">
+        <div class="list-group-item">
+            <form th:action="@{/question/add}" th:method="put" th:object="${newQuestion}">
+                <div class="form-group row">
+                    <label for="questionText" class="col-sm-2 col-form-label">Текст вопроса</label>
+                    <div class="col-sm-10">
+                <textarea class="form-control" id="questionText" th:field="*{questionText}">
+                </textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="multianswer" class="col-sm-2 col-form-label">Несколько ответов</label>
+                    <div class="col-sm-10">
+                        <input type='checkbox' class="form-control" id="multianswer" th:field="*{multiAnswer}">
+                        </input>
+                    </div>
+                </div>
+                <div class="form-group row answer-group" th:each="answer, iter: *{answers}" >
+                    <label th:for="'answer'+${iter.index}" class="col-sm-2 col-form-label"
+                           th:text="'Ответ '+${iter.index}"></label>
+                    <div class="col-sm-5">
+                        <input type='text' class="form-control" th:id="'answer'+${iter.index}"
+                               th:field="*{answers[__${iter.index}__].answerText}">
+                        </input>
+                    </div>
+                    <div class="col-sm-5">
+
+                        <label th:for="'answer'+${iter.index}+'-correct'" class="form-check-label">
+                            <input type='checkbox' class="form-check-input" th:id="'answer'+${iter.index}+'-correct'"
+                                   th:field="*{answers[__${iter.index}__].correct}">
+                            </input>
+                            Верный ответ
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="btn btn-link add-answer">
+                        Добавить ответ
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Добавить вопрос
+                </button>
+            </form>
+        </div>
         <div class="list-group-item " th:each="i : ${#numbers.sequence( 1, 5)}">
             <table>
                 <thead>
@@ -24,13 +69,16 @@
                 <tbody>
                 <tr>
                     <td rowspan="3">В чем сила брат?</td>
-                    <td> <input type="radio" th:name="'question'+${i}" th:id="'1question'+${i}"/> <label th:for="'1question'+${i}" >В деньгах</label></td>
+                    <td><input type="radio" th:name="'question'+${i}" th:id="'1question'+${i}"/> <label
+                            th:for="'1question'+${i}">В деньгах</label></td>
                 </tr>
                 <tr>
-                    <td> <input type="radio" th:name="'question'+${i}" th:id="'2question'+${i}"/> <label th:for="'2question'+${i}" >В правде</label></td>
+                    <td><input type="radio" th:name="'question'+${i}" th:id="'2question'+${i}"/> <label
+                            th:for="'2question'+${i}">В правде</label></td>
                 </tr>
                 <tr>
-                    <td> <input type="radio" th:name="'question'+${i}" th:id="'3question'+${i}"/> <label th:for="'3question'+${i}" >В ньютонах</label></td>
+                    <td><input type="radio" th:name="'question'+${i}" th:id="'3question'+${i}"/> <label
+                            th:for="'3question'+${i}">В ньютонах</label></td>
                 </tr>
                 </tbody>
             </table>
@@ -52,19 +100,19 @@
         </ul>
     </nav>
     <!--<div class="question">-->
-        <!--<form action="">-->
-            <!--<div class="question__text">This is a question text/</div>-->
-            <!--<div class="question__type">-->
-                <!--<div class="form-group form-check">-->
-                    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-false"/>-->
-                    <!--<label for="multianswered-false" class="form-check-label">Один ответ</label>-->
-                <!--</div>-->
-                <!--<div class="form-group form-check">-->
-                    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-true">-->
-                    <!--<label for="multianswered-true" class="form-check-label">Несколько ответов</label>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</form>-->
+    <!--<form action="">-->
+    <!--<div class="question__text">This is a question text/</div>-->
+    <!--<div class="question__type">-->
+    <!--<div class="form-group form-check">-->
+    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-false"/>-->
+    <!--<label for="multianswered-false" class="form-check-label">Один ответ</label>-->
+    <!--</div>-->
+    <!--<div class="form-group form-check">-->
+    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-true">-->
+    <!--<label for="multianswered-true" class="form-check-label">Несколько ответов</label>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</form>-->
     <!--</div>-->
 </th:block>
 </html>

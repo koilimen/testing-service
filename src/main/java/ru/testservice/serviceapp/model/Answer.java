@@ -11,7 +11,7 @@ public class Answer {
     @Column
     private String answerText;
     @Column
-    private boolean isCorrect;
+    private boolean correct;
 
     public Answer() {
     }
@@ -33,10 +33,10 @@ public class Answer {
     }
 
     public boolean isCorrect() {
-        return isCorrect;
+        return correct;
     }
 
     public void setCorrect(boolean correct) {
-        isCorrect = correct;
+        this.correct = correct;
     }
 }

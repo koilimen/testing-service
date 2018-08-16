@@ -53,13 +53,14 @@ public class TestsController {
     public String saveNewQuestion(Model model, @PathVariable Long id, @ModelAttribute("newQuestion") Question question,
                                   BindingResult result) {
         Test test = ts.getTest(id);
-        model.addAttribute("test", test);
         if (!result.hasErrors()) {
             question.setId(null);
             question.setTest(test);
             question.setId(qs.save(question).getId());
             question.getAnswers().forEach(a -> a.setQuestion(question));
             qs.save(question);
+            test.setQuestionsNumber((short) (test.getQuestionList().size()));
+            test = ts.save(test);
             Question newQuestion = new Question();
             newQuestion.setAnswers(new ArrayList<>());
             newQuestion.getAnswers().add(new Answer());
@@ -67,7 +68,13 @@ public class TestsController {
             newQuestion.getAnswers().add(new Answer());
             model.addAttribute("newQuestion", newQuestion);
         }
+        model.addAttribute("test", test);
         return "test-edit-page";
+    }
+    @RequestMapping(value="/render/answer", method = RequestMethod.GET)
+    public String renderAnswerLine(@RequestParam Integer index, Model model){
+        model.addAttribute("index", index);
+        return "/partials/question :: question";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

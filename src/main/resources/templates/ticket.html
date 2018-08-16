@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default.html}">
+<th:block layout:fragment="content">
+    <h2>
+        <th:block th:text="${test.title}"></th:block>
+    </h2>
+    <div class="list-group-item" th:each="question : ${questions}">
+        <form th:action="@{/ticket/check}" th:method="post">
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Вопрос</th>
+                    <th>Ответ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:rowspan="${question.answers.size()+1}" rowspan="3" th:text="${question.questionText}"></td>
+
+                </tr>
+                <tr th:each="answer, status: ${question.answers}">
+                    <td><input th:type="${question.multiAnswer} ? 'checkbox':'radio'"
+                               th:name="'answer'+${status.index}" th:id="'answer'+${status.index}"/>
+                        <label th:for="'answer'+${status.index}" th:text="${answer.answerText}">В правде</label></td>
+                </tr>
+
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Проверить</button>
+        </form>
+    </div>
+
+
+</th:block>
+</html>

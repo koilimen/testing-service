@@ -13,39 +13,25 @@
     </p>
     <p th:text="${test.description}"></p>
     <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action" th:each="i : ${#numbers.sequence( 1, 15)}">
-            Билет № <th:block th:text="${i}"></th:block>
+        <a th:href="@{/ticket/(testId=${test.id})}" class="list-group-item list-group-item-action" th:each="i : ${#numbers.sequence( 0, test.questionsNumber/5)}">
+            Билет № <th:block th:text="${i+1}"></th:block>
         </a>
     </div>
     <br>
     <br>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Назад</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Вперед</a>
-            </li>
-        </ul>
-    </nav>
-    <!--<div class="question">-->
-        <!--<form action="">-->
-            <!--<div class="question__text">This is a question text/</div>-->
-            <!--<div class="question__type">-->
-                <!--<div class="form-group form-check">-->
-                    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-false"/>-->
-                    <!--<label for="multianswered-false" class="form-check-label">Один ответ</label>-->
-                <!--</div>-->
-                <!--<div class="form-group form-check">-->
-                    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-true">-->
-                    <!--<label for="multianswered-true" class="form-check-label">Несколько ответов</label>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</form>-->
-    <!--</div>-->
+    <!--<nav aria-label="Page navigation example">-->
+        <!--<ul class="pagination justify-content-center">-->
+            <!--<li class="page-item disabled">-->
+                <!--<a class="page-link" href="#" tabindex="-1">Назад</a>-->
+            <!--</li>-->
+            <!--<li class="page-item"><a class="page-link" href="#">1</a></li>-->
+            <!--<li class="page-item"><a class="page-link" href="#">2</a></li>-->
+            <!--<li class="page-item"><a class="page-link" href="#">3</a></li>-->
+            <!--<li class="page-item">-->
+                <!--<a class="page-link" href="#">Вперед</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</nav>-->
+
 </th:block>
 </html>

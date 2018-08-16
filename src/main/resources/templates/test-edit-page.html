@@ -15,7 +15,8 @@
 
     <div class="list-group">
         <div class="list-group-item">
-            <form th:action="@{/question/add}" th:method="put" th:object="${newQuestion}">
+            <form action="" th:method="put" th:object="${newQuestion}">
+                <input type="hidden" th:for="*{id}"/>
                 <div class="form-group row">
                     <label for="questionText" class="col-sm-2 col-form-label">Текст вопроса</label>
                     <div class="col-sm-10">
@@ -23,16 +24,9 @@
                 </textarea>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="multianswer" class="col-sm-2 col-form-label">Несколько ответов</label>
-                    <div class="col-sm-10">
-                        <input type='checkbox' class="form-control" id="multianswer" th:field="*{multiAnswer}">
-                        </input>
-                    </div>
-                </div>
-                <div class="form-group row answer-group" th:each="answer, iter: *{answers}" >
+                <div class="form-group row answer-group" th:each="answer, iter: *{answers}">
                     <label th:for="'answer'+${iter.index}" class="col-sm-2 col-form-label"
-                           th:text="'Ответ '+${iter.index}"></label>
+                           th:text="'Ответ '+${iter.index + 1}"></label>
                     <div class="col-sm-5">
                         <input type='text' class="form-control" th:id="'answer'+${iter.index}"
                                th:field="*{answers[__${iter.index}__].answerText}">
@@ -41,9 +35,8 @@
                     <div class="col-sm-5">
 
                         <label th:for="'answer'+${iter.index}+'-correct'" class="form-check-label">
-                            <input type='checkbox' class="form-check-input" th:id="'answer'+${iter.index}+'-correct'"
-                                   th:field="*{answers[__${iter.index}__].correct}">
-                            </input>
+                            <input type="checkbox" class="form-check-input" th:id="'answer'+${iter.index}+'-correct'"
+                                   th:field="*{answers[__${iter.index}__].correct}"/>
                             Верный ответ
                         </label>
                     </div>
@@ -58,28 +51,25 @@
                 </button>
             </form>
         </div>
-        <div class="list-group-item " th:each="i : ${#numbers.sequence( 1, 5)}">
+        <div class="list-group-item " th:each="question : ${test.questionList}">
             <table>
                 <thead>
                 <tr>
-                    <th>Вопрос с подвохом</th>
-                    <th>Ответ с апломбом</th>
+                    <th>Вопрос</th>
+                    <th>Ответ</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td rowspan="3">В чем сила брат?</td>
-                    <td><input type="radio" th:name="'question'+${i}" th:id="'1question'+${i}"/> <label
-                            th:for="'1question'+${i}">В деньгах</label></td>
+                    <td th:rowspan="${question.answers.size()+1}" rowspan="3" th:text="${question.questionText}"></td>
+
                 </tr>
-                <tr>
-                    <td><input type="radio" th:name="'question'+${i}" th:id="'2question'+${i}"/> <label
-                            th:for="'2question'+${i}">В правде</label></td>
+                <tr th:each="answer, status: ${question.answers}">
+                    <td><input th:type="${question.multiAnswer} ? 'checkbox':'radio'"
+                               th:name="'answer'+${status.index}" th:id="'answer'+${status.index}"/>
+                        <label th:for="'answer'+${status.index}" th:text="${answer.answerText}">В правде</label></td>
                 </tr>
-                <tr>
-                    <td><input type="radio" th:name="'question'+${i}" th:id="'3question'+${i}"/> <label
-                            th:for="'3question'+${i}">В ньютонах</label></td>
-                </tr>
+
                 </tbody>
             </table>
         </div>

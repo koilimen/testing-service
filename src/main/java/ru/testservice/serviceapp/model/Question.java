@@ -2,6 +2,7 @@ package ru.testservice.serviceapp.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "questions", schema = "public")
@@ -11,12 +12,22 @@ public class Question {
     private Long id;
     @Column
     private String questionText;
-    @Column
-    private boolean multiAnswer;
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
     private List<Answer> answers;
+    @ManyToOne
+    @JoinColumn(name = "test_id")
+    private Test test;
+
 
     public Question() {
+    }
+
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
     }
 
     public Long getId() {
@@ -36,12 +47,9 @@ public class Question {
     }
 
     public boolean isMultiAnswer() {
-        return multiAnswer;
+        return answers.stream().filter(Answer::isCorrect).count() > 1;
     }
 
-    public void setMultiAnswer(boolean multiAnswer) {
-        this.multiAnswer = multiAnswer;
-    }
 
     public List<Answer> getAnswers() {
         return answers;

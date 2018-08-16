@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.testservice.serviceapp.model.Answer;
 import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.model.Test;
+import ru.testservice.serviceapp.service.QuestionService;
 import ru.testservice.serviceapp.service.TestService;
 
 import javax.validation.Valid;
@@ -18,10 +19,12 @@ import java.util.List;
 @RequestMapping("/tests")
 public class TestsController {
     private final TestService ts;
+    private final QuestionService qs;
 
     @Autowired
-    public TestsController(TestService ts) {
+    public TestsController(TestService ts, QuestionService qs) {
         this.ts = ts;
+        this.qs = qs;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -29,19 +32,41 @@ public class TestsController {
         model.addAttribute("newTest", new Test());
         List<Test> tests = (List<Test>) ts.getTests();
         model.addAttribute("tests", tests);
-            model.addAttribute("editableTest", tests.stream().filter(t -> t.getId().equals(editId)).findFirst().orElseGet(Test::new));
+        model.addAttribute("editableTest", tests.stream().filter(t -> t.getId().equals(editId)).findFirst().orElseGet(Test::new));
         return "tests";
     }
 
-    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/edit", method = {RequestMethod.GET})
     public String getTestEditPage(Model model, @PathVariable Long id) {
-        model.addAttribute("test", ts.getTest(id));
+        Test test = ts.getTest(id);
+        model.addAttribute("test", test);
         Question newQuestion = new Question();
         newQuestion.setAnswers(new ArrayList<>());
         newQuestion.getAnswers().add(new Answer());
         newQuestion.getAnswers().add(new Answer());
         newQuestion.getAnswers().add(new Answer());
         model.addAttribute("newQuestion", newQuestion);
+        return "test-edit-page";
+    }
+
+    @RequestMapping(value = "/{id}/edit", method = {RequestMethod.PUT})
+    public String saveNewQuestion(Model model, @PathVariable Long id, @ModelAttribute("newQuestion") Question question,
+                                  BindingResult result) {
+        Test test = ts.getTest(id);
+        model.addAttribute("test", test);
+        if (!result.hasErrors()) {
+            question.setId(null);
+            question.setTest(test);
+            question.setId(qs.save(question).getId());
+            question.getAnswers().forEach(a -> a.setQuestion(question));
+            qs.save(question);
+            Question newQuestion = new Question();
+            newQuestion.setAnswers(new ArrayList<>());
+            newQuestion.getAnswers().add(new Answer());
+            newQuestion.getAnswers().add(new Answer());
+            newQuestion.getAnswers().add(new Answer());
+            model.addAttribute("newQuestion", newQuestion);
+        }
         return "test-edit-page";
     }
 

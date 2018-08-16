@@ -30,7 +30,7 @@ public class Test {
     @Column
     private short questionsNumber;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "test", cascade = CascadeType.PERSIST)
     private List<Question> questionList;
 
     public Test(String title, String description, short questionsNumber) {

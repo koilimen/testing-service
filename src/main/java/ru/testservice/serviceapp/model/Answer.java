@@ -12,13 +12,28 @@ public class Answer {
     private String answerText;
     @Column
     private boolean correct;
-
+    @Transient
+    private boolean checked;
     @ManyToOne
     @JoinColumn(name ="question_id")
     private Question question;
 
 
     public Answer() {
+    }
+
+    public Answer(String answerText, boolean correct, Question question) {
+        this.answerText = answerText;
+        this.correct = correct;
+        this.question = question;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public Question getQuestion() {

@@ -8,7 +8,7 @@
         <th:block th:text="${test.title}"></th:block>
     </h2>
     <div class="list-group-item" th:each="question : ${questions}">
-        <form th:action="@{/ticket/check}" th:method="post">
+        <form th:action="@{/ticket/check}" th:method="post" th:object="ticketDto">
 
             <table>
                 <thead>
@@ -18,15 +18,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td th:rowspan="${question.answers.size()+1}" rowspan="3" th:text="${question.questionText}"></td>
-
-                </tr>
-                <tr th:each="answer, status: ${question.answers}">
-                    <td><input th:type="${question.multiAnswer} ? 'checkbox':'radio'"
-                               th:name="'answer'+${status.index}" th:id="'answer'+${status.index}"/>
-                        <label th:for="'answer'+${status.index}" th:text="${answer.answerText}">В правде</label></td>
-                </tr>
+                <th:block th:each="question, questIter : *{questions}">
+                    <tr>
+                        <td th:rowspan="${question.answers.size()+1}"
+                            th:text="${question.questionText}"></td>
+                    </tr>
+                    <tr th:each="answer, answIter: *{question.answers}">
+                        <input type="hidden" th:field="*{questions[__${questIter.index}__].answers[__${answIter.index}__].id"/>
+                        <td>
+                            <input th:type="${question.multiAnswer} ? 'checkbox':'radio'"
+                                   th:field="*{questions[__${questIter.index}__].answers[__${answIter.index}__].checked}"
+                                   th:id="'answer'+${status.index}"/>
+                            <label th:for="'answer'+${answIter.index}" th:text="${answer.answerText}">В правде</label>
+                        </td>
+                    </tr>
+                </th:block>
 
                 </tbody>
             </table>

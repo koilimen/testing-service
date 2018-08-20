@@ -13,7 +13,7 @@
     </p>
     <p th:text="${test.description}"></p>
     <div class="list-group">
-        <a th:href="@{/ticket/(testId=${test.id})}" class="list-group-item list-group-item-action" th:each="i : ${#numbers.sequence( 0, test.questionsNumber/5)}">
+        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" class="list-group-item list-group-item-action" th:each="i : ${#numbers.sequence( 0, test.questionsNumber/5)}">
             Билет № <th:block th:text="${i+1}"></th:block>
         </a>
     </div>

@@ -8,7 +8,7 @@
         <th:block th:text="${test.title}"></th:block>
     </h2>
     <div class="list-group-item" th:each="question : ${questions}">
-        <form th:action="@{/ticket/check}" th:method="post" th:object="ticketDto">
+        <form th:action="@{/ticket/check}" th:method="post" th:object="${ticketDto}">
 
             <table>
                 <thead>

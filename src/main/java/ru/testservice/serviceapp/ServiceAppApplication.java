@@ -19,11 +19,7 @@ import javax.sql.DataSource;
 } )
 public class ServiceAppApplication extends SpringBootServletInitializer{
 
-	@Bean
-	@ConfigurationProperties(prefix="spring.datasource")
-	public DataSource dataSource(){
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
-	}
+
 
 
 	public static void main(String[] args) {

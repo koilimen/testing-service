@@ -65,7 +65,7 @@
 
                 </tr>
                 <tr th:each="answer, status: ${question.answers}">
-                    <td><input th:type="${question.multiAnswer} ? 'checkbox':'radio'"
+                    <td th:class="${answer.correct} ? 'green-bg': ''"><input th:type="${question.multiAnswer} ? 'checkbox':'radio'"
                                th:name="'answer'+${status.index}" th:id="'answer'+${status.index}"/>
                         <label th:for="'answer'+${status.index}" th:text="${answer.answerText}">В правде</label></td>
                 </tr>
@@ -89,20 +89,5 @@
             </li>
         </ul>
     </nav>
-    <!--<div class="question">-->
-    <!--<form action="">-->
-    <!--<div class="question__text">This is a question text/</div>-->
-    <!--<div class="question__type">-->
-    <!--<div class="form-group form-check">-->
-    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-false"/>-->
-    <!--<label for="multianswered-false" class="form-check-label">Один ответ</label>-->
-    <!--</div>-->
-    <!--<div class="form-group form-check">-->
-    <!--<input type="radio" name="multianswered" class="form-check-input" id="multianswered-true">-->
-    <!--<label for="multianswered-true" class="form-check-label">Несколько ответов</label>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</form>-->
-    <!--</div>-->
 </th:block>
 </html>

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.repository.QuestionRepository;
 
+import java.util.List;
+
 @Service
 public class QuestionService {
     private final QuestionRepository repository;
@@ -16,5 +18,9 @@ public class QuestionService {
 
     public Question save(Question question){
         return repository.save(question);
+    }
+
+    public List<Question> getQuestions(List<Long> questionIds) {
+        return (List<Question>) repository.findAllById(questionIds);
     }
 }

@@ -12,4 +12,9 @@ public class RootController {
         model.addAttribute("isMain", true);
         return "main";
     }
+
+    @RequestMapping(value = "/splash", method = {RequestMethod.GET, RequestMethod.POST})
+    public String splash(Model model){
+            return "splash";
+    }
 }

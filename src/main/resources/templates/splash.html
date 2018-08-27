@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Сервис тестирования | в разрботке</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+<body>
+<div class="signal-bar signal-bar-top"></div>
+<div class="container ">
+    <div class="splash-container">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="splash-heading">Сайт находится в разработке.</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form-inline" method="post" th:action="@{/splash}">
+                    <label class="sr-only" for="inlineFormInput" >Логин</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" name="j_login" id="inlineFormInput"
+                           placeholder="логин">
+
+                    <label class="sr-only" for="inlineFormInputGroup">Пароль</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <input type="password" class="form-control" name="j_pass" id="inlineFormInputGroup" placeholder="пароль">
+                    </div>
+
+                    <div class="form-check mb-2 mr-sm-2 mb-sm-0">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="remember-me"> Запомнить меня
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

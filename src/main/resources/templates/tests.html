@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
     <ul class="tests-list">
@@ -16,8 +17,11 @@
                 <a th:href="@{/tests/{testId}(testId=${test.id})}"
                    class="tests-list__item-link  btn btn-link">Перейти</a>
                 <a th:href="@{/tests/{testId}(testId=${test.id})}"
+                   sec:authorize="${hasRole('ROLE_ADMIN')}"
                    class="tests-list__item-link tests-list__item-remove-link  btn btn-link">Удалить</a>
-                <a th:href="@{/tests(editId=${test.id})}" class="tests-list__item-link tests-list__item-edit-link  btn btn-link">Редактировать</a>
+                <a th:href="@{/tests(editId=${test.id})}" class="tests-list__item-link tests-list__item-edit-link  btn btn-link"
+                   sec:authorize="${hasRole('ROLE_ADMIN')}"
+                >Редактировать</a>
             </th:block>
             <th:block th:if="${editableTest != null && editableTest.id == test.id}">
                 <!--/*@thymesVar id="editableTest" type="ru.testservice.serviceapp.model.Test"*/-->
@@ -46,7 +50,10 @@
             </th:block>
 
         </li>
-        <li class="tests-list__item">
+        <li class="tests-list__item"
+            sec:authorize="${hasRole('ROLE_ADMIN')}"
+
+        >
             <!--/*@thymesVar id="newTest" type="ru.testservice.serviceapp.model.Test"*/-->
             <form action="#" th:action="@{/tests}" th:object="${newTest}" th:method="put" >
 

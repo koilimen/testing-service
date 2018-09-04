@@ -1,4 +1,11 @@
-
+.logo{
+    background: url(../img/pbo.jpg);
+    width: 100px;
+    height: 100px;
+    display: block;
+    background-size: contain;
+    float:left;
+}
 .tests-list__item {
     background: #eeeeee;
     display: block;
@@ -59,4 +66,31 @@ td {
 .signal-bar-bottom {
     position: absolute;
     bottom: 0;
+}
+
+table thead, .qrow{
+    border-bottom: 1px solid #999;
+}
+
+.ticket-table{
+    width:100%;
+}
+.ticket-table__head{
+    font-size:1.1em;
+}
+.ticket-table__row{
+    display:block;
+    width:100%;
+    margin-bottom:10px;
+}
+
+.ticket-table .ticket-table__row:nth-child(odd){
+    border-bottom: 4px solid #007bff;
+}
+
+.ticket-table__answer-row{
+    padding:15px;
+}
+.ticket-table__cell{
+    display:inline;
 }

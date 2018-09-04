@@ -9,45 +9,44 @@
     </h2>
     <form th:action="@{/ticket/check/}" th:method="post" th:object="${ticketDto}">
         <input type="hidden" th:field="${ticketDto.testId}"/>
-        <table>
-            <thead>
-            <tr>
-                <th>Вопрос</th>
-                <th>Ответ</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="ticket-table">
+            <div class="ticket-table__head">
+                <div class="ticket-table__cell">Вопросы</div>
+            </div>
             <th:block th:each="question, questIter : *{questionList}">
-                <tr>
-                    <td th:rowspan="${question.answers.size()+1}"
-                        th:utext="${question.questionText + (question.multiAnswer ? '<br/><small>* Может быть несколько ответов</small>' :'') }"></td>
+                <div class="ticket-table__row">
+                    <div class='ticket-table__cell' th:rowspan="${question.answers.size()+1}"
+                         th:utext="${question.questionText + (question.multiAnswer ? '<br/><small>* Может быть несколько ответов</small>' :'') }"></div>
                     <input type="hidden"
                            th:field="*{questionList[__${questIter.index}__].id}"/>
                     <input type="hidden"
                            th:field="*{questionList[__${questIter.index}__].questionText}"/>
-                </tr>
-                <tr th:each="answer, answIter: *{questionList[__${questIter.index}__].answers}"
-                    th:with="correct=*{questionList[__${questIter.index}__].answers[__${answIter.index}__].correct},ansChecked=*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}">
+                </div>
+                <div class="ticket-table__row ticket-table__answer-row">
+                    <div class="ticket-table__cell">
+                        <div th:each="answer, answIter: *{questionList[__${questIter.index}__].answers}"
+                             th:with="correct=*{questionList[__${questIter.index}__].answers[__${answIter.index}__].correct},ansChecked=*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}">
 
-                    <input type="hidden"
-                           th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].id}"/>
-                    <input type="hidden"
-                           th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].answerText}"/>
-                    <td th:class="${checked and ansChecked} ? (${correct} ? 'green-bg':'red-bg'): '' ">
-                        <input type="checkbox"
-                               th:disabled="${checked}"
-                               th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}"
-                               th:id="'answer'+${answIter.index}+${questIter.index}"/>
-                        <label th:for="'answer'+${answIter.index}+${questIter.index }" th:text="${answer.answerText}">В
-                            правде</label>
-                    </td>
-                </tr>
+                            <input type="hidden"
+                                   th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].id}"/>
+                            <input type="hidden"
+                                   th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].answerText}"/>
+                            <div th:class="${checked and ansChecked} ? (${correct} ? 'green-bg':'red-bg'): '' ">
+                                <input type="checkbox"
+                                       th:disabled="${checked}"
+                                       th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}"
+                                       th:id="'answer'+${answIter.index}+${questIter.index}"/>
+                                <label th:for="'answer'+${answIter.index}+${questIter.index }"
+                                       th:text="${answer.answerText}">В
+                                    правде</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </th:block>
-
-            </tbody>
-        </table>
+        </div>
         <button type="submit" class="btn btn-primary" th:if="${not checked}">Проверить</button>
-        <a th:href="@{/tests/{testId}(testId=${ticketDto.testId})}"   th:if="${ checked}">Назад к билетам</a>
+        <a th:href="@{/tests/{testId}(testId=${ticketDto.testId})}" th:if="${ checked}">Назад к билетам</a>
     </form>
 
 

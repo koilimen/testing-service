@@ -4,12 +4,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
-    <h2 >
+    <h2>
         Сервис тестирования для товарищей тех.специлальностей.
     </h2>
     <p>
         Здравствуйте. данный сервис предназначен для тестирования крутых спецов.
     </p>
-    <p><a href="/tests">Тесты</a></p>
+    <div class="row">
+        <div class="col-lg-5 col-md-5">
+            <th:block th:replace="blocks/add-course-form::add-course-form"></th:block>
+            <th:block th:replace="blocks/courses-list::courses-list"></th:block>
+        </div>
+    </div>
 </th:block>
 </html>

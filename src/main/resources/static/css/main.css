@@ -94,3 +94,21 @@ table thead, .qrow{
 .ticket-table__cell{
     display:inline;
 }
+
+footer{
+    background: #595d63;
+    padding: 30px 0 ;
+    color: #fff;
+}
+footer .nav-link{
+    font-size: 13px;
+    color: #fff;
+}
+
+.content{
+    margin-bottom:50px;
+}
+.courses-table__control{
+    margin-right: 25px;
+    cursor:pointer;
+}

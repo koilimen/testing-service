@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.testservice</groupId>
-    <artifactId>service-app</artifactId>
+    <artifactId>courseService-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>service-app</name>
+    <name>courseService-app</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -99,7 +99,7 @@
     </profiles>
 
     <build>
-        <finalName>service-app</finalName>
+        <finalName>courseService-app</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

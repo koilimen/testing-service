@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -30,10 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .failureUrl("/splash?error=true")
                 .permitAll()
                 .and()
-                .logout()
-                .deleteCookies("JSESSIONID")
-                .and()
-                .rememberMe().key("sjha876sdhu))");
+                .rememberMe().key("sjha876sdhu))")
+                .and().
+                logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/splash");
     }
 
     @Bean

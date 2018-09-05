@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <th:block th:replace="header :: header ">
+<div class="container-fluid">
+    <th:block th:replace="includes/header :: header ">
         <!--empty-->
     </th:block>
-    <div class="row">
+    <div class="row content">
         <div class="col-md-2 col-lg-2">
-            <th:block th:replace="nav :: nav">
+            <th:block th:replace="includes/nav :: nav">
                 <!--empty-->
             </th:block>
         </div>
@@ -28,6 +28,9 @@
             </th:block>
         </div>
     </div>
+    <th:block th:replace="includes/footer :: footer ">
+        <!--empty-->
+    </th:block>
 </div>
 <script type="application/javascript" src="/js/bootstrap.js"></script>
 <script type="application/javascript" src="/js/jquery.min.3.1.1.js"></script>

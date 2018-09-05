@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:fragment="add-course-form">
+    <div sec:authorize="${hasRole('ROLE_ADMIN')}">
+        <!--/*@thymesVar id="newCourse" type="ru.testservice.serviceapp.model.Course"*/-->
+        <form action="#" th:action="@{/}" th:object="${newCourse}" th:method="put">
+
+            <input type="text" class="form-control" th:field="*{name}"
+                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': 'is-valid'"
+                   placeholder="Новый курс"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                Title errors
+            </div>
+            <button type="submit" class="tests-list__item-link btn btn-link add-test">Добавить</button>
+        </form>
+    </div>
+</th:block>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default.html}">
+<th:block layout:fragment="content">
+    <!--/*@thymesVar id="course" type="ru.testservice.serviceapp.model.Course"*/-->
+    <h2 th:text="${course.name}">
+    </h2>
+    <div class="row">
+        <div class="col-lg-5 col-md-5">
+            <th:block th:replace="blocks/add-section-form::add-section-form">
+            </th:block>
+
+            <th:block th:replace="blocks/sections-list::sections-list">
+            </th:block>
+        </div>
+    </div>
+
+</th:block>
+</html>

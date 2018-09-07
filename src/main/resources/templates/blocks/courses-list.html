@@ -31,7 +31,9 @@
             </td>
             <td>
                 <th:block th:if="${editCourse == null or editCourse.id ne course.id}">
-                    <i class="courses-table__control fa fa-sign-in-alt" title="Перейти"></i>
+                    <a th:href="@{/course/{id}(id=${course.id})}">
+                        <i class="courses-table__control fa fa-sign-in-alt" title="Перейти"></i>
+                    </a>
                     <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
                         <a th:href="@{/edit/{id}(id=${course.id})}">
                             <i class="courses-table__control far fa-edit" title="Редактировать"></i>

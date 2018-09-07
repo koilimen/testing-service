@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:fragment="sections-list">
+    <table class="table table-striped courses-table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Область аттестации</th>
+            <th scope="col">Наименование</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="editSection" type="ru.testservice.serviceapp.model.Section"*/-->
+        <!--/*@thymesVar id="course" type="ru.testservice.serviceapp.model.Course"*/-->
+        <tr th:each="section, status : ${sections}">
+            <th scope="row" th:text="${status.index+1}"></th>
+
+            <td th:if="${editSection eq null or editSection.id ne section.id}" th:text="${section.code}">Mark</td>
+            <td th:if="${editSection eq null or editSection.id ne section.id}" th:text="${section.name}">Mark</td>
+            <td th:if="${editSection ne null and editSection.id eq section.id}">
+                <form class="form-inline" th:action="@{/course/{cid}/edit/{id}(id=${editSection.id}, cid=${course.id})}" th:object="${editSection}"
+                      th:method="post">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{course.id}">
+                    <input type="text" class="form-control" th:field="*{code}"
+                           th:classappend="${#fields.hasErrors('code')} ? 'is-invalid': 'is-valid'"
+                           placeholder="Область аттестации"/>
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('code')}" th:errors="*{code}">
+                        Title errors
+                    </div>
+                    <input type="text" class="form-control" th:field="*{name}"
+                           th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': 'is-valid'"
+                           placeholder="Новый курс"/>
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                        Title errors
+                    </div>
+                    <button type="submit" class="tests-list__item-link btn btn-link add-test">Сохранить</button>
+                    <a th:href="@{/course/{cid}(cid=${course.id})}">Отмена</a>
+                </form>
+            </td>
+            <td>
+                <th:block th:if="${editSection == null or editSection.id ne section.id}">
+                    <a th:href="@{/course/{cid}/section/{id}(id=${section.id},cid=${course.id})}">
+                        <i class="sections-table__control fa fa-sign-in-alt" title="Перейти"></i>
+                    </a>
+                    <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
+                        <a th:href="@{/course/{cid}/edit/{id}(id=${section.id},cid=${course.id})}">
+                            <i class="sections-table__control far fa-edit" title="Редактировать"></i>
+                        </a>
+                        <a th:href="@{/course/{cid}/deletesecton /{id}(id=${section.id}, cid=${course.id})}">
+                            <i class="sections-table__control far fa-trash-alt" title="Удалить"></i>
+                        </a>
+                    </th:block>
+                </th:block>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</th:block>
+</html>

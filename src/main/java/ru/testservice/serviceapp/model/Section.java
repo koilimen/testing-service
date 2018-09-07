@@ -6,16 +6,25 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(schema = "public", name = "sections")
-public class Section extends AbstractEntitry {
+public class Section extends AbstractEntity {
     @Column(name = "section_name")
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Название раздела не может быть пустым")
+    @NotEmpty(message = "Название раздела не может быть пустым")
     private String name;
     @Column(name = "section_code")
+    @NotNull(message = "Код раздела не может быть пустым")
+    @NotEmpty(message = "Код раздела не может быть пустым")
     private String code;
     @ManyToOne
     @JoinColumn(name ="course_id")
     private Course course;
+
+    public Section() {
+    }
+
+    public Section(Course course) {
+        this.course = course;
+    }
 
     public Course getCourse() {
         return course;

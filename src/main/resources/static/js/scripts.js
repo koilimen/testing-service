@@ -8,17 +8,6 @@ $(document).ready(function () {
         })
     });
 
-    $('body').on('click', '.tests-list__item-remove-link', function (e) {
-        e.preventDefault();
-        var $this = $(this);
-        $.ajax({
-            url: $this.attr('href'),
-            method: 'DELETE',
-            success: function (response) {
-                $this.parent().remove();
-            }
-        })
-    })
 
     $('body').on('click', '.add-answer', function (e) {
         e.preventDefault();

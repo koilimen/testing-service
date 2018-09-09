@@ -19,18 +19,21 @@ public class Test {
     @NotNull
     @Pattern(regexp = "[а-яА-Я0-9\\s-_\\.]+", message = "Для ввода допустимы символы А-Я, цифры, пробел, точка, _ -")
     @NotEmpty(message = "Название не может быть пустым.")
-    @Length(min=3, max=50, message = "Длина названия должна быть от 3 до 50 символов.")
+    @Length(min = 3, max = 50, message = "Длина названия должна быть от 3 до 50 символов.")
     private String title;
     @Column
     @NotNull
     @Pattern(regexp = "[а-яА-Я0-9\\s-_\\.]+", message = "Для ввода допустимы символы А-Я, цифры, пробел, точка, _ -")
     @NotEmpty(message = "Описание не может быть пустым.")
-    @Length(min=0, max=255, message = "Длина описнаие должна быть не более 255 символов.")
+    @Length(min = 0, max = 255, message = "Длина описнаие должна быть не более 255 символов.")
     private String description;
     @Column
     private short questionsNumber;
 
-    @OneToMany(mappedBy = "test", cascade = CascadeType.PERSIST)
+    @ManyToOne
+    @JoinColumn(name = "section_id")
+    private Section section;
+    @OneToMany(mappedBy = "test", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<Question> questionList;
 
     public Test(String title, String description, short questionsNumber) {
@@ -39,7 +42,19 @@ public class Test {
         this.questionsNumber = questionsNumber;
     }
 
+    public Test(Section section) {
+        this.section = section;
+    }
+
     public Test() {
+    }
+
+    public Section getSection() {
+        return section;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
     }
 
     public List<Question> getQuestionList() {

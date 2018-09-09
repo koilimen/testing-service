@@ -2,6 +2,8 @@ package ru.testservice.serviceapp.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.testservice.serviceapp.model.Answer;
 import ru.testservice.serviceapp.model.Question;
@@ -36,5 +38,9 @@ public class TestService {
 
     public Test getTest(Long id) {
         return repository.findById(id).orElse(null);
+    }
+
+    public Page<Test> findAllBySectionId(Long id, Pageable pageable){
+        return  repository.findAllBySectionId(id, pageable);
     }
 }

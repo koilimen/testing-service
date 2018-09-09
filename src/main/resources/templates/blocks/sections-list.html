@@ -43,7 +43,7 @@
             </td>
             <td>
                 <th:block th:if="${editSection == null or editSection.id ne section.id}">
-                    <a th:href="@{/course/{cid}/section/{id}(id=${section.id},cid=${course.id})}">
+                    <a th:href="@{/section/{id}(id=${section.id})}">
                         <i class="sections-table__control fa fa-sign-in-alt" title="Перейти"></i>
                     </a>
                     <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">

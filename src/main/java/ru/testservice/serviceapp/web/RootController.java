@@ -12,21 +12,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.service.CourseService;
+import ru.testservice.serviceapp.service.StorageService;
 
 import javax.validation.Valid;
 
 @Controller
 public class RootController {
     private final CourseService courseService;
+    private final StorageService storageService;
 
     @Autowired
-    public RootController(CourseService courseService) {
+    public RootController(CourseService courseService, StorageService storageService) {
         this.courseService = courseService;
+        this.storageService = storageService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String main(Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
         model.addAttribute("newCourse", new Course());
+        model.addAttribute("files", storageService.getAll());
         prepareMainModel(model, pageable);
         return "main";
     }

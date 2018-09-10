@@ -20,7 +20,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/splash").permitAll()
-                .antMatchers("/", "/tests/**", "/ticket/**").authenticated()
+                .antMatchers("/", "/tests/**", "/ticket/**","/docsupload/").authenticated()
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
@@ -33,7 +33,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe().key("sjha876sdhu))")
                 .and().
-                logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/splash");
+                logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/splash")
+                ;
     }
 
     @Bean

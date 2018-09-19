@@ -16,6 +16,8 @@
     <div class="list-group">
         <div class="list-group-item">
             <form action="" th:method="put" th:object="${newQuestion}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
                 <input type="hidden" th:for="*{id}"/>
                 <div class="form-group row">
                     <label for="questionText" class="col-sm-2 col-form-label">Текст вопроса</label>

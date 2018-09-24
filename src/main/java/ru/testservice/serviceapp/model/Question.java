@@ -7,6 +7,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "questions", schema = "public")
 public class Question {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,6 +22,16 @@ public class Question {
 
 
     public Question() {
+    }
+
+    public Question(Test test) {
+        this.test = test;
+    }
+
+    public Question(String questionText, List<Answer> answers, Test test) {
+        this.questionText = questionText;
+        this.answers = answers;
+        this.test = test;
     }
 
     public Test getTest() {
@@ -57,5 +69,9 @@ public class Question {
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public Question clone() {
+        return new Question(this.getQuestionText(), this.getAnswers(), this.getTest());
     }
 }

@@ -15,6 +15,35 @@
 
     <div class="list-group">
         <div class="list-group-item">
+            <form th:action="@{/questions/upload}" id="questionFilesForm">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" name="testId" th:value="${test.id}"/>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="docxFile">Файлы для загрузки: </label>
+
+                            <input type="file" name="docxFiles" multiple="true"
+                                   class="form-control-file"
+                                   aria-describedby="docxFileHelp"
+                                   id="docxFile"
+                                   accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+                            <small id="docxFileHelp" class="form-text text-muted">Тип файлов docx</small>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="progress" style="display:none">
+                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Загрузить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="list-group-item">
             <form action="" th:method="put" th:object="${newQuestion}">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
@@ -67,8 +96,9 @@
 
                 </tr>
                 <tr th:each="answer, status: ${question.answers}">
-                    <td th:class="${answer.correct} ? 'green-bg': ''"><input th:type="${question.multiAnswer} ? 'checkbox':'radio'"
-                               th:name="'answer'+${status.index}" th:id="'answer'+${status.index}"/>
+                    <td th:class="${answer.correct} ? 'green-bg': ''"><input
+                            th:type="${question.multiAnswer} ? 'checkbox':'radio'"
+                            th:name="'answer'+${status.index}" th:id="'answer'+${status.index}"/>
                         <label th:for="'answer'+${status.index}" th:text="${answer.answerText}">В правде</label></td>
                 </tr>
 

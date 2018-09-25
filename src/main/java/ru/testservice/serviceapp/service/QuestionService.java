@@ -45,12 +45,16 @@ public class QuestionService {
 
     private void extract(XWPFParagraph paragraph, List<Question> questions) {
         String text = paragraph.getText().trim();
+        char c = text.charAt(0);
         XWPFRun isColored = paragraph.getRuns().stream().filter(r -> r.getColor() != null).findFirst().orElse(null);
         XWPFRun isBold = paragraph.getRuns().stream().filter(r -> r.isBold()).findFirst().orElse(null);
-        if (isBold != null || (isColored != null && isColored.getColor().equals("00B050"))) {
+        if (paragraph.getNumFmt() == null) {
+//            if (isBold != null && (isColored != null && isColored.getColor().equals("000000"))
+//                    || (isColored != null && isColored.getColor().equals("00B050"))) {
             // Текст вопроса - нужно создавать новый вопрос
             if (buferQuestion != null) {
-                questions.add(buferQuestion.clone());
+                if (!buferQuestion.getAnswers().isEmpty())
+                    questions.add(buferQuestion.clone());
                 log.info("Question added with test: {}", buferQuestion.getQuestionText());
             }
             buferQuestion = new Question(text, new ArrayList<>(), testLink);
@@ -64,31 +68,32 @@ public class QuestionService {
         }
     }
 
+
     private void parse(MultipartFile file, List<Question> questions) {
         try {
             XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(file.getInputStream()));
             Iterator bodyElementIterator = xdoc.getBodyElementsIterator();
-            while (bodyElementIterator.hasNext()) {
-                IBodyElement element = (IBodyElement) bodyElementIterator.next();
-
-                if (BodyElementType.TABLE == element.getElementType()) {
-                    List<XWPFTable> tableList = element.getBody().getTables();
-                    for (XWPFTable table : tableList) {
-                        for (int i = 0; i < table.getRows().size(); i++) {
-                            XWPFTableRow row = table.getRow(i);
-                            XWPFTableCell cell = row.getCell(0);
-                            XWPFParagraph paragraph = cell.getParagraphArray(0);
-                            if (paragraph.getText().trim().isEmpty()) continue;
-                            extract(paragraph, questions);
-                        }
-                    }
-                } else if (BodyElementType.PARAGRAPH == element.getElementType()) {
-                    for (XWPFParagraph paragraph : element.getBody().getParagraphs()) {
-                        if (paragraph.getText().trim().isEmpty()) continue;
-                        extract(paragraph, questions);
-                    }
-                }
+            List<XWPFParagraph> paragraphs = xdoc.getParagraphs();
+//            while (bodyElementIterator.hasNext()) {
+//                IBodyElement element = (IBodyElement) bodyElementIterator.next();
+//                if (BodyElementType.TABLE == element.getElementType()) {
+//                    List<XWPFTable> tableList = element.getBody().getTables();
+//                    for (XWPFTable table : tableList) {
+//                        for (int i = 0; i < table.getRows().size(); i++) {
+//                            XWPFTableRow row = table.getRow(i);
+//                            XWPFTableCell cell = row.getCell(0);
+//                            XWPFParagraph paragraph = cell.getParagraphArray(0);
+//                            if (paragraph.getText().trim().isEmpty()) continue;
+//                            extract(paragraph, questions);
+//                        }
+//                    }
+//                } else if (BodyElementType.PARAGRAPH == element.getElementType()) {
+            for (XWPFParagraph paragraph : paragraphs) {
+                if (paragraph.getText().trim().isEmpty()) continue;
+                extract(paragraph, questions);
             }
+//                }
+//            }
         } catch (Exception ex) {
             log.error("errr", ex);
         }

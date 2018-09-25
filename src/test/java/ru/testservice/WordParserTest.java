@@ -19,10 +19,7 @@ public class WordParserTest {
             FileInputStream fis = new FileInputStream(PATH_TO_DOC);
             XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
             List<XWPFParagraph> paragraphList = xdoc.getParagraphs();
-            int c = 0;
             for (XWPFParagraph paragraph : paragraphList) {
-                c++;
-                if (c > 125) break;
                 if (paragraph.getText().isEmpty()) continue;
                 extract(paragraph);
             }

@@ -8,7 +8,7 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(columnDefinition = "text")
     private String answerText;
     @Column
     private boolean correct;

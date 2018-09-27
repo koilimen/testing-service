@@ -96,9 +96,7 @@
 
                 </tr>
                 <tr th:each="answer, status: ${question.answers}">
-                    <td th:class="${answer.correct} ? 'green-bg': ''"><input
-                            th:type="${question.multiAnswer} ? 'checkbox':'radio'"
-                            th:name="'answer'+${status.index}" th:id="'answer'+${status.index}"/>
+                    <td th:class="${answer.correct} ? 'green-bg': ''">
                         <label th:for="'answer'+${status.index}" th:text="${answer.answerText}">В правде</label></td>
                 </tr>
 

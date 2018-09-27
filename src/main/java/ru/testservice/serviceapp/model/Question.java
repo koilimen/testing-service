@@ -12,9 +12,9 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(columnDefinition = "text")
     private String questionText;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
     @ManyToOne
     @JoinColumn(name = "test_id")
@@ -32,6 +32,9 @@ public class Question {
         this.questionText = questionText;
         this.answers = answers;
         this.test = test;
+        this.answers.forEach( a -> {
+            a.setQuestion(this);
+        });
     }
 
     public Test getTest() {
@@ -73,5 +76,18 @@ public class Question {
 
     public Question clone() {
         return new Question(this.getQuestionText(), this.getAnswers(), this.getTest());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        this.answers.forEach( a -> {
+            b.append('\t').append(a.getAnswerText()).append('\n');
+        });
+        return "Question{" +
+                "id=" + id +
+                ", questionText='" + questionText + '\'' +
+                ", test=" + test +
+                "}:\n"+b.toString();
     }
 }

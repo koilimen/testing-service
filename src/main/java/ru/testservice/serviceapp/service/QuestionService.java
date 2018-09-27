@@ -13,6 +13,7 @@ import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.model.Test;
 import ru.testservice.serviceapp.repository.QuestionRepository;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -43,19 +44,15 @@ public class QuestionService {
         return (List<Question>) repository.findAllById(questionIds);
     }
 
-    private void extract(XWPFParagraph paragraph, List<Question> questions) {
+    private  void  extract(XWPFParagraph paragraph, List<Question> questions, boolean isQuestionText) {
         String text = paragraph.getText().trim();
-        char c = text.charAt(0);
-        XWPFRun isColored = paragraph.getRuns().stream().filter(r -> r.getColor() != null).findFirst().orElse(null);
-        XWPFRun isBold = paragraph.getRuns().stream().filter(r -> r.isBold()).findFirst().orElse(null);
-        if (paragraph.getNumFmt() == null) {
-//            if (isBold != null && (isColored != null && isColored.getColor().equals("000000"))
-//                    || (isColored != null && isColored.getColor().equals("00B050"))) {
+        if (text.isEmpty() || text.length() < 3) return;
+        if (isQuestionText) {
             // Текст вопроса - нужно создавать новый вопрос
             if (buferQuestion != null) {
                 if (!buferQuestion.getAnswers().isEmpty())
                     questions.add(buferQuestion.clone());
-                log.info("Question added with test: {}", buferQuestion.getQuestionText());
+                log.debug("{}", buferQuestion.toString());
             }
             buferQuestion = new Question(text, new ArrayList<>(), testLink);
         } else {
@@ -64,38 +61,48 @@ public class QuestionService {
             XWPFRun isItalic = paragraph.getRuns().stream().filter(XWPFRun::isItalic).findFirst().orElse(null);
             Answer ans = new Answer(text, null != isItalic, buferQuestion);
             buferQuestion.getAnswers().add(ans);
-            log.info("Answer added with text: {}", ans.getAnswerText());
         }
     }
 
 
-    private void parse(MultipartFile file, List<Question> questions) {
+    private void parseTables(MultipartFile file, List<Question> questions) {
         try {
             XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(file.getInputStream()));
             Iterator bodyElementIterator = xdoc.getBodyElementsIterator();
-            List<XWPFParagraph> paragraphs = xdoc.getParagraphs();
-//            while (bodyElementIterator.hasNext()) {
-//                IBodyElement element = (IBodyElement) bodyElementIterator.next();
-//                if (BodyElementType.TABLE == element.getElementType()) {
-//                    List<XWPFTable> tableList = element.getBody().getTables();
-//                    for (XWPFTable table : tableList) {
-//                        for (int i = 0; i < table.getRows().size(); i++) {
-//                            XWPFTableRow row = table.getRow(i);
-//                            XWPFTableCell cell = row.getCell(0);
-//                            XWPFParagraph paragraph = cell.getParagraphArray(0);
-//                            if (paragraph.getText().trim().isEmpty()) continue;
-//                            extract(paragraph, questions);
-//                        }
-//                    }
-//                } else if (BodyElementType.PARAGRAPH == element.getElementType()) {
-            for (XWPFParagraph paragraph : paragraphs) {
-                if (paragraph.getText().trim().isEmpty()) continue;
-                extract(paragraph, questions);
+            while (bodyElementIterator.hasNext()) {
+                IBodyElement element = (IBodyElement) bodyElementIterator.next();
+                if ("TABLE".equalsIgnoreCase(element.getElementType().name())) {
+                    List<XWPFTable> tableList = element.getBody().getTables();
+                    for (XWPFTable table : tableList) {
+                        for (int i = 0; i < table.getRows().size(); i++) {
+                            XWPFTableRow row = table.getRow(i);
+                            XWPFTableCell cell = row.getCell(0);
+                            XWPFParagraph paragraph = cell.getParagraphArray(0);
+                            String numFmt = paragraph.getNumFmt();
+                            extract(paragraph, questions, numFmt != null && numFmt.equalsIgnoreCase("decimal"));
+                            if(questions.size() == 15){
+                                return;
+                            }
+                        }
+                    }
+                }
             }
-//                }
-//            }
         } catch (Exception ex) {
-            log.error("errr", ex);
+            ex.printStackTrace();
+        }
+    }
+
+
+
+    private void parseByLists(MultipartFile file, List<Question> questions) {
+        try {
+            XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(file.getInputStream()));
+            xdoc.getParagraphs().stream().forEach((XWPFParagraph paragraph) -> {
+                extract(paragraph, questions, paragraph.getNumFmt() == null);
+
+            });
+        } catch (Exception ex) {
+            log.error("ParseByLists exception. File name: {}", file.getOriginalFilename(), ex);
         }
 
     }
@@ -103,10 +110,17 @@ public class QuestionService {
     public HttpStatus uploadQuestions(List<MultipartFile> files) {
         List<Question> questions = new ArrayList<>();
         files.stream().forEach(f -> {
-            parse(f, questions);
+            boolean tabled = f.getName().contains("__tabled");
+            log.debug("File {} {} tabled ", f.getName(), tabled ? "is" : "is not");
+            if (tabled) {
+                parseTables(f, questions);
+            } else {
+                parseByLists(f, questions);
+            }
         });
         log.info("Parsed questions: {}", questions.size());
         testLink = null;
+        repository.saveAll(questions);
         return HttpStatus.OK;
     }
 }

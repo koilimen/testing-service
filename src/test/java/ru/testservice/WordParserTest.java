@@ -31,6 +31,7 @@ public class WordParserTest {
 
     private void extract(XWPFParagraph paragraph) {
         char startChar = paragraph.getText().charAt(0);
+        String text = paragraph.getText();
         XWPFRun isColored = paragraph.getRuns().stream().filter(r -> r.getColor() != null).findFirst().orElse(null);
 
         if (Character.isDigit(startChar) || (isColored != null && isColored.getColor().equals("00B050"))) {
@@ -54,7 +55,6 @@ public class WordParserTest {
             Iterator bodyElementIterator = xdoc.getBodyElementsIterator();
             while (bodyElementIterator.hasNext()) {
                 IBodyElement element = (IBodyElement) bodyElementIterator.next();
-
                 if ("TABLE".equalsIgnoreCase(element.getElementType().name())) {
                     List<XWPFTable> tableList = element.getBody().getTables();
                     int c = 0;

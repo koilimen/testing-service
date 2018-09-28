@@ -11,7 +11,7 @@
     <!--</ul>-->
     <!--</div>-->
 
-    <nav class="nav flex-column nav-pills" aria-orientation="vertical">
+    <nav class="nav nav-pills" aria-orientation="vertical">
         <div class="nav-link" sec:authorize="${hasRole('ROLE_ADMIN')}">
             <form th:method="POST" enctype="multipart/form-data" th:action="@{/docsupload/}">
                 <table>

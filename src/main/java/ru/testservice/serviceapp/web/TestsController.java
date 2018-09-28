@@ -1,6 +1,7 @@
 package ru.testservice.serviceapp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,6 @@ import ru.testservice.serviceapp.service.QuestionService;
 import ru.testservice.serviceapp.service.TestService;
 
 import javax.validation.Valid;
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +41,6 @@ public class TestsController {
     @RequestMapping(value = "/{id}/edit", method = {RequestMethod.GET})
     public String getTestEditPage(Model model, @PathVariable Long id, @PageableDefault(page = 0, size = 15) Pageable pageable) {
         Test test = ts.getTest(id);
-
         model.addAttribute("test", test);
         Question newQuestion = new Question();
         newQuestion.setAnswers(new ArrayList<>());

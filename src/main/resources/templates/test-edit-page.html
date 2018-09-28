@@ -82,24 +82,24 @@
                 </button>
             </form>
         </div>
-        <div class="list-group-item" th:each="question : ${test.questionList}">
+        <div class="list-group-item">
             <table>
                 <thead>
                 <tr>
-                    <th>Вопрос</th>
-                    <th>Ответ</th>
+                    <th>Вопросы</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td th:rowspan="${question.answers.size()+1}" rowspan="3" th:text="${question.questionText}"></td>
-
-                </tr>
-                <tr th:each="answer, status: ${question.answers}">
-                    <td th:class="${answer.correct} ? 'green-bg': ''">
-                        <label th:for="'answer'+${status.index}" th:text="${answer.answerText}">В правде</label></td>
-                </tr>
-
+                <th:block th:each="question : ${questions}">
+                    <tr class="question-row">
+                        <td th:text="${question.questionText}"></td>
+                    </tr>
+                    <tr class="answer-row" th:each="answer, status: ${question.answers}">
+                        <td th:class="${answer.correct} ? 'green-bg': ''">
+                            <label th:for="'answer'+${status.index}" th:text="${answer.answerText}">В правде</label>
+                        </td>
+                    </tr>
+                </th:block>
                 </tbody>
             </table>
         </div>

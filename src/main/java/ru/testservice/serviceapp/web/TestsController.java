@@ -41,6 +41,7 @@ public class TestsController {
     @RequestMapping(value = "/{id}/edit", method = {RequestMethod.GET})
     public String getTestEditPage(Model model, @PathVariable Long id, @PageableDefault(page = 0, size = 15) Pageable pageable) {
         Test test = ts.getTest(id);
+        test.setQuestionsNumber(qs.countTestQuestions(id));
         model.addAttribute("test", test);
         Question newQuestion = new Question();
         newQuestion.setAnswers(new ArrayList<>());
@@ -48,6 +49,7 @@ public class TestsController {
         newQuestion.getAnswers().add(new Answer());
         newQuestion.getAnswers().add(new Answer());
         model.addAttribute("newQuestion", newQuestion);
+        model.addAttribute("questions", qs.getQuestions(id, pageable));
         return "test-edit-page";
     }
 
@@ -61,7 +63,7 @@ public class TestsController {
             question.setId(qs.save(question).getId());
             question.getAnswers().forEach(a -> a.setQuestion(question));
             qs.save(question);
-            test.setQuestionsNumber((short) (test.getQuestionList().size()));
+            test.setQuestionsNumber(qs.countTestQuestions(test.getId()));
             test = ts.save(test);
             Question newQuestion = new Question();
             newQuestion.setAnswers(new ArrayList<>());
@@ -81,7 +83,9 @@ public class TestsController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getTestPage(Model model, @PathVariable Long id) {
-        model.addAttribute("test", ts.getTest(id));
+        Test test = ts.getTest(id);
+        test.setQuestionsNumber(qs.countTestQuestions(id));
+        model.addAttribute("test", test);
         return "test-page";
     }
 

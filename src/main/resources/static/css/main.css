@@ -112,3 +112,11 @@ footer .nav-link{
     margin-right: 25px;
     cursor:pointer;
 }
+
+.question-row{
+    background: azure;
+    border-top: 3px solid #d1ecf1;
+}
+.answer-row td{
+    padding-left: 20px;
+}

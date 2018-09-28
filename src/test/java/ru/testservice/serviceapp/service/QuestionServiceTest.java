@@ -4,18 +4,21 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.*;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
+import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.repository.QuestionRepository;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 public class QuestionServiceTest {
     private final static String PATH_TO_DOC = "/home/igor/Документы/фриланс/prmbez24/G.2.1.docx";
@@ -27,7 +30,20 @@ public class QuestionServiceTest {
     @Before
     public void wireUp() {
         MockitoAnnotations.initMocks(this);
+        Pageable pageable = PageRequest.of(0, 15, Sort.Direction.ASC, "id");
+        Long testId = 1L;
+        when(rp.findAllByTestId(testId, pageable)).thenReturn(pageQuestions(testId, pageable));
         service = new QuestionService(rp);
+    }
+
+    private Page<Question> pageQuestions(Long testId, Pageable pageable) {
+        ru.testservice.serviceapp.model.Test test = new ru.testservice.serviceapp.model.Test();
+        test.setId(testId);
+        List<Question> ql = new ArrayList<>(pageable.getPageSize());
+        for (int i = 0; i < pageable.getPageSize(); i++) {
+            ql.add(new Question(test));
+        }
+        return new PageImpl<>(ql, pageable, 100);
     }
 
 
@@ -38,11 +54,21 @@ public class QuestionServiceTest {
         service.uploadQuestions(files);
 
     }
+
     @Test
     public void uploadQuestionsLIST() throws IOException {
         MultipartFile mpf = new MockMultipartFile("file", new FileInputStream(PATH_TO_DOC));
         List<MultipartFile> files = Collections.singletonList(mpf);
         service.uploadQuestions(files);
+    }
 
+    @Test
+    public void testGetQuestionsByTestIdPageable() {
+        Long testId = 1L;
+        Pageable pageable = PageRequest.of(0, 15, Sort.Direction.ASC, "id");
+        Page<Question> questionsPage = service.getQuestions(testId, pageable);
+        assertNotNull("QuestionPage is null", questionsPage);
+        assertEquals(15, questionsPage.getSize());
+        assertEquals(0, questionsPage.getNumber());
     }
 }

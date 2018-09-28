@@ -5,7 +5,8 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.testservice.serviceapp.model.Answer;
@@ -13,11 +14,10 @@ import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.model.Test;
 import ru.testservice.serviceapp.repository.QuestionRepository;
 
-import java.io.FileInputStream;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class QuestionService {
@@ -107,9 +107,9 @@ public class QuestionService {
 
     }
 
-    public HttpStatus uploadQuestions(List<MultipartFile> files) {
+    public void uploadQuestions(List<MultipartFile> files) {
         List<Question> questions = new ArrayList<>();
-        files.stream().forEach(f -> {
+        files.forEach(f -> {
             boolean tabled = f.getName().contains("__tabled");
             log.debug("File {} {} tabled ", f.getName(), tabled ? "is" : "is not");
             if (tabled) {
@@ -121,6 +121,13 @@ public class QuestionService {
         log.info("Parsed questions: {}", questions.size());
         testLink = null;
         repository.saveAll(questions);
-        return HttpStatus.OK;
+    }
+
+    public Page<Question> getQuestions(@NotNull Long testId, @NotNull Pageable pageable) {
+        return repository.findAllByTestId(testId, pageable);
+    }
+
+    public Long countTestQuestions(Long id) {
+        return repository.countQuestionsByTestId(id);
     }
 }

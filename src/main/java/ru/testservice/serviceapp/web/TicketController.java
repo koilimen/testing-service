@@ -1,6 +1,9 @@
 package ru.testservice.serviceapp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,8 +38,8 @@ public class TicketController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String ticket(@RequestParam Long testId, @RequestParam Integer ticketNum, Model model) {
         Test test = ts.getTest(testId);
-        Collections.shuffle(test.getQuestionList());
-        model.addAttribute("ticketDto", makeTicketDto(test.getId(), test.getQuestionList().subList(0, 5)));
+        Pageable pg = PageRequest.of(ticketNum, 5, Sort.Direction.ASC, "id");
+        model.addAttribute("ticketDto", makeTicketDto(test.getId(), qs.getQuestions(testId, pg).getContent()));
         model.addAttribute("test", test);
         model.addAttribute("checked", false);
         return "ticket";

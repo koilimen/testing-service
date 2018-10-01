@@ -49,6 +49,7 @@ public class TestsController {
         newQuestion.getAnswers().add(new Answer());
         newQuestion.getAnswers().add(new Answer());
         model.addAttribute("newQuestion", newQuestion);
+        model.addAttribute("pageActive", pageable.getPageNumber());
         model.addAttribute("questions", qs.getQuestions(id, pageable));
         return "test-edit-page";
     }

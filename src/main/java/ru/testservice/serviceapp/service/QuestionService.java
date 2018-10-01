@@ -130,4 +130,8 @@ public class QuestionService {
     public Long countTestQuestions(Long id) {
         return repository.countQuestionsByTestId(id);
     }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 }

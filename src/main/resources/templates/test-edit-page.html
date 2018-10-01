@@ -90,9 +90,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <th:block th:each="question : ${questions}">
+                <th:block th:each="question : ${questions.getContent()}">
                     <tr class="question-row">
-                        <td th:text="${question.questionText}"></td>
+                        <td >
+                            <th:block th:text="${question.questionText}"></th:block>
+                            <a th:href="@{/questions/delete/{id}(id=${question.id})}">Удалить</a>
+                        </td>
                     </tr>
                     <tr class="answer-row" th:each="answer, status: ${question.answers}">
                         <td th:class="${answer.correct} ? 'green-bg': ''">
@@ -108,14 +111,9 @@
     <br>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Назад</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Вперед</a>
+            <li class="page-item" th:classappend="${pageActive == pageNum} ? 'active': ''"
+                th:each="pageNum : ${#numbers.sequence(1, questions.getTotalPages())}">
+                <a class="page-link"  th:href="@{/tests/{id}/edit(id=${test.id},page=${pageNum})}" th:text="${pageNum}"></a>
             </li>
         </ul>
     </nav>

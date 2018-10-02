@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.repository.CourseRepository;
 
-import java.util.List;
-
 @Service
 public class CourseService {
     private final CourseRepository repository;
@@ -33,5 +31,13 @@ public class CourseService {
 
     public Course getById(Long id) {
         return repository.findById(id).orElse(new Course());
+    }
+
+    public Iterable<Course> getAll() {
+        return repository.findAll();
+    }
+
+    public Iterable<Course> getAllExcept(Course course) {
+        return repository.findAllExcept(course.getId());
     }
 }

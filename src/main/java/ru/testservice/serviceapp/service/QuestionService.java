@@ -80,9 +80,6 @@ public class QuestionService {
                             XWPFParagraph paragraph = cell.getParagraphArray(0);
                             String numFmt = paragraph.getNumFmt();
                             extract(paragraph, questions, numFmt != null && numFmt.equalsIgnoreCase("decimal"));
-                            if(questions.size() == 15){
-                                return;
-                            }
                         }
                     }
                 }
@@ -97,9 +94,8 @@ public class QuestionService {
     private void parseByLists(MultipartFile file, List<Question> questions) {
         try {
             XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(file.getInputStream()));
-            xdoc.getParagraphs().stream().forEach((XWPFParagraph paragraph) -> {
+            xdoc.getParagraphs().forEach((XWPFParagraph paragraph) -> {
                 extract(paragraph, questions, paragraph.getNumFmt() == null);
-
             });
         } catch (Exception ex) {
             log.error("ParseByLists exception. File name: {}", file.getOriginalFilename(), ex);

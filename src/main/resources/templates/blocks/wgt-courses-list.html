@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:fragment="wgt-courses-list" th:if="${!#lists.isEmpty(allCourses)}">
+    <div class="widget widget-courses">
+
+        <div class="widget__head">
+            Еще курсы
+        </div>
+        <div class="widget__body">
+
+            <ul class="list-group">
+                <li class="list-group-item" th:each="cc_course : ${allCourses}" th:utext="'<a href=\'/course/'+${cc_course.id}+'\'>'+${cc_course.name}+'</a>'">
+                    Course text
+                </li>
+            </ul>
+        </div>
+    </div>
+</th:block>
+</html>

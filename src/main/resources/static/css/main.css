@@ -120,3 +120,12 @@ footer .nav-link{
 .answer-row td{
     padding-left: 20px;
 }
+
+.widget .widget__head{
+    font-size: 16px;
+}
+.widget-courses .widget__body{
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: visible;
+}

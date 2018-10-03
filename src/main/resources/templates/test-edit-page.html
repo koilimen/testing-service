@@ -29,6 +29,9 @@
                                    id="docxFile"
                                    accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
                             <small id="docxFileHelp" class="form-text text-muted">Тип файлов docx</small>
+                            <div class="invalid-feedback" style="display:none">
+                                Выберите один или несколько файлов формата docx!
+                            </div>
                         </div>
                         <div class="form-group">
 
@@ -112,8 +115,8 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${pageActive == pageNum} ? 'active': ''"
-                th:each="pageNum : ${#numbers.sequence(1, questions.getTotalPages())}">
-                <a class="page-link"  th:href="@{/tests/{id}/edit(id=${test.id},page=${pageNum})}" th:text="${pageNum}"></a>
+                th:each="pageNum : ${#numbers.sequence(0, questions.getTotalPages()-1)}">
+                <a class="page-link"  th:href="@{/tests/{id}/edit(id=${test.id},page=${pageNum})}" th:text="${pageNum+1}"></a>
             </li>
         </ul>
     </nav>

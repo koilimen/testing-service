@@ -1,8 +1,29 @@
 $(document).ready(function () {
     var XHR_FILE_UPLOADER;
+
+    function validateFiles($form) {
+        var fileInput = $form.find('#docxFile');
+        var files = fileInput[0].files;
+        if (files.length === 0) return false;
+        for (var i = 0; i < files.length; i++) {
+            var mimeType = files.item(i).type;
+            if (mimeType !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
     $("#questionFilesForm").on('submit', function (e) {
         e.preventDefault();
-        let $this = $(this);
+        var $this = $(this);
+        $('.invalid-feedback').hide();
+        var filesValid = validateFiles($this);
+        if (!filesValid) {
+            $('.invalid-feedback').show();
+            return;
+        }
         var formData = new FormData($this[0]);
         $('.progress').show();
         $.ajax({

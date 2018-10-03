@@ -50,9 +50,10 @@ public class QuestionService {
         if (isQuestionText) {
             // Текст вопроса - нужно создавать новый вопрос
             if (buferQuestion != null) {
-                if (!buferQuestion.getAnswers().isEmpty())
+                if (!buferQuestion.getAnswers().isEmpty()) {
                     questions.add(buferQuestion.clone());
-                log.debug("{}", buferQuestion.toString());
+                    log.debug("{}", buferQuestion.toString());
+                }
             }
             buferQuestion = new Question(text, new ArrayList<>(), testLink);
         } else {
@@ -95,12 +96,16 @@ public class QuestionService {
         try {
             XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(file.getInputStream()));
             xdoc.getParagraphs().forEach((XWPFParagraph paragraph) -> {
-                extract(paragraph, questions, paragraph.getNumFmt() == null);
+                extract(paragraph, questions,   isBold(paragraph) || paragraph.getText().contains("?"));
             });
         } catch (Exception ex) {
             log.error("ParseByLists exception. File name: {}", file.getOriginalFilename(), ex);
         }
 
+    }
+
+    private boolean isBold(XWPFParagraph paragraph) {
+        return paragraph.getRuns().stream().anyMatch(XWPFRun::isBold);
     }
 
     public void uploadQuestions(List<MultipartFile> files) {

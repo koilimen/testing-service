@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 public class QuestionServiceTest {
-    private final static String PATH_TO_DOC = "/home/igor/Документы/фриланс/prmbez24/А-1.docx";
+    private final static String PATH_TO_DOC = "/home/igor/Документы/фриланс/prmbez24/G.2.1.docx";
     private final static String PATH_TO_TABLED = "/home/igor/Документы/фриланс/prmbez24/E.2.1.docx";
     @Mock
     private QuestionRepository rp;

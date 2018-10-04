@@ -11,6 +11,7 @@
         <sql    dbms="postgesql">
             ALTER TABLE public.tests ALTER COLUMN description TYPE varchar(512);
             ALTER TABLE public.tests ALTER COLUMN title TYPE varchar(256);
+
         </sql>
     </changeSet>
 

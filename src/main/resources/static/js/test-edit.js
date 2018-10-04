@@ -34,13 +34,13 @@ $(document).ready(function () {
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-            xhr: function () {
-                XHR_FILE_UPLOADER = $.ajaxSettings.xhr();
-                if (XHR_FILE_UPLOADER.upload) {
-                    XHR_FILE_UPLOADER.upload.addEventListener('progress', progressFileUpload, false);
-                }
-                return XHR_FILE_UPLOADER;
-            },
+            // xhr: function () {
+            //     XHR_FILE_UPLOADER = $.ajaxSettings.xhr();
+            //     if (XHR_FILE_UPLOADER.upload) {
+            //         XHR_FILE_UPLOADER.upload.addEventListener('progress', progressFileUpload, false);
+            //     }
+            //     return XHR_FILE_UPLOADER;
+            // },
             success: function (data) {
                 if (data !== 'ok') {
                     console.log("data")

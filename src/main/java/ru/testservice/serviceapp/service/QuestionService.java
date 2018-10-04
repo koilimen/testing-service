@@ -44,11 +44,14 @@ public class QuestionService {
         return (List<Question>) repository.findAllById(questionIds);
     }
 
-    private  void  extract(XWPFParagraph paragraph, List<Question> questions, boolean isQuestionText) {
+    private void extract(XWPFParagraph paragraph, List<Question> questions, boolean isQuestionText) {
         String text = paragraph.getText().trim();
         if (text.isEmpty() || text.length() < 3) return;
         if (isQuestionText) {
             // Текст вопроса - нужно создавать новый вопрос
+            if (text.indexOf(".") <= 3 && text.indexOf(".") > 0) {
+                text = text.substring(text.indexOf(".") + 1).trim();
+            }
             if (buferQuestion != null) {
                 if (!buferQuestion.getAnswers().isEmpty()) {
                     questions.add(buferQuestion.clone());
@@ -58,6 +61,7 @@ public class QuestionService {
             buferQuestion = new Question(text, new ArrayList<>(), testLink);
         } else {
             // Текст ответа - если создан новый вопрос - добавляем ответ, если нет - прерываемся
+            if (text.charAt(1) == ')') text = text.substring(2);
             if (buferQuestion == null) return;
             XWPFRun isItalic = paragraph.getRuns().stream().filter(XWPFRun::isItalic).findFirst().orElse(null);
             Answer ans = new Answer(text, null != isItalic, buferQuestion);
@@ -91,12 +95,11 @@ public class QuestionService {
     }
 
 
-
     private void parseByLists(MultipartFile file, List<Question> questions) {
         try {
             XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(file.getInputStream()));
             xdoc.getParagraphs().forEach((XWPFParagraph paragraph) -> {
-                extract(paragraph, questions,   isBold(paragraph) || paragraph.getText().contains("?"));
+                extract(paragraph, questions, isBold(paragraph) || paragraph.getText().contains("?"));
             });
         } catch (Exception ex) {
             log.error("ParseByLists exception. File name: {}", file.getOriginalFilename(), ex);

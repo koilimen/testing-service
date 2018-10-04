@@ -1,6 +1,7 @@
 package ru.testservice.serviceapp;
 
 import com.zaxxer.hikari.HikariDataSource;
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -18,7 +19,6 @@ import javax.sql.DataSource;
         @PropertySource(value = "classpath:/application-${spring.profiles.active}.properties", ignoreResourceNotFound = true)
 } )
 public class ServiceAppApplication extends SpringBootServletInitializer{
-
 
 
 

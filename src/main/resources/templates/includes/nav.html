@@ -25,9 +25,8 @@
                 </table>
             </form>
         </div>
-        <a class="nav-link " th:classappend="${isMain == true} ? 'active': ''" id="v-pills-home-tab" data-toggle="pill"
-           href="/"
-           role="tab" aria-controls="v-pills-home" aria-selected="true">Главная</a>
+        <a class="nav-link " th:classappend="${isMain == true} ? 'active': ''" href="/">Главная</a>
+        <a class="nav-link " href="/docs">Документы</a>
         <a class="nav-link " th:each="file : ${files}"
            id="v-pills-home-tab" data-toggle="pill"
            th:href="@{/docs/{id}(id=${file.id})}"

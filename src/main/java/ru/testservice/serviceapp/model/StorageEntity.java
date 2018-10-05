@@ -11,6 +11,9 @@ public class StorageEntity extends AbstractEntity {
     private String link;
     @Column
     private String contentType;
+    @OneToOne
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
     @Lob
     private byte[] file;
 
@@ -22,6 +25,14 @@ public class StorageEntity extends AbstractEntity {
         this.link = link;
         this.contentType = contentType;
         this.file = file;
+    }
+
+    public Folder getFolder() {
+        return folder;
+    }
+
+    public void setFolder(Folder folder) {
+        this.folder = folder;
     }
 
     public String getContentType() {

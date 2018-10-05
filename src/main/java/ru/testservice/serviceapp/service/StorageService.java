@@ -38,4 +38,8 @@ public class StorageService {
     public List<StorageEntity> getAll() {
         return (List<StorageEntity>) repository.findAll();
     }
+
+    public List<StorageEntity> getFiles() {
+        return (List<StorageEntity>) repository.findAll();
+    }
 }

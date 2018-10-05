@@ -9,6 +9,7 @@
     </h2>
     <form th:action="@{/ticket/check/}" th:method="post" th:object="${ticketDto}">
         <input type="hidden" th:field="${ticketDto.testId}"/>
+        <input type="hidden" th:field="${ticketDto.errorsCount}"/>
         <div class="ticket-table">
             <div class="ticket-table__head">
                 <div class="ticket-table__cell">Вопросы</div>
@@ -25,28 +26,63 @@
                 <div class="ticket-table__row ticket-table__answer-row">
                     <div class="ticket-table__cell">
                         <div th:each="answer, answIter: *{questionList[__${questIter.index}__].answers}"
-                             th:with="correct=*{questionList[__${questIter.index}__].answers[__${answIter.index}__].correct},ansChecked=*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}">
+                        >
 
                             <input type="hidden"
                                    th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].id}"/>
                             <input type="hidden"
                                    th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].answerText}"/>
-                            <div th:class="${checked and ansChecked} ? (${correct} ? 'green-bg':'red-bg'): '' ">
-                                <input type="checkbox"
-                                       th:disabled="${checked}"
-                                       th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}"
-                                       th:id="'answer'+${answIter.index}+${questIter.index}"/>
-                                <label th:for="'answer'+${answIter.index}+${questIter.index }"
-                                       th:text="${answer.answerText}">В
-                                    правде</label>
-                            </div>
+                            <input type="hidden"
+                                   th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].correct}"/>
+                            <th:block th:if="${ticketChecked and (answer.checked and answer.correct or (not answer.checked) and answer.correct)}">
+                                <div class="green-bg">
+                                    <input type="checkbox"
+                                           th:disabled="${true}"
+                                           th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}"
+                                           th:id="'answer'+${answIter.index}+${questIter.index}"/>
+                                    <label th:for="'answer'+${answIter.index}+${questIter.index }"
+                                           th:text="${answer.answerText}">Answer text</label>
+                                </div>
+                            </th:block>
+                            <th:block th:if="${ticketChecked and answer.checked and not answer.correct}">
+                                <div class="red-bg">
+                                    <input type="checkbox"
+                                           th:disabled="${true}"
+                                           th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}"
+                                           th:id="'answer'+${answIter.index}+${questIter.index}"/>
+                                    <label th:for="'answer'+${answIter.index}+${questIter.index }"
+                                           th:text="${answer.answerText}">Answer text</label>
+                                </div>
+                            </th:block>
+                            <th:block th:if="${ticketChecked and not answer.checked and not answer.correct}">
+                                <div>
+                                    <input type="checkbox"
+                                           th:disabled="${true}"
+                                           th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}"
+                                           th:id="'answer'+${answIter.index}+${questIter.index}"/>
+                                    <label th:for="'answer'+${answIter.index}+${questIter.index }"
+                                           th:text="${answer.answerText}">Answer text</label>
+                                </div>
+                            </th:block>
+                            <th:block th:if="${not ticketChecked }">
+                                <div>
+                                    <input type="checkbox"
+                                           th:field="*{questionList[__${questIter.index}__].answers[__${answIter.index}__].checked}"
+                                           th:id="'answer'+${answIter.index}+${questIter.index}"/>
+                                    <label th:for="'answer'+${answIter.index}+${questIter.index }"
+                                           th:text="${answer.answerText}">Answer text</label>
+                                </div>
+                            </th:block>
                         </div>
                     </div>
                 </div>
             </th:block>
         </div>
-        <button type="submit" class="btn btn-primary" th:if="${not checked}">Проверить</button>
-        <a th:href="@{/tests/{testId}(testId=${ticketDto.testId})}" th:if="${ checked}">Назад к билетам</a>
+        <button type="submit" class="btn btn-primary" th:if="${not ticketChecked}">Проверить</button>
+        <th:block th:if="${incorrectCount > ticketDto.errorsCount }" th:text="'Вы совершили более '+ ${ticketDto.errorsCount} + ' ошибок. Тест не пройден'"/>
+        <th:block th:if="${incorrectCount <= ticketDto.errorsCount }" th:text="'Тест успешно пройден!'"/>
+        <a th:href="@{/tests/{testId}(testId=${ticketDto.testId})}" th:if="${ ticketChecked}">Назад к билетам</a>
+
     </form>
 
 

@@ -13,7 +13,9 @@ import ru.testservice.serviceapp.model.Answer;
 import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.model.Test;
 import ru.testservice.serviceapp.repository.QuestionRepository;
+import ru.testservice.serviceapp.repository.TestRepository;
 
+import javax.management.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,12 +25,14 @@ import java.util.List;
 public class QuestionService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final QuestionRepository repository;
+    private final TestRepository tr;
     private Question buferQuestion;
     private Test testLink;
 
     @Autowired
-    public QuestionService(QuestionRepository repository) {
+    public QuestionService(QuestionRepository repository, TestRepository tr) {
         this.repository = repository;
+        this.tr = tr;
     }
 
     public QuestionService with(Test test) {
@@ -37,7 +41,13 @@ public class QuestionService {
     }
 
     public Question save(Question question) {
-        return repository.save(question);
+        boolean isNew = question.getId() == null;
+        question = repository.save(question);
+        if (isNew) {
+            question.getTest().increaseQN();
+            tr.save(question.getTest());
+        }
+        return question;
     }
 
     public List<Question> getQuestions(List<Long> questionIds) {
@@ -123,8 +133,10 @@ public class QuestionService {
             }
         });
         log.info("Parsed questions: {}", questions.size());
-        testLink = null;
+        testLink.setQuestionsNumber(testLink.getQuestionsNumber() + questions.size());
         repository.saveAll(questions);
+        tr.save(testLink);
+        testLink = null;
     }
 
     public Page<Question> getQuestions(@NotNull Long testId, @NotNull Pageable pageable) {

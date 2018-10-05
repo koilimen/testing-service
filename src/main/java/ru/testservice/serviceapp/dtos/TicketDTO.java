@@ -6,10 +6,19 @@ import java.util.List;
 
 public class TicketDTO {
     private List<Question> questionList;
+    private Integer errorsCount;
 
     private Long testId;
 
     public TicketDTO() {
+    }
+
+    public Integer getErrorsCount() {
+        return errorsCount;
+    }
+
+    public void setErrorsCount(Integer errorsCount) {
+        this.errorsCount = errorsCount;
     }
 
     public Long getTestId() {

@@ -7,6 +7,8 @@
             <th scope="col">#</th>
             <th scope="col">Область аттестации</th>
             <th scope="col">Наименование</th>
+            <th scope="col" sec:authorize="{hasRole('ROLE_ADMIN')}">Кол-во вопросов в билете</th>
+            <th scope="col" sec:authorize="{hasRole('ROLE_ADMIN')}">Максимальное кол-во ошибок в билете</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -18,8 +20,15 @@
 
             <td th:if="${editSection eq null or editSection.id ne section.id}" th:text="${section.code}">Mark</td>
             <td th:if="${editSection eq null or editSection.id ne section.id}" th:text="${section.name}">Mark</td>
+            <td th:if="${editSection eq null or editSection.id ne section.id}" th:text="${section.questionsCount}"
+                sec:authorize="{hasRole('ROLE_ADMIN')}">Mark
+            </td>
+            <td th:if="${editSection eq null or editSection.id ne section.id}" th:text="${section.errorsCount}"
+                sec:authorize="{hasRole('ROLE_ADMIN')}">Mark
+            </td>
             <td th:if="${editSection ne null and editSection.id eq section.id}">
-                <form class="form-inline" th:action="@{/course/{cid}/edit/{id}(id=${editSection.id}, cid=${course.id})}" th:object="${editSection}"
+                <form class="form-inline" th:action="@{/course/{cid}/edit/{id}(id=${editSection.id}, cid=${course.id})}"
+                      th:object="${editSection}"
                       th:method="post">
                     <input type="hidden" th:field="*{id}">
                     <input type="hidden" th:field="*{course.id}">
@@ -32,9 +41,23 @@
                     </div>
                     <input type="text" class="form-control" th:field="*{name}"
                            th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': 'is-valid'"
-                           placeholder="Новый курс"/>
+                           placeholder="Новый раздел"/>
                     <div class="invalid-feedback"
                          th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                        Title errors
+                    </div>
+                    <input type="text" class="form-control" th:field="*{questionsCount}"
+                           th:classappend="${#fields.hasErrors('questionsCount')} ? 'is-invalid': 'is-valid'"
+                           placeholder="Кол-во вопросов в билете"/>
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('questionsCount')}" th:errors="*{questionsCount}">
+                        Title errors
+                    </div>
+                    <input type="text" class="form-control" th:field="*{errorsCount}"
+                           th:classappend="${#fields.hasErrors('errorsCount')} ? 'is-invalid': 'is-valid'"
+                           placeholder="Кол-во ошибок в билете"/>
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('errorsCount')}" th:errors="*{errorsCount}">
                         Title errors
                     </div>
                     <button type="submit" class="tests-list__item-link btn btn-link add-test">Сохранить</button>

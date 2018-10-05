@@ -25,6 +25,26 @@
                     Title errors
                 </div>
             </div>
+            <div class="form-group">
+                <input type="text" class="form-control" th:field="*{questionsCount}"
+                       style="width:220px"
+                       th:classappend="${#fields.hasErrors('questionsCount')} ? 'is-invalid': 'is-valid'"
+                       placeholder="Кол-во вопросов в билете"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('questionsCount')}" th:errors="*{questionsCount}">
+                    Title errors
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" th:field="*{errorsCount}"
+                       style="width:220px"
+                       th:classappend="${#fields.hasErrors('errorsCount')} ? 'is-invalid': 'is-valid'"
+                       placeholder="Кол-во ошибок в билете"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('errorsCount')}" th:errors="*{errorsCount}">
+                    Title errors
+                </div>
+            </div>
             <button type="submit" class="tests-list__item-link btn btn-link add-test">Добавить</button>
         </form>
     </div>

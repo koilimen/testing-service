@@ -1,6 +1,9 @@
 package ru.testservice.serviceapp.model;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -21,12 +24,38 @@ public class Section extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name ="course_id")
     private Course course;
+    @Column(name = "questions_count")
+    @ColumnDefault(value = "5")
+    @NotNull(message = "Укажите кол-во вопросов в билете")
+    @Min(value = 1, message = "Кол-во вопросов в билете не может быть меньше 1")
+    private Integer questionsCount;
+    @Column(name = "errors_count")
+    @ColumnDefault(value = "1")
+    @NotNull(message = "Укажите допустимое кол-во ошибок в билете")
+    private Integer errorsCount;
+
 
     public Section() {
     }
 
     public Section(Course course) {
         this.course = course;
+    }
+
+    public Integer getErrorsCount() {
+        return errorsCount;
+    }
+
+    public void setErrorsCount(Integer errorsCount) {
+        this.errorsCount = errorsCount;
+    }
+
+    public Integer getQuestionsCount() {
+        return questionsCount;
+    }
+
+    public void setQuestionsCount(Integer questionsCount) {
+        this.questionsCount = questionsCount;
     }
 
     public Course getCourse() {

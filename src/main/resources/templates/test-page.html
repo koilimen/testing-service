@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
-    <h2 >
+    <h2>
         <th:block th:text="${test.title}"></th:block>
         <span class="badge badge-secondary" style="float:right" th:text="'Вопросов: '+${test.questionsNumber}">Вопросов: 0</span>
     </h2>
@@ -13,25 +13,17 @@
     </p>
     <p th:text="${test.description}"></p>
     <div class="list-group">
-        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" class="list-group-item list-group-item-action" th:each="i : ${#numbers.sequence( 0, test.questionsNumber/5)}">
-            Билет № <th:block th:text="${i+1}"></th:block>
-        </a>
+        <th:block th:if="${test.questionsNumber > 0}">
+            <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" class="list-group-item list-group-item-action"
+               th:each="i : ${#numbers.sequence( 0, test.questionsNumber/test.section.questionsCount -1) }">
+                Билет № <th:block th:text="${i+1}"></th:block>
+            </a>
+        </th:block>
+        <th:block th:if="${test.questionsNumber == 0}">
+            В тесте еще нет вопросов.
+        </th:block>
     </div>
     <br>
     <br>
-    <!--<nav aria-label="Page navigation example">-->
-        <!--<ul class="pagination justify-content-center">-->
-            <!--<li class="page-item disabled">-->
-                <!--<a class="page-link" href="#" tabindex="-1">Назад</a>-->
-            <!--</li>-->
-            <!--<li class="page-item"><a class="page-link" href="#">1</a></li>-->
-            <!--<li class="page-item"><a class="page-link" href="#">2</a></li>-->
-            <!--<li class="page-item"><a class="page-link" href="#">3</a></li>-->
-            <!--<li class="page-item">-->
-                <!--<a class="page-link" href="#">Вперед</a>-->
-            <!--</li>-->
-        <!--</ul>-->
-    <!--</nav>-->
-
 </th:block>
 </html>

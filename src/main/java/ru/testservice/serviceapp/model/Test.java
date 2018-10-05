@@ -88,4 +88,8 @@ public class Test {
     public void setQuestionsNumber(Long questionsNumber) {
         this.questionsNumber = questionsNumber;
     }
+
+    public void increaseQN() {
+        this.questionsNumber++;
+    }
 }

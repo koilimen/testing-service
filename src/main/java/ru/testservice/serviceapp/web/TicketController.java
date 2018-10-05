@@ -17,10 +17,7 @@ import ru.testservice.serviceapp.model.Test;
 import ru.testservice.serviceapp.service.QuestionService;
 import ru.testservice.serviceapp.service.TestService;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -38,43 +35,40 @@ public class TicketController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String ticket(@RequestParam Long testId, @RequestParam Integer ticketNum, Model model) {
         Test test = ts.getTest(testId);
-        Pageable pg = PageRequest.of(ticketNum, 5, Sort.Direction.ASC, "id");
-        model.addAttribute("ticketDto", makeTicketDto(test.getId(), qs.getQuestions(testId, pg).getContent()));
+        Pageable pg = PageRequest.of(ticketNum, test.getSection().getQuestionsCount(), Sort.Direction.ASC, "id");
+        model.addAttribute("ticketDto", makeTicketDto(test.getId(), test.getSection().getErrorsCount(), qs.getQuestions(testId, pg).getContent()));
         model.addAttribute("test", test);
-        model.addAttribute("checked", false);
+        model.addAttribute("ticketChecked", false);
         return "ticket";
     }
 
-    private TicketDTO makeTicketDto(Long testId, List<Question> questions) {
+    private TicketDTO makeTicketDto(Long testId, Integer errorsCount, List<Question> questions) {
         TicketDTO t = new TicketDTO();
         t.setQuestionList(questions);
         t.setTestId(testId);
+        t.setErrorsCount(errorsCount);
         return t;
     }
 
     @RequestMapping(value = "/check/", method = RequestMethod.POST)
     public String checkTicket(@ModelAttribute TicketDTO ticketDto, Model model) {
-        List<Long> questionIds = ticketDto.getQuestionList().stream().map(Question::getId).collect(Collectors.toList());
-        List<Question> questions = qs.getQuestions(questionIds);
-        Map<Long, Answer> ticketAnswers = getAnswers(ticketDto.getQuestionList());
-        Map<Long, Answer> correctAnswers = getAnswers(questions);
-        ticketAnswers.forEach((id, ans) -> {
-            Answer correctAnswer = correctAnswers.get(id);
-            ans.setCorrect(correctAnswer.isCorrect());
-        });
+        Collection<Answer> ticketAnswers = getAnswersList(ticketDto.getQuestionList());
+        long incorrectCount = ticketAnswers.stream().filter(a -> a.isChecked() && a.isCorrect() != a.isChecked()).count();
+        model.addAttribute("incorrectCount", incorrectCount );
         model.addAttribute("ticketDto", ticketDto);
         model.addAttribute("test", ts.getTest(ticketDto.getTestId()));
-        model.addAttribute("checked", true);
+        model.addAttribute("ticketChecked", true);
         return "ticket";
     }
 
-    private Map<Long, Answer> getAnswers(List<Question> questions) {
-        Map<Long, Answer> answers = new HashMap<>();
+
+
+    private Collection<Answer> getAnswersList(List<Question> questions) {
+        List<Answer> answers = new ArrayList<>();
         questions.forEach(q -> {
-            q.getAnswers().forEach(a -> {
-                answers.put(a.getId(), a);
-            });
+            answers.addAll(q.getAnswers());
         });
         return answers;
     }
+
 }

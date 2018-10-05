@@ -9,6 +9,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.repository.QuestionRepository;
+import ru.testservice.serviceapp.repository.TestRepository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,6 +26,8 @@ public class QuestionServiceTest {
     private final static String PATH_TO_TABLED = "/home/igor/Документы/фриланс/prmbez24/E.2.1.docx";
     @Mock
     private QuestionRepository rp;
+    @Mock
+    private TestRepository tr;
     private QuestionService service;
 
     @Before
@@ -33,7 +36,7 @@ public class QuestionServiceTest {
         Pageable pageable = PageRequest.of(0, 15, Sort.Direction.ASC, "id");
         Long testId = 1L;
         when(rp.findAllByTestId(testId, pageable)).thenReturn(pageQuestions(testId, pageable));
-        service = new QuestionService(rp);
+        service = new QuestionService(rp, tr);
     }
 
     private Page<Question> pageQuestions(Long testId, Pageable pageable) {

@@ -7,6 +7,10 @@
    http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-   <include file="/liquibase/changelogs/test-change-fields-length.xml"/>
-   <include file="/liquibase/changelogs/section-add-questions-count-column.xml"/>
+    <changeSet author="imilienko" id="section-add-quesions-count-column">
+        <addColumn tableName="sections" schemaName="public">
+            <column defaultValueNumeric="5" name="questions_count" type="integer"></column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

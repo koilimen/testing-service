@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:fragment="node-body(rootFolder, storageEntities)">
+    <ul class="tree__node-body">
+        <li class="tree__node-body__item" th:each="entity : ${storageEntities}">
+            <a th:href="@{/docs/{id}(id=${entity.id})}" th:text="${entity.name}"></a>
+        </li>
+        <li class="tree__node-body__item folder-item" th:each="folder : ${rootFolder.childFolders}">
+            <div class="tree__node">
+
+                <input type="checkbox" class="tree__node-checkbox" th:id="${'checkbox'+folder.id}"/>
+                <label th:attr="data-id=${folder.id}" th:for="${'checkbox'+folder.id}" th:text="${folder.title}">Документы</label>
+            </div>
+        </li>
+    </ul>
+</th:block>
+</html>

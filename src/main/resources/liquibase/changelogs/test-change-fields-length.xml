@@ -7,7 +7,7 @@
    http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="imilienko" id="test-change-fields-length">
+    <changeSet author="imilienko" id="test-change-fields-length" context="prod">
         <sql    dbms="postgesql">
             ALTER TABLE public.tests ALTER COLUMN description TYPE varchar(512);
             ALTER TABLE public.tests ALTER COLUMN title TYPE varchar(256);

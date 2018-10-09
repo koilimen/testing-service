@@ -1,0 +1,40 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="imilienko" id="add-folders-table" context="prod">
+        <sql dbms="postgresql">
+            create table folder (
+            id bigserial not null
+            constraint folder_pkey
+            primary key,
+            title varchar(255),
+            parent_folder_id bigint
+            constraint fk57g7veis1gp5wn3g0mp0x57pl
+            references folder );
+
+            alter table storages
+            (
+            id bigserial not null
+            constraint storages_pkey
+            primary key,
+            content_type varchar(255),
+            file oid,
+            link varchar(255),
+            name varchar(255),
+            folder_id bigint
+            constraint fkqo5rarhu2wxaqe0mycbw8mfds
+            references folder
+            )
+            ;
+
+
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

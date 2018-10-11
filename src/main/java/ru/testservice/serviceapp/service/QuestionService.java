@@ -143,6 +143,14 @@ public class QuestionService {
         return repository.findAllByTestId(testId, pageable);
     }
 
+    public Page<Question> getQuestions(@NotNull Test test, List<Long> except, @NotNull Pageable pageable) {
+        if(except == null || except.size() == 0 ){
+            return repository.findAllByTestId(test.getId(), pageable);
+        }
+        return repository.findAllByTestIdExcpet(test, except, pageable);
+    }
+
+
     public Long countTestQuestions(Long id) {
         return repository.countQuestionsByTestId(id);
     }

@@ -79,8 +79,8 @@
             </th:block>
         </div>
         <button type="submit" class="btn btn-primary" th:if="${not ticketChecked}">Проверить</button>
-        <th:block th:if="${incorrectCount > ticketDto.errorsCount }" th:text="'Вы совершили более '+ ${ticketDto.errorsCount} + ' ошибок. Тест не пройден'"/>
-        <th:block th:if="${incorrectCount <= ticketDto.errorsCount }" th:text="'Тест успешно пройден!'"/>
+        <th:block th:if="${ticketChecked and incorrectCount > ticketDto.errorsCount }" th:text="'Вы совершили более '+ ${ticketDto.errorsCount} + ' ошибок. Тест не пройден'"/>
+        <th:block th:if="${ticketChecked and incorrectCount <= ticketDto.errorsCount }" th:text="'Тест успешно пройден!'"/>
         <a th:href="@{/tests/{testId}(testId=${ticketDto.testId})}" th:if="${ ticketChecked}">Назад к билетам</a>
 
     </form>

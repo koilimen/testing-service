@@ -1,5 +1,6 @@
 package ru.testservice.serviceapp.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -30,7 +31,9 @@ public class Test {
     @ManyToOne
     @JoinColumn(name = "section_id")
     private Section section;
-
+    @Column(name="test_order")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer order ;
 
     public Test(String title, String description, Long questionsNumber) {
         this.title = title;
@@ -38,7 +41,24 @@ public class Test {
         this.questionsNumber = questionsNumber;
     }
 
+    public Test(Long id, Integer order) {
+        this.id = id;
+        this.order = order;
+    }
 
+    public static Test of(Long id) {
+        Test t = new Test();
+        t.setId(id);
+        return t;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
 
     public Test(Section section) {
         this.section = section;

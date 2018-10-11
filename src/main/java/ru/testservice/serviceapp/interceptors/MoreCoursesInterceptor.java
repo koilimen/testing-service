@@ -20,16 +20,18 @@ public class MoreCoursesInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-        String requestURI = request.getRequestURI();
-        for (String url : urls) {
-            if (requestURI.startsWith(url)) {
-                Course course = (Course) modelAndView.getModel().get("course");
-                if(course != null) {
-                    modelAndView.addObject("allCourses", cs.getAllExcept(course));
-                } else {
-                    modelAndView.addObject("allCourses", cs.getAll());
+        if (!"XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            String requestURI = request.getRequestURI();
+            for (String url : urls) {
+                if (requestURI.startsWith(url)) {
+                    Course course = (Course) modelAndView.getModel().get("course");
+                    if (course != null) {
+                        modelAndView.addObject("allCourses", cs.getAllExcept(course));
+                    } else {
+                        modelAndView.addObject("allCourses", cs.getAll());
+                    }
+                    break;
                 }
-                break;
             }
         }
 

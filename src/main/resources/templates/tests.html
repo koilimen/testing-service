@@ -6,13 +6,14 @@
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
     <div class="row">
-        <div class="col-lg-5 col-md-5">
+        <th:block class="col-lg-5 col-md-5">
             <h3 th:text="${'Раздел '+section.name+' '+section.code}"></h3>
             <ul class="tests-list">
-                <li class="tests-list__item"
+                <li class="tests-list__item new"
                     sec:authorize="${hasRole('ROLE_ADMIN')}">
                     <!--/*@thymesVar id="newTest" type="ru.testservice.serviceapp.model.Test"*/-->
-                    <form action="#" th:action="@{/section/{id}(id=${section.id})}" th:object="${newTest}" th:method="put">
+                    <form action="#" th:action="@{/section/{id}(id=${section.id})}" th:object="${newTest}"
+                          th:method="put">
                         <input type="hidden" th:field="*{section.id}"/>
                         <input type="hidden" th:field="*{id}"/>
                         <input type="text" class="form-control" th:field="*{title}"
@@ -33,6 +34,8 @@
                     </form>
                 </li>
                 <li th:each="test : ${tests}" class="tests-list__item"
+                    th:attr="data-order=${test.order}, data-id=${test.id}"
+
                 >
                     <th:block th:if="${editableTest == null || editableTest.id != test.id}">
                         <div class=" field tests-list__item-qn">
@@ -48,6 +51,16 @@
                         <a th:href="@{/section/{id}(editId=${test.id},id=${section.id})}"
                            class="tests-list__item-link tests-list__item-edit-link  btn btn-link"
                            sec:authorize="${hasRole('ROLE_ADMIN')}">Редактировать</a>
+                        <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
+                            |
+                        </th:block>
+                        <div class="sort-up btn btn-link"
+                             sec:authorize="${hasRole('ROLE_ADMIN')}">Вверх
+                        </div>
+                        <div class="sort-down btn btn-link"
+                             sec:authorize="${hasRole('ROLE_ADMIN')}">Вниз
+                        </div>
+
                     </th:block>
                     <th:block th:if="${editableTest != null && editableTest.id == test.id}">
                         <!--/*@thymesVar id="editableTest" type="ru.testservice.serviceapp.model.Test"*/-->
@@ -81,7 +94,7 @@
                 </li>
 
             </ul>
-        </div>
+    </div>
     </div>
 </th:block>
 </html>

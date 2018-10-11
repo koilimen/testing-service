@@ -110,6 +110,10 @@ public class TestsController {
         model.addAttribute("editableTest", new Test());
         return "tests";
     }
+    @RequestMapping(value = "/update-orders",method = RequestMethod.POST)
+    public @ResponseBody String updateTestOrder(@RequestParam("ids[]") List<Long> ids, @RequestParam("orders[]") List<Integer> orders)  {
+        return ts.uppdateOrders(ids, orders);
+    }
 
     @RequestMapping(value = "/{testId}", method = RequestMethod.DELETE)
     public @ResponseBody

@@ -34,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMe().key("sjha876sdhu))")
                 .and().
                 logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/splash")
+        .and().csrf().disable()
                 ;
     }
 

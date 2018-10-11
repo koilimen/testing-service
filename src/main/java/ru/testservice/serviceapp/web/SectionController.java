@@ -32,7 +32,7 @@ public class SectionController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String main(@PathVariable Long id, @RequestParam(value = "editId", required = false) Long testEditId,
-                       Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+                       Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         Section section = sectionService.getById(id);
         prepareModel(section, model, testEditId, pageable);
         model.addAttribute("newTest", new Test(section));
@@ -42,7 +42,7 @@ public class SectionController {
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public String updateTest(@PathVariable Long id, @RequestParam(value = "editId", required = false) Long testEditId,
                              @ModelAttribute("editableTest") @Valid Test editableTest, BindingResult result,
-                             Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+                             Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         if (!result.hasErrors()) {
             testService.save(editableTest);
             return "redirect:/section/" + id;
@@ -62,7 +62,7 @@ public class SectionController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public String saveNewTest(@PathVariable Long id, @ModelAttribute("newTest") @Valid Test newTest,
                               BindingResult result,
-                              Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+                              Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         if (!result.hasErrors()) {
             testService.save(newTest);
             return "redirect:/section/" + id;

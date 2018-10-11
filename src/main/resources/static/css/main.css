@@ -16,6 +16,12 @@
     position: relative;
 }
 
+.tests-list__item.dragover{
+    border: 2px dashed #007bff;
+}
+.tests-list__item.dragover .test-item{
+}
+
 .tests-list__item-link {
     bottom: 0;
 }

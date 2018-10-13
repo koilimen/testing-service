@@ -31,7 +31,7 @@ public class Test {
     private Section section;
     @Column(name="test_order")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer order ;
+    private Integer order  = 0;
 
     public Test(String title, String description, Long questionsNumber) {
         this.title = title;

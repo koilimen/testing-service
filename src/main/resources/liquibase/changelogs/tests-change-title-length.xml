@@ -7,7 +7,12 @@
    http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-   <include file="/liquibase/changelogs/test-change-fields-length.xml"/>
-   <include file="/liquibase/changelogs/section-add-questions-count-column.xml"/>
-   <include file="/liquibase/changelogs/tests-change-title-length.xml"/>
+    <changeSet author="imilienko" id="tests-change-title-length" context="prod">
+        <sql    dbms="postgesql">
+            ALTER TABLE public.tests ALTER COLUMN description TYPE varchar(1024);
+            ALTER TABLE public.tests ALTER COLUMN title TYPE varchar(1024);
+
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

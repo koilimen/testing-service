@@ -16,15 +16,13 @@ public class Test {
     private Long id;
     @Column
     @NotNull
-    @Pattern(regexp = "[а-яА-Я0-9\\s-_.]+", message = "Для ввода допустимы символы А-Я, цифры, пробел, точка, _ -")
     @NotEmpty(message = "Название не может быть пустым.")
-    @Length(min = 3, max = 512 , message = "Длина названия должна быть от 3 до 512 символов.")
+    @Length(min = 3, max = 1024 , message = "Длина названия должна быть от 3 до 512 символов.")
     private String title;
     @Column
     @NotNull
-    @Pattern(regexp = "[а-яА-Я0-9\\s-_.,]+", message = "Для ввода допустимы символы А-Я, цифры, пробел, точка, запятая, _ -")
     @NotEmpty(message = "Описание не может быть пустым.")
-    @Length( max = 512, message = "Длина описнаие должна быть не более 512 символов.")
+    @Length( max = 1024, message = "Длина описнаие должна быть не более 512 символов.")
     private String description;
     @Column
     private Long questionsNumber;

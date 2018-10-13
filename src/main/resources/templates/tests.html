@@ -6,7 +6,7 @@
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
     <div class="row">
-        <th:block class="col-lg-5 col-md-5">
+        <div class="col-lg-5 col-md-5">
             <h3 th:text="${'Раздел '+section.name+' '+section.code}"></h3>
             <ul class="tests-list">
                 <li class="tests-list__item new"
@@ -62,7 +62,7 @@
                         </div>
 
                     </th:block>
-                    <th:block th:if="${editableTest != null && editableTest.id == test.id}">
+                    <div th:if="${editableTest != null && editableTest.id == test.id}">
                         <!--/*@thymesVar id="editableTest" type="ru.testservice.serviceapp.model.Test"*/-->
                         <form action="#" th:action="@{/section/{id}(id=${section.id},editId=${editableTest.id})}"
                               th:object="${editableTest}" method="post">
@@ -89,7 +89,7 @@
                             </a>
                         </form>
 
-                    </th:block>
+                    </div>
 
                 </li>
 

@@ -30,7 +30,7 @@ public class Test {
     @JoinColumn(name = "section_id")
     private Section section;
     @Column(name="test_order")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer order ;
 
     public Test(String title, String description, Long questionsNumber) {

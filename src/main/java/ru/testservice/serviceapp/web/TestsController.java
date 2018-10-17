@@ -89,6 +89,11 @@ public class TestsController {
         model.addAttribute("test", test);
         return "test-page";
     }
+    @RequestMapping(value = "/{id}/delete-all-questions", method = RequestMethod.GET)
+    public String deleteTestQuestions( @PathVariable Long id) {
+        qs.deleteByTestId(id);
+        return "redirect:/tests/"+id+"/edit";
+    }
 
     @RequestMapping(method = RequestMethod.PUT)
     public String addTest(@ModelAttribute("newTest") @Valid Test test, BindingResult result, Model model) {

@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <label for="docxFile">Файлы для загрузки: </label>
 
-                            <input type="file" name="docxFiles" multiple="true"
+                            <input type="file" name="docxFiles" multiple="multiple"
                                    class="form-control-file"
                                    aria-describedby="docxFileHelp"
                                    id="docxFile"
@@ -86,11 +86,12 @@
                 </button>
             </form>
         </div>
-        <div class="list-group-item">
+        <div class="list-group-item" th:if="${!questions.getContent().isEmpty()}">
             <table>
                 <thead>
                 <tr>
                     <th>Вопросы</th>
+                    <th><a href="delete-all-questions" class="btn btn-link">Удалить все вопросы</a></th>
                 </tr>
                 </thead>
                 <tbody>

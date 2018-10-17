@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.testservice.serviceapp.model.Answer;
 import ru.testservice.serviceapp.model.Question;
@@ -157,5 +158,10 @@ public class QuestionService {
 
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteByTestId(@NotNull Long id) {
+        repository.deleteAllByTestId(id);
     }
 }

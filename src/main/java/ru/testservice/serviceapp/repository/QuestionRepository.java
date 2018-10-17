@@ -17,4 +17,6 @@ public interface QuestionRepository extends PagingAndSortingRepository<Question,
                                          @Param("except") List<Long> exceptQuestionIds, Pageable pageable);
 
     Long countQuestionsByTestId(Long id);
+
+    void deleteAllByTestId(Long id);
 }

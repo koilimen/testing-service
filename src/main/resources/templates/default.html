@@ -6,27 +6,24 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Сервис тестирования</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="/css/tree.css">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
     <th:block th:replace="includes/header :: header ">
         <!--empty-->
     </th:block>
-    <div class="row content">
-        <div class="col-md-2 col-lg-2">
+    <div class="wrapper">
+        <div class="left-sidebar">
             <th:block th:replace="includes/nav :: nav">
                 <!--empty-->
             </th:block>
-            <th:block th:replace="blocks/wgt-courses-list :: wgt-courses-list">
-                <!--empty-->
-            </th:block>
+
         </div>
-        <div class="col-md-10 col-lg-10">
+        <div class="content">
             <th:block layout:fragment="content">
                 <!--empty-->
             </th:block>

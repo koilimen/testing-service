@@ -1,16 +1,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="header">
-    <header class="row">
-        <div class="col-lg-11 col-md-11">
-            <span class="logo"></span>
-            <h1>Онлайн <span>тестирование</span></h1>
-            <h4>Подготовка специалистов к аттестации в Ростехнадзоре</h4>
-        </div>
-        <div class="col-lg-1 col-md-1">
-            <a href="/logout">Выход</a>
-        </div>
-
-    </header>
+    <div class="header-container">
+        <header>
+            <div class="logo">PromBez<span class="logo__orange">24</span><span class="logo__suffix">.ru</span></div>
+            <div class="header__main"><strong>Онлайн тестирование</strong>
+                <br/>
+                Подготовка специалистов к аттестации в Ростехнадзоре
+            </div>
+            <div class="socials">
+                <div class="social"><i class="vk"></i></div>
+                <div class="social"><i class="fb"></i></div>
+                <div class="social"><i class="telegram"></i></div>
+            </div>
+        </header>
+    </div>
 </th:block>
 </html>

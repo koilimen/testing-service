@@ -1,25 +1,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <th:block th:fragment="nav">
-
-
-    <!--<div>-->
-    <!--<ul>-->
-    <!--<li th:each="file : ${files}">-->
-    <!--<a th:href="${file}" th:text="${file}" />-->
-    <!--</li>-->
-    <!--</ul>-->
-    <!--</div>-->
-
-    <nav class="nav nav-pills" aria-orientation="vertical">
+    <nav class="nav " >
 
         <a class="nav-link " th:classappend="${isMain == true} ? 'active': ''" href="/">Главная</a>
-        <a class="nav-link " href="/docs">Документы</a>
-        <a class="nav-link " th:each="file : ${files}"
-           id="v-pills-home-tab" data-toggle="pill"
-           th:href="@{/docs/{id}(id=${file.id})}"
-           role="tab" aria-controls="v-pills-home" aria-selected="true"
-           th:text="${file.name}">Главная</a>
+        <a class="nav-link "  href="/">Главная</a>
+        <a class="nav-link " href="/">Главная</a>
+        <a class="nav-link " href="/">Главная</a>
 
     </nav>
 </th:block>

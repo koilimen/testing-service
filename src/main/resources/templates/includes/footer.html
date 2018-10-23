@@ -1,46 +1,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="footer">
-    <footer class="row">
-
-            <div class="col-lg-2 col-md-2"></div>
-            <div class="col-lg-10 col-md-10">
-                <h5>Нормативные документы</h5>
-                <nav class="nav flex-column nav-pills" aria-orientation="vertical">
-
-                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
-                       aria-controls="v-pills-profile" aria-selected="false">
-                        Экзаменационные билеты и тесты
-                    </a>
-                    <a class="nav-link" data-toggle="pill" href="#v-pills-messages" role="tab"
-                       aria-controls="v-pills-messages" aria-selected="false">
-                        Порядок аттестации
-                    </a>
-                    <a class="nav-link" data-toggle="pill" href="#v-pills-settings" role="tab"
-                       aria-controls="v-pills-settings" aria-selected="false">
-                        Области аттестации
-                    </a>
-                    <a class="nav-link" data-toggle="pill" href="#v-pills-settings" role="tab"
-                       aria-controls="v-pills-settings" aria-selected="false">
-                        Гос. Пошлина
-                    </a>
-                    <a class="nav-link" data-toggle="pill" href="#v-pills-settings" role="tab"
-                       aria-controls="v-pills-settings" aria-selected="false">
-                        Нормативная документация
-                    </a>
-                    <a class="nav-link" data-toggle="pill" href="#v-pills-settings" role="tab"
-                       aria-controls="v-pills-settings" aria-selected="false">
-                        Адреса комиссий
-                    </a>
-                    <a class="nav-link" data-toggle="pill" href="#v-pills-settings" role="tab"
-                       aria-controls="v-pills-settings" aria-selected="false">
-                        Учебные центры
-                    </a>
-                </nav>
-                <br/>
-                <small>prombez24.ru &copy; 2018</small>
-
+    <footer>
+        <div class="footer__main">
+            <div class="footer__main-col1">
+                <div class="logo logo-footer">PromBez<span class="logo__orange">24</span><span
+                        class="logo__suffix">.ru</span></div>
+                <p><strong>Онлайн тестирование</strong></p>
+                <p>Подготовка специалистов к аттестации в Ростехнадзоре</p>
             </div>
+            <div class="footer__main-col2">
+                <div class="footer__col-heading">Мы в соцсетях:</div>
+                <div class="socials">
+                    <div class="social"><i class="vk vk-colored"></i></div>
+                    <div class="social"><i class="fb fb-colored"></i></div>
+                    <div class="social"><i class="telegram telegram-colored"></i></div>
+                </div>
+            </div>
+            <div class="footer__main-col3">
+                <div class="footer__col-heading">Карта сайта:</div>
+                <ul class="footer-nav">
+                    <li><a href="#">Нормативные документы</a></li>
+                    <li><a href="№">Экзаменационные билеты и тесты</a></li>
+                    <li><a href="№">Порядок аттестации</a></li>
+                    <li><a href="№">Области аттестации</a></li>
+                    <li><a href="№">Гос. Пошлина</a></li>
+                    <li><a href="№">Нормативная документация</a></li>
+                    <li><a href="№">Адреса комиссий</a></li>
+                    <li><a href="№">Учебные центры</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="footer__sub">
+            <div class="copyright" >PromBez24.ru © <th:block th:text="${#dates.year(#dates.createNow())}"></th:block></div>
+        </div>
 
     </footer>
 </th:block>

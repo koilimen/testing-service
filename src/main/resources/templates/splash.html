@@ -5,47 +5,40 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Сервис тестирования | в разрботке</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Сервис тестирования</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tree.css">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
           integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
 <body>
-<div class="signal-bar signal-bar-top"></div>
-<div class="container ">
-    <div class="splash-container">
-
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="splash-heading">Сайт находится в разработке.</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <form class="form-inline" method="post" th:action="@{/splash}">
-                    <label class="sr-only" for="inlineFormInput" >Логин</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" name="j_login" id="inlineFormInput"
-                           placeholder="логин">
-
-                    <label class="sr-only" for="inlineFormInputGroup">Пароль</label>
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <input type="password" class="form-control" name="j_pass" id="inlineFormInputGroup" placeholder="пароль">
-                    </div>
-
-                    <div class="form-check mb-2 mr-sm-2 mb-sm-0">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" name="remember-me"> Запомнить меня
-                        </label>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Войти</button>
-                </form>
-            </div>
+<div class="container">
+    <th:block th:replace="includes/header :: header ">
+        <!--empty-->
+    </th:block>
+    <div class="wrapper">
+        <div class="login-form">
+            <form method="post" th:action="@{/splash}">
+                <div class="login-form__heading">
+                    Вход
+                </div>
+                <div class="form-field">
+                    <label for="j_pass">Логин:</label>
+                    <input id="j_login" name="j_login" type="text"/>
+                </div>
+                <div class="form-field">
+                    <label for="j_pass">Пароль:</label>
+                    <input id="j_pass" name="j_pass" type="password"/>
+                </div>
+                <a href="#" class="login-form__forgot">Забыли пароль?</a>
+                <button type="submit" class="btn login-form__btn"> Войти</button>
+            </form>
         </div>
     </div>
-
+    <th:block th:replace="includes/footer :: footer ">
+        <!--empty-->
+    </th:block>
 </div>
 </body>
 </html>

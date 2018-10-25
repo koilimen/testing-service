@@ -17,7 +17,7 @@
     <th:block th:replace="includes/header :: header ">
         <!--empty-->
     </th:block>
-    <div class="wrapper">
+    <div class="wrapper wrapper-login">
         <div class="login-form">
             <form method="post" th:action="@{/splash}">
                 <div class="login-form__heading">
@@ -35,6 +35,13 @@
                 <button type="submit" class="btn login-form__btn"> Войти</button>
             </form>
         </div>
+        <div class="alert" th:if="${error}">
+            <span class="alert__icon"></span>
+            <div class="alert__text">
+                Неправильный логин и/или пароль!
+            </div>
+        </div>
+
     </div>
     <th:block th:replace="includes/footer :: footer ">
         <!--empty-->

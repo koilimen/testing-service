@@ -6,10 +6,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.service.CourseService;
 import ru.testservice.serviceapp.service.StorageService;
@@ -53,7 +50,6 @@ public class RootController {
         Course course = courseService.getById(id);
         model.addAttribute("editCourse", course);
         model.addAttribute("newCourse", new Course());
-
         return "main";
     }
 
@@ -87,7 +83,12 @@ public class RootController {
     }
 
     @RequestMapping(value = "/splash", method = {RequestMethod.GET, RequestMethod.POST})
-    public String splash(Model model) {
+    public String splash(Model model, @RequestParam(value = "error",defaultValue = "false") Boolean error) {
+        model.addAttribute("error", error);
         return "splash";
+    }
+    @RequestMapping(value = "/uikit", method = {RequestMethod.GET, RequestMethod.POST})
+    public String uikit(Model model) {
+        return "ui-kit";
     }
 }

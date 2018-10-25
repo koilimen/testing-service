@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Сервис тестирования</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tree.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <th:block th:replace="includes/header :: header ">
+        <!--empty-->
+    </th:block>
+    <div class="wrapper">
+        <h1>Заголовок</h1>
+        <h2>Заголовок</h2>
+        <h3>Заголовок</h3>
+        <h4>Заголовок</h4>
+        <h5>Заголовок</h5>
+        <p>Обычный текст</p>
+        <p><strong>Жирный текст</strong></p>
+        <div class="success">
+            <span class="success__icon"></span>
+            <div class="success__text">
+                Успех
+            </div>
+        </div>
+        <div class="alert">
+            <span class="alert__icon"></span>
+            <div class="alert__text">
+                Неправильный логин и/или пароль!
+            </div>
+        </div>
+        <p>Списки</p>
+        <ul class="list">
+            <li class="list__item">
+                <a href="#">Item 1</a>
+            </li>
+            <li class="list__item">
+                <a href="#">Item 2</a>
+            </li>
+            <li class="list__item">
+                <a href="#">Item 3</a>
+            </li>
+        </ul>
+        <form action="/form" class="form">
+            <div class="form-field">
+                <label for="text1">Label 1</label>
+                <input type="text" id="text1"/>
+            </div>
+            <div class="form-field">
+                <label for="select1">Select Label 1</label>
+                <div class="select">
+                    <input type="hidden" id="select1"/>
+                    <div class="select__trigger"></div>
+                    <span class="select__trigger-arrow"></span>
+                    <ul class="select__list">
+                        <li class="select__list-item" data-value="1">Option1</li>
+                        <li class="select__list-item" data-value="2">Option1</li>
+                        <li class="select__list-item" data-value="3">Option1</li>
+                        <li class="select__list-item" data-value="4">Option1</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-field">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" >
+                        <div class="check"></div>
+                        <span class="label">Checkbox</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-field">
+                <div class="radio">
+                    <label>
+                        <input type="radio" >
+                        <div class="check"></div>
+                        <span class="label">Radiobutton</span>
+                    </label>
+                </div>
+            </div>
+            <div class="edit"></div>
+            <div class="remove"></div>
+            <button class="btn ">Кнопка</button>
+            <button class="btn btn-primary">Кнопка</button>
+            <button class="btn btn-warn">Кнопка</button>
+        </form>
+        <table cellspacing="0">
+            <thead>
+            <tr class="row">
+                <th>Область аттестации</th>
+                <th>Наименование</th>
+                <th>Количество вопросов</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="row">
+                <td>А!</td>
+                <td>Общие требования к какой-то фигне</td>
+                <td>12</td>
+            </tr>
+            <tr class="row">
+                <td>А2</td>
+                <td>Еще какие-то требования</td>
+                <td>24
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="quote">
+            <span class="quote__icon"></span>
+            <div class="quote__text">Цитата великого человека</div>
+            <div class="quote__autor">Великий Человек</div>
+        </div>
+    </div>
+
+    <th:block th:replace="includes/footer :: footer ">
+        <!--empty-->
+    </th:block>
+</div>
+<script type="application/javascript" src="/js/jquery.min.3.1.1.js"></script>
+<script type="application/javascript" src="/js/bootstrap.js"></script>
+<script type="application/javascript" src="/js/docs.js"></script>
+<script type="application/javascript" src="/js/scripts.js"></script>
+<script type="application/javascript" src="/js/tests.js"></script>
+<script type="application/javascript" src="/js/test-edit.js"></script>
+</body>
+</html>

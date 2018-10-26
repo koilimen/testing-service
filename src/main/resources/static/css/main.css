@@ -34,7 +34,7 @@ h5 {
     font-size: 20px;
 }
 
-body {
+.splash {
     background-color: #E8EDF4;
 }
 
@@ -52,6 +52,7 @@ a:hover {
 }
 
 p {
+    display:block;
     font-style: normal;
     font-weight: normal;
     line-height: 23px;
@@ -416,7 +417,9 @@ header div {
 
 /*FOOTER*/
 footer {
+    background: #E8EDF4;
     border-top: 1px solid #B3C0D2;
+    clear: both;
 }
 
 footer .social {
@@ -653,7 +656,8 @@ footer, .footer__sub {
 
 .quote {
     position: relative;
-    width: 321px;
+    width: 410px;
+    margin-top: 15px;
 }
 
 .quote__text {

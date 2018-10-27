@@ -5,22 +5,30 @@
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
 
-    <p>
+    <p class="row">
         Наш сайт предназначен для подготовки специалистов к сдаче экзамена в Ростехнадзоре по требованиям промышленной
         безопасности, энергетической безопасности, безопасности гидротехнических сооружений а так же по вопросам охраны
         труда и ПТМ
     </p>
-    <div class="quote" style="float:right">
-        <span class="quote__icon"></span>
-        <div class="quote__text">Знание есть сила, а сила есть знание.</div>
-        <div class="quote__autor">Френсис Бэкон</div>
-    </div>
-    <p style="float:left; margin-top:10px;">Ниже Вы сможете найти актуальные типовые онлайн тесты для подготовки к аттестации в Ростехнадзоре:</p>
     <div class="row">
-        <div class="col-lg-5 col-md-5">
-            <th:block th:replace="blocks/add-course-form::add-course-form"></th:block>
-            <th:block th:replace="blocks/courses-list::courses-list"></th:block>
+
+        <div class="quote" style="float:right">
+            <span class="quote__icon"></span>
+            <div class="quote__text">Знание есть сила, а сила есть знание.</div>
+            <div class="quote__autor">Френсис Бэкон</div>
         </div>
+    </div>
+    <p class="row">Ниже Вы сможете найти актуальные типовые онлайн тесты для подготовки к
+        аттестации в Ростехнадзоре:</p>
+    <th:block th:replace="blocks/add-course-form::add-course-form"></th:block>
+    <div class="row">
+        <th:block th:replace="blocks/courses-list::courses-list"></th:block>
+    </div>
+    <div class="row">
+        <p>Текст о важности экзамена и инфа зачеом он нужен вообще. Текст о важности экзамена и инфа зачеом он нужен
+            вообще. Текст о важности экзамена и инфа зачеом он нужен вообще.</p>
+        <p>Текст о важности экзамена и инфа зачеом он нужен вообще. Текст о важности экзамена и инфа зачеом он нужен
+            вообще. Текст о важности экзамена и инфа зачеом он нужен вообще. </p>
     </div>
 </th:block>
 </html>

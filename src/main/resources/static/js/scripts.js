@@ -42,4 +42,34 @@ $(document).ready(function () {
             $('.select').removeClass('opened');
         }
     })
+
+    $body.on('submit', '#editCourseForm', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var data = {
+            name: $this.find("#name").val(),
+            id: $this.find("#id").val()
+        };
+
+        var _csrf = $(this).find('input[name="_csrf"]').val();
+        $.ajax({
+            data: JSON.stringify(data),
+            url: "/course/edit",
+            method: 'PUT',
+            contentType: 'application/json; charset=utf-8',
+            headers: {
+                'X-CSRF-TOKEN': _csrf
+            },
+            success: function (response) {
+                if (response === 'SUCCESS')
+                    window.location.reload(true);
+                else {
+                    //error
+                }
+            },
+            error: function(xhr, status, err){
+                console.log(err);
+            }
+        })
+    })
 });

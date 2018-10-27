@@ -34,6 +34,23 @@ public class CourseController {
         return "course";
     }
 
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public @ResponseBody
+    String edit(@RequestBody @Valid Course course,
+                BindingResult result) {
+        if (result.hasErrors()) {
+            return "ERROR";
+        }
+        courseService.save(course);
+        return "SUCCESS";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editForm(@PathVariable Long id, Model model) {
+        Course course = courseService.getById(id);
+        model.addAttribute("newCourse", course);
+        return "blocks/modals::course-edit-form";
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public String main(@PathVariable Long id, Model model,
@@ -51,8 +68,9 @@ public class CourseController {
     @RequestMapping(value = "/{cid}/deletesecton/{sid}", method = RequestMethod.GET)
     public String deleteSection(@PathVariable Long cid, @PathVariable Long sid) {
         sectionService.deleteById(sid);
-        return "redirect:/course/"+cid;
+        return "redirect:/course/" + cid;
     }
+
     @RequestMapping(value = "/{cid}/edit/{sid}", method = RequestMethod.GET)
     public String editSection(@PathVariable Long cid, @PathVariable Long sid, Model model,
                               @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
@@ -63,13 +81,14 @@ public class CourseController {
         return "course";
 
     }
+
     @RequestMapping(value = "/{cid}/edit/{sid}", method = RequestMethod.POST)
     public String editSectionPost(@PathVariable Long cid, @PathVariable Long sid, Model model,
-                              @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable,
+                                  @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable,
                                   @ModelAttribute("editSection") @Valid Section editSection, BindingResult result) {
-        if(!result.hasErrors()){
+        if (!result.hasErrors()) {
             sectionService.save(editSection);
-            return "redirect:/course/"+cid;
+            return "redirect:/course/" + cid;
         }
         Course course = courseService.getById(cid);
         prepareModel(course, model, pageable);

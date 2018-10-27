@@ -1,12 +1,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<th:block th:fragment="add-course-form">
-    <div class="row new-course-form" sec:authorize="${hasRole('ROLE_ADMIN')}">
+<th:block th:fragment="course-edit-form">
+    <div class="new-course-form" sec:authorize="${hasRole('ROLE_ADMIN')}">
         <!--/*@thymesVar id="newCourse" type="ru.testservice.serviceapp.model.Course"*/-->
-        <form action="#" th:action="@{/}" th:object="${newCourse}" th:method="put" >
-            <div class="new-course-form__heading">Добавление нового курса</div>
+        <form action="#" id="editCourseForm" th:action="@{/course/edit}" th:object="${newCourse}" th:method="put" >
+            <input type="hidden" th:field="*{id}" id="id"/>
+            <div class="new-course-form__heading">Редактирование курса</div>
             <span class="add-img"></span>
             <input type="text"  th:field="*{name}" class="form-control-inline"
+                   id="name"
                    style="width:481px;"
                    th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': 'is-valid'"
                    placeholder="Введите нименование курса"/>
@@ -14,7 +16,7 @@
                  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                 Title errors
             </div>
-            <button type="submit" class="btn btn-primary form-control-inline">+Добавить курс</button>
+            <button type="submit" class="btn btn-primary form-control-inline">Сохранить</button>
             <small>Нажмите на картинку, чтобы добавить значок курса. Рекомендуемый размер - 32x32px, формат - PNG.</small>
         </form>
     </div>

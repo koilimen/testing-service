@@ -5,6 +5,8 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     font-family: Roboto;
+    color: rgba(52, 52, 52, 0.87);
+
 }
 
 h1, h2, h3, h4, h5 {
@@ -52,12 +54,12 @@ a:hover {
 }
 
 p {
-    display:block;
+    display: block;
     font-style: normal;
     font-weight: normal;
     line-height: 23px;
     font-size: 16px;
-    color: rgba(52, 52, 52, 0.87);
+    margin: 10px 0 10px;
 }
 
 strong {
@@ -66,6 +68,23 @@ strong {
     line-height: 23px;
     font-size: 16px;
     color: #000000;
+}
+
+.form-control-inline{
+    display: inline-block;
+}
+form small {
+    font-style: italic;
+    font-weight: normal;
+    line-height: 17px;
+    font-size: 12px;
+    color: rgba(52, 52, 52, 0.87);
+}
+.row {
+    display:block;
+    width:100%;
+    clear: both;
+    margin: 5px 0px 10px;
 }
 
 .btn {
@@ -82,6 +101,7 @@ strong {
     border-radius: 4px;
     width: 139px;
     height: 32px;
+    cursor: pointer;
 }
 
 .btn-primary {
@@ -164,6 +184,7 @@ table tr td {
     box-sizing: border-box;
 }
 
+
 table tr th {
     height: 40px;
     border-top: 1px solid #C4C4C4;
@@ -171,7 +192,9 @@ table tr th {
     box-sizing: border-box;
     padding: 0 10px;
 }
-
+.table-headless tr:first-child td{
+    border-top: 1px solid #C4C4C4;
+}
 table tr td:first-child, table tr th:first-child {
     border-left: 1px solid #C4C4C4;
 }
@@ -337,19 +360,21 @@ header div {
     height: 90px;
 
 }
-.logo__text{
-    padding-top: 30px;
+
+.logo__text {
+    padding-top: 35px;
     font-style: normal;
     font-weight: bold;
     line-height: normal;
     font-size: 18px;
     color: #FFFFFF;
 }
-.logo-img{
-    display:block;
-    float:left;
-    width:64px;
-    height:64px;
+
+.logo-img {
+    display: block;
+    float: left;
+    width: 64px;
+    height: 64px;
     background: url(../img/logo.png);
     margin-right: 14px;
     margin-top: 13px;
@@ -358,17 +383,36 @@ header div {
 .logo__orange {
     color: #FFB23E;
 }
-.logo__suffix{
-    font-size: 15px;
+
+.logo__suffix {
+    font-size: 12px;
+    color: #FFFFFF;
+
 }
+
 .header__main {
     width: 605px;
     height: 90px;
     font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 16px;
+    padding-top: 18px;
+    color: #FFFFFF;
+}
+
+.header__main strong {
+    display: block;
+    font-style: normal;
     font-weight: 500;
     line-height: normal;
     font-size: 20px;
-    padding-top: 18px;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+}
+
+.header__main span {
+    display: block;
     color: #FFFFFF;
 }
 
@@ -578,6 +622,7 @@ footer, .footer__sub {
     text-decoration-line: underline;
     float: right;
     margin-right: 20px;
+    margin-top: 10px;
     color: #F58522;
 }
 
@@ -706,4 +751,40 @@ footer, .footer__sub {
     line-height: 0px;
     _border-color: #000000 #000000 #000000 #ffffff;
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+}
+
+.new-course-form {
+    padding: 19px 17px 22px 20px;
+    border: 1px solid #C4C4C4;
+
+}
+.new-course-form.fancybox-content{
+    width:762px;
+}
+.new-course-form__heading {
+    font-style: normal;
+    font-weight: 500;
+    line-height: 27px;
+    font-size: 18px;
+    color: #000000;
+}
+.add-img{
+    float: left;
+    margin: 10px 5px 0;
+    width: 28px;
+    height: 24px;
+    background: url(../img/add-photo.png);
+}
+.courses-table{
+    width:100%;
+}
+.courses-table td {
+    text-align: left;
+}
+
+.fa-trash-alt{
+    color: #EB5757;
+}
+.fa-edit, .fa-sign-in-alt{
+    color: #1B65C0;
 }

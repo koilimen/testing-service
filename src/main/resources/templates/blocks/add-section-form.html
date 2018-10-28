@@ -1,51 +1,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <th:block th:fragment="add-section-form">
-    <div sec:authorize="${hasRole('ROLE_ADMIN')}">
+    <div class="row new-course-form " sec:authorize="${hasRole('ROLE_ADMIN')}">
         <!--/*@thymesVar id="newSection" type="ru.testservice.serviceapp.model.Section"*/-->
         <form action="#" th:action="@{/course/{id}(id=${course.id})}" th:object="${newSection}" th:method="put">
+            <div class="new-course-form__heading">Добавление нового раздела</div>
             <input type="hidden" th:field="*{course.id}">
             <input type="hidden" th:field="*{id}">
-            <div class="form-group">
-                <input type="text" class="form-control" th:field="*{name}"
-                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': 'is-valid'"
-                       placeholder="Новый раздел"/>
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-                    Title errors
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" th:field="*{code}"
-                       style="width:220px"
+            <div class="form-field-inline" style="width:172px;">
+                <label for="code">Область аттестации</label>
+                <input type="text" id="code" class="form-control" th:field="*{code}"
                        th:classappend="${#fields.hasErrors('code')} ? 'is-invalid': 'is-valid'"
-                       placeholder="Область аттестации"/>
+                />
                 <div class="invalid-feedback"
                      th:if="${#fields.hasErrors('code')}" th:errors="*{code}">
                     Title errors
                 </div>
             </div>
-            <div class="form-group">
-                <input type="text" class="form-control" th:field="*{questionsCount}"
-                       style="width:220px"
+            <div class="form-field-inline" style="width:546px;">
+                <label for="name">Наименование раздела</label>
+                <input type="text" id="name" class="form-control" th:field="*{name}"
+                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': 'is-valid'"
+                />
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                    Title errors
+                </div>
+            </div>
+            <div class="form-field-inline" style="width:172px">
+                <label for="qCount">Кол-во вопросов в билете</label>
+                <input type="text" id="qCount" class="form-control" th:field="*{questionsCount}"
                        th:classappend="${#fields.hasErrors('questionsCount')} ? 'is-invalid': 'is-valid'"
-                       placeholder="Кол-во вопросов в билете"/>
+                />
                 <div class="invalid-feedback"
                      th:if="${#fields.hasErrors('questionsCount')}" th:errors="*{questionsCount}">
                     Title errors
                 </div>
             </div>
-            <div class="form-group">
-                <input type="text" class="form-control" th:field="*{errorsCount}"
-                       style="width:220px"
+            <div class="form-field-inline" style="width: 172px;">
+                <label for="errCount">Кол-во ошибок в билете</label>
+                <input type="text" id="errCount" class="form-control" th:field="*{errorsCount}"
                        th:classappend="${#fields.hasErrors('errorsCount')} ? 'is-invalid': 'is-valid'"
-                       placeholder="Кол-во ошибок в билете"/>
+                />
                 <div class="invalid-feedback"
                      th:if="${#fields.hasErrors('errorsCount')}" th:errors="*{errorsCount}">
                     Title errors
                 </div>
             </div>
-            <button type="submit" class="tests-list__item-link btn btn-link add-test">Добавить</button>
+            <div class="form-field-inline" style="width: 215px"></div>
+            <div class="form-field-inline" >
+                <button type="submit" class=" btn btn-primary">+Добавить</button>
+            </div>
         </form>
     </div>
 </th:block>

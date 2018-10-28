@@ -10,8 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond" rel="stylesheet">
     <link rel="stylesheet" href="/css/tree.css">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css"/>
 
 </head>
 <body>
@@ -20,16 +21,28 @@
         <!--empty-->
     </th:block>
     <div class="wrapper">
-        <div class="left-sidebar">
+        <div class="left-sidebar" th:if="${isMain}">
             <th:block th:replace="includes/nav :: nav">
                 <!--empty-->
             </th:block>
 
         </div>
-        <div class="content">
+        <div class="content" th:classappend="${isMain} ? 'content-main'">
             <th:block layout:fragment="content">
                 <!--empty-->
             </th:block>
+        </div>
+        <div class="right-sidebar" th:if="${isMain eq null or not isMain}">
+            <div class="row">
+                <div class="ad-block ">
+                    РЕКЛАМА
+                </div>
+            </div>
+            <div class="row">
+                <div class="ad-block">
+                    РЕКЛАМА
+                </div>
+            </div>
         </div>
     </div>
     <th:block th:replace="includes/footer :: footer ">

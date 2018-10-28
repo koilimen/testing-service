@@ -60,4 +60,9 @@ public class TestService {
         }
         return "SUCCESS";
     }
+
+    @Transactional
+    public void removeBySectionId(Long sid) {
+        repository.deleteAllBySectionId(sid);
+    }
 }

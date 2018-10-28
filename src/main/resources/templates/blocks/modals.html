@@ -21,4 +21,60 @@
         </form>
     </div>
 </th:block>
+
+<th:block th:fragment="section-edit-form">
+    <div class="row edit-section-form " id="editSection" sec:authorize="${hasRole('ROLE_ADMIN')}"
+        th:classappend="${hasErrors} ? 'fancybox-content' : ''">
+        <!--/*@thymesVar id="newSection" type="ru.testservice.serviceapp.model.Section"*/-->
+        <form action="#" id="editSectionForm" th:action="@{/section/{id}/edit(id=${section.id})}" th:object="${section}" th:method="post">
+            <div class="edit-section-form__heading">Добавление нового раздела</div>
+            <input type="hidden" id="id" th:field="*{course.id}">
+            <input type="hidden" id="courseId" th:field="*{id}">
+            <div class="form-field-inline" style="width:172px;">
+                <label for="code">Область аттестации</label>
+                <input type="text" id="code" class="form-control" th:field="*{code}"
+                       th:classappend="${#fields.hasErrors('code')} ? 'is-invalid': 'is-valid'"
+                />
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('code')}" th:errors="*{code}">
+                    Title errors
+                </div>
+            </div>
+            <div class="form-field-inline" style="width:546px;">
+                <label for="name">Наименование раздела</label>
+                <input type="text" id="name" class="form-control" th:field="*{name}"
+                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': 'is-valid'"
+                />
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                    Title errors
+                </div>
+            </div>
+            <div class="form-field-inline" style="width:172px">
+                <label for="qCount">Кол-во вопросов в билете</label>
+                <input type="text" id="qCount" class="form-control" th:field="*{questionsCount}"
+                       th:classappend="${#fields.hasErrors('questionsCount')} ? 'is-invalid': 'is-valid'"
+                />
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('questionsCount')}" th:errors="*{questionsCount}">
+                    Title errors
+                </div>
+            </div>
+            <div class="form-field-inline" style="width: 172px;">
+                <label for="errCount">Кол-во ошибок в билете</label>
+                <input type="text" id="errCount" class="form-control" th:field="*{errorsCount}"
+                       th:classappend="${#fields.hasErrors('errorsCount')} ? 'is-invalid': 'is-valid'"
+                />
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('errorsCount')}" th:errors="*{errorsCount}">
+                    Title errors
+                </div>
+            </div>
+            <div class="form-field-inline" style="width: 215px"></div>
+            <div class="form-field-inline" >
+                <button type="submit" class=" btn btn-primary">+Добавить</button>
+            </div>
+        </form>
+    </div>
+</th:block>
 </html>

@@ -11,4 +11,5 @@ import java.util.List;
 public interface TestRepository extends CrudRepository<Test, Long> {
     Page<Test> findAllBySectionId(Long sectionId, Pageable pageable);
     Iterable<Test> findAll(Sort sort);
+    void deleteAllBySectionId(Long sid);
 }

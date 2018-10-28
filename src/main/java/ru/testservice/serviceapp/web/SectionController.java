@@ -13,7 +13,9 @@ import ru.testservice.serviceapp.service.CourseService;
 import ru.testservice.serviceapp.service.SectionService;
 import ru.testservice.serviceapp.service.TestService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -39,6 +41,26 @@ public class SectionController {
         return "tests";
     }
 
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+    public String editForm(@PathVariable Long id, Model model) {
+        Section section = sectionService.getById(id);
+        model.addAttribute("section", section);
+        return "blocks/modals::section-edit-form";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String editForm(@RequestBody @Valid Section section, BindingResult result, Model model,
+                           HttpServletResponse response) throws IOException {
+        if (result.hasErrors()) {
+            model.addAttribute("section", section);
+            model.addAttribute("hasErrors", true);
+            return "blocks/modals::section-edit-form";
+        }
+        sectionService.save(section);
+        response.getWriter().append("OK");
+        return null;
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public String updateTest(@PathVariable Long id, @RequestParam(value = "editId", required = false) Long testEditId,
                              @ModelAttribute("editableTest") @Valid Test editableTest, BindingResult result,
@@ -52,10 +74,11 @@ public class SectionController {
         model.addAttribute("newTest", new Test(section));
         return "tests";
     }
+
     @RequestMapping(value = "/{id}/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String deleteTest(@PathVariable Long id, @RequestParam(value = "deleteId") Long deleteId) {
         testService.remove(deleteId);
-        return "redirect:/section/"+id;
+        return "redirect:/section/" + id;
     }
 
 

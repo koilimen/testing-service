@@ -11,7 +11,9 @@ import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.model.Section;
 import ru.testservice.serviceapp.service.CourseService;
 import ru.testservice.serviceapp.service.SectionService;
+import ru.testservice.serviceapp.service.TestService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -19,18 +21,25 @@ import javax.validation.Valid;
 public class CourseController {
     private final CourseService courseService;
     private final SectionService sectionService;
+    private final TestService testService;
 
     @Autowired
-    public CourseController(CourseService courseService, SectionService sectionService) {
+    public CourseController(CourseService courseService, SectionService sectionService, TestService testService) {
         this.courseService = courseService;
         this.sectionService = sectionService;
+        this.testService = testService;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String main(@PathVariable Long id, Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+    public String main(@PathVariable Long id, Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable,
+                       HttpServletRequest request) {
         Course course = courseService.getById(id);
+        Iterable<Course> allExcept = courseService.getAllExcept(course);
+        model.addAttribute("courses", allExcept);
+        if (request.isUserInRole("ROLE_ADMIN")) {
+            model.addAttribute("newSection", new Section(course));
+        }
         prepareModel(course, model, pageable);
-        model.addAttribute("newSection", new Section(course));
         return "course";
     }
 
@@ -67,6 +76,7 @@ public class CourseController {
 
     @RequestMapping(value = "/{cid}/deletesecton/{sid}", method = RequestMethod.GET)
     public String deleteSection(@PathVariable Long cid, @PathVariable Long sid) {
+        testService.removeBySectionId(sid);
         sectionService.deleteById(sid);
         return "redirect:/course/" + cid;
     }

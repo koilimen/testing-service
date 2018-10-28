@@ -5,16 +5,32 @@
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
     <!--/*@thymesVar id="course" type="ru.testservice.serviceapp.model.Course"*/-->
-    <h2 th:text="${course.name}">
-    </h2>
     <div class="row">
-        <div class="col-lg-5 col-md-5">
-            <th:block th:replace="blocks/add-section-form::add-section-form">
-            </th:block>
-
-            <th:block th:replace="blocks/sections-list::sections-list">
-            </th:block>
+        <h4>
+            Подготовка к аттестации работников организаций по курсу:
+        </h4>
+    </div>
+    <div class="row">
+        <th:block th:replace="blocks/courses-list::courses-list(showControls=${false})"></th:block>
+    </div>
+    <div class="row">
+        <div class="quote" style="width:505px; float:right">
+            <span class="quote__icon"></span>
+            <div class="quote__text">В наибольшей безопасности тот, кто начеку, даже когда нет опасности.</div>
+            <div class="quote__autor">Сайрус Паблиус</div>
         </div>
+    </div>
+    <div class="row">
+        <h5 th:text="${course.name}"></h5>
+    </div>
+    <div class="row">
+        <th:block th:replace="blocks/add-section-form::add-section-form">
+        </th:block>
+    </div>
+
+    <div class="row">
+        <th:block th:replace="blocks/sections-list::sections-list">
+        </th:block>
     </div>
 
 </th:block>

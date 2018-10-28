@@ -1,14 +1,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<th:block th:fragment="courses-list">
+<th:block th:fragment="courses-list(showControls)">
     <table class="table-headless courses-table">
 
         <tbody>
         <!--/*@thymesVar id="courses" type="java.util.List<ru.testservice.serviceapp.model.Course>"*/-->
         <!--/*@thymesVar id="editCourse" type="ru.testservice.serviceapp.model.Course"*/-->
-        <tr th:each="course, status : ${courses}">
-            <td></td>
-            <td th:if="${editCourse eq null or editCourse.id ne course.id}" th:text="${course.name}">Mark</td>
+        <tr th:each="course, status : ${courses}"  >
+            <td ></td>
+            <td th:if="${editCourse eq null or editCourse.id ne course.id}" >
+                <a th:href="@{/course/{id}(id=${course.id})}" th:text="${course.name}"></a>
+            </td>
             <td th:if="${editCourse ne null and editCourse.id eq course.id}">
                 <form class="form-inline" th:action="@{/edit/{id}(id=${course.id})}" th:object="${editCourse}"
                       th:method="post">
@@ -22,7 +24,7 @@
                     <button type="submit" class="tests-list__item-link btn btn-link add-test">Сохранить</button>
                 </form>
             </td>
-            <th:block th:if="${editCourse == null or editCourse.id ne course.id}">
+            <th:block th:if="${(showControls eq null or showControls) and (editCourse == null or editCourse.id ne course.id)}">
                 <td>
                     <a th:href="@{/course/{id}(id=${course.id})}">
                         <i class="courses-table__control fa fa-sign-in-alt" title="Перейти"></i>

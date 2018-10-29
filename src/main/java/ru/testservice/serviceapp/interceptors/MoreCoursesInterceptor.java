@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MoreCoursesInterceptor extends HandlerInterceptorAdapter {
 
-    private final String[] urls = new String[]{"/course/", "/section/", "/tests/", "/ticket/"};
+    private final String[] urls = new String[]{"/course/", "/section/", "/ticket/"};
     private CourseService cs;
 
     public MoreCoursesInterceptor(CourseService cs) {

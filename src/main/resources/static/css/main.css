@@ -472,6 +472,7 @@ header div {
 .content{
     width: 761px;
     float:left;
+    margin-bottom:30px;
 }
 .content-main {
     width: 720px;
@@ -704,7 +705,9 @@ footer, .footer__sub {
 .list {
     width: 540px;
 }
-
+.list__striped li:nth-child(odd){
+    background: #C4C4C4;
+}
 .list .list__item:first-child {
     border-top: 1px solid #C4C4C4;
 }
@@ -837,4 +840,14 @@ footer, .footer__sub {
 .right-sidebar .ad-block{
     width:200px;
     height:380px;
+}
+
+.tickets .list {
+    width: 201px;
+    float:left;
+    margin-right:11px;
+}
+.tickets .list .list__item{
+    height:40px;
+    padding-top:7px;
 }

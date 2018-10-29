@@ -4,20 +4,78 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
-    <h2>
-        <th:block th:text="${test.title}"></th:block>
-        <span class="badge badge-secondary" style="float:right" th:text="'Вопросов: '+${test.questionsNumber}">Вопросов: 0</span>
-    </h2>
-    <p>
-        <a th:href="@{/tests/{id}/edit(id=${test.id})}">Редактировать</a>
-    </p>
-    <p th:text="${test.description}"></p>
-    <div class="list-group">
+    <div class="row">
+        <h4>
+            Подготовка к аттестации работников организаций по курсу:
+        </h4>
+    </div>
+    <div class="row">
+        <th:block  th:replace="blocks/courses-list::courses-list(courses=${allCourses}, showControls=${false})"></th:block>
+    </div>
+    <div class="row">
+        <div class="quote" style="width:505px; float:right">
+            <span class="quote__icon"></span>
+            <div class="quote__text">В наибольшей безопасности тот, кто начеку, даже когда нет опасности.</div>
+            <div class="quote__autor">Сайрус Паблиус</div>
+        </div>
+    </div>
+    <div class="row">
+        <h5 >
+            <strong th:text="${test.title}"></strong>
+        </h5>
+    </div>
+
+    <div class="row tickets" >
         <th:block th:if="${test.questionsNumber > 0}">
-            <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" class="list-group-item list-group-item-action"
-               th:each="i : ${#numbers.sequence( 0, test.questionsNumber/test.section.questionsCount -1) }">
-                Билет № <th:block th:text="${i+1}"></th:block>
-            </a>
+            <th:block th:if="${colsCount == 1}">
+                <ul class="list list-striped">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( 0, test.questionsNumber/test.section.questionsCount -1) }">
+                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" >
+                            Билет № <th:block th:text="${i+1}"></th:block>
+                        </a>
+                    </li>
+                </ul>
+            </th:block>
+            <th:block th:if="${colsCount == 2}">
+                <ul class="list list-striped">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( 0, 10)}">
+                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" >
+                            Билет № <th:block th:text="${i+1}"></th:block>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="list list-striped">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( 11, test.questionsNumber/test.section.questionsCount -1) }">
+                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" >
+                            Билет № <th:block th:text="${i+1}"></th:block>
+                        </a>
+                    </li>
+                </ul>
+            </th:block>
+            <th:block th:if="${colsCount == 3}" >
+                <ul class="list list-striped">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( 0, ticketsCount/3 )}">
+                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" >
+                            Билет № <th:block th:text="${i+1}"></th:block>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="list list-striped">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( ticketsCount/3+1, 2*ticketsCount/3+1) }">
+                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" >
+                            Билет № <th:block th:text="${i+1}"></th:block>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="list list-striped">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( 2*ticketsCount/3+2, ticketsCount) }">
+                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}" >
+                            Билет № <th:block th:text="${i+1}"></th:block>
+                        </a>
+                    </li>
+                </ul>
+            </th:block>
+
         </th:block>
         <th:block th:if="${test.questionsNumber == 0}">
             В тесте еще нет вопросов.

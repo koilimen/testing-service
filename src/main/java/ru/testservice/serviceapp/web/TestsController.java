@@ -8,25 +8,31 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.testservice.serviceapp.model.Answer;
+import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.model.Test;
+import ru.testservice.serviceapp.service.CourseService;
 import ru.testservice.serviceapp.service.QuestionService;
 import ru.testservice.serviceapp.service.TestService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/tests")
 public class TestsController {
     private final TestService ts;
     private final QuestionService qs;
+    private final CourseService cs;
 
     @Autowired
-    public TestsController(TestService ts, QuestionService qs) {
+    public TestsController(TestService ts, QuestionService qs, CourseService cs) {
         this.ts = ts;
         this.qs = qs;
+        this.cs = cs;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -76,8 +82,9 @@ public class TestsController {
         model.addAttribute("test", test);
         return "test-edit-page";
     }
-    @RequestMapping(value="/render/answer", method = RequestMethod.GET)
-    public String renderAnswerLine(@RequestParam Integer index, Model model){
+
+    @RequestMapping(value = "/render/answer", method = RequestMethod.GET)
+    public String renderAnswerLine(@RequestParam Integer index, Model model) {
         model.addAttribute("index", index);
         return "/partials/question :: question";
     }
@@ -85,14 +92,26 @@ public class TestsController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getTestPage(Model model, @PathVariable Long id) {
         Test test = ts.getTest(id);
+        Set<Course> courses = Collections.singleton(cs.getById(test.getSection().getCourse().getId()));
         test.setQuestionsNumber(qs.countTestQuestions(id));
+        int ticketsCount = test.getQuestionsNumber().intValue() / test.getSection().getQuestionsCount();
+        if (ticketsCount <= 10) {
+            model.addAttribute("colsCount", 1);
+        } else if (ticketsCount <= 20) {
+            model.addAttribute("colsCount", 2);
+        } else {
+            model.addAttribute("colsCount", 3);
+        }
         model.addAttribute("test", test);
+        model.addAttribute("ticketsCount", ticketsCount);
+        model.addAttribute("allCourses", courses);
         return "test-page";
     }
+
     @RequestMapping(value = "/{id}/delete-all-questions", method = RequestMethod.GET)
-    public String deleteTestQuestions( @PathVariable Long id) {
+    public String deleteTestQuestions(@PathVariable Long id) {
         qs.deleteByTestId(id);
-        return "redirect:/tests/"+id+"/edit";
+        return "redirect:/tests/" + id + "/edit";
     }
 
     @RequestMapping(method = RequestMethod.PUT)
@@ -115,8 +134,10 @@ public class TestsController {
         model.addAttribute("editableTest", new Test());
         return "tests";
     }
-    @RequestMapping(value = "/update-orders",method = RequestMethod.POST)
-    public @ResponseBody String updateTestOrder(@RequestParam("ids[]") List<Long> ids, @RequestParam("orders[]") List<Integer> orders)  {
+
+    @RequestMapping(value = "/update-orders", method = RequestMethod.POST)
+    public @ResponseBody
+    String updateTestOrder(@RequestParam("ids[]") List<Long> ids, @RequestParam("orders[]") List<Integer> orders) {
         return ts.uppdateOrders(ids, orders);
     }
 

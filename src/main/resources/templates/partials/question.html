@@ -2,6 +2,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="index" type="java.lang.Integer"*/-->
 <th:block th:fragment="question">
+
     <div class="form-group row answer-group">
         <label th:for="'answer'+${index}" class="col-sm-2 col-form-label"
                th:text="'Ответ '+${index + 1}"></label>

@@ -1,0 +1,16 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="answer" type="ru.testservice.serviceapp.model.Answer"*/-->
+<th:block th:fragment="answer">
+    <div class="question__answers-list-item">
+        <div class="checkbox checkbox-green">
+            <label>
+                <input type="checkbox" th:id="'answer'+${answer.id}+'-correct'"
+                       th:name="'answers['+${answer.id}+'].correct'">
+                <div class="check"></div>
+                <span class="label" th:text="${answer.answerText}"></span>
+            </label>
+        </div>
+    </div>
+</th:block>
+</html>

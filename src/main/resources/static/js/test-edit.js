@@ -1,8 +1,7 @@
 $(document).ready(function () {
     var XHR_FILE_UPLOADER;
 
-    function validateFiles($form) {
-        var fileInput = $form.find('#docxFile');
+    function validateFiles(fileInput) {
         var files = fileInput[0].files;
         if (files.length === 0) return false;
         for (var i = 0; i < files.length; i++) {
@@ -15,7 +14,7 @@ $(document).ready(function () {
         return true;
     }
 
-    $("#questionFilesForm").on('submit', function (e) {
+    $("#docxFile").on('change', function (e) {
         e.preventDefault();
         var $this = $(this);
         $('.invalid-feedback').hide();
@@ -24,26 +23,24 @@ $(document).ready(function () {
             $('.invalid-feedback').show();
             return;
         }
-        var formData = new FormData($this[0]);
-        $('.progress').show();
+        var form = $this.closest('form');
+        var formData = new FormData(form[0]);
+        $this.closest('.file-input-wrapper').addClass('loading');
+        var _csrf = form.find('input[name="_csrf"]').val();
         $.ajax({
             type: 'POST',
-            url: $this.attr('action'),
+            url: form.attr('action'),
             data: formData,
             cache: false,
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-            // xhr: function () {
-            //     XHR_FILE_UPLOADER = $.ajaxSettings.xhr();
-            //     if (XHR_FILE_UPLOADER.upload) {
-            //         XHR_FILE_UPLOADER.upload.addEventListener('progress', progressFileUpload, false);
-            //     }
-            //     return XHR_FILE_UPLOADER;
-            // },
+            headers: {
+                'X-CSRF-TOKEN': _csrf
+            },
             success: function (data) {
                 if (data !== 'ok') {
-                    console.log("data")
+                    console.log(data);
                 } else {
                     setTimeout(function () {
                         window.location.reload();
@@ -57,6 +54,10 @@ $(document).ready(function () {
             }
         });
     })
+
+    $('body').on('click', '.open-file-dialog', function(){
+       $("#docxFile").click();
+    });
 
     function progressFileUpload(e) {
         if (e.lengthComputable) {

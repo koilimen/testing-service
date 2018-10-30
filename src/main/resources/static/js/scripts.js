@@ -10,15 +10,65 @@ $(document).ready(function () {
     });
 
 
-    $body.on('click', '.add-answer', function (e) {
+    $body.on('submit', '.add-answer-form', function (e) {
         e.preventDefault();
-        var answersCount = $('.answer-group').length;
+        var form = $(this);
+        var question = $(this).closest('.question');
+        var data = {
+            question: {
+                id: form.find('input[name="questionId"]').val()
+            },
+            answerText: form.find('input[name="additionalAnswer"]').val(),
+            correct: false
+        }
         var $this = $(this);
+        var _csrf = form.find('input[name="_csrf"]').val();
+
         $.ajax({
-            url: "/tests/render/answer?index=" + answersCount,
-            method: 'GET',
+            url: "/questions/add-answer",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                'X-CSRF-TOKEN': _csrf
+            },
+            method: 'POST',
             success: function (response) {
-                $(response).insertBefore($this.parent());
+                $(response).insertAfter(question.find('.question__answers-list-item').last());
+                form.find('input[name="additionalAnswer"]').val('');
+            }
+        })
+    });
+    $body.on('click', '.question__answers-list-item__remove', function (e) {
+        var aId = $(this).data('id');
+        var csrfHeaderName = $("meta[name='_csrf_header']").attr('content');
+        var csrfHeaderContent = $("meta[name='_csrf']").attr('content');
+        var headers = {};
+        headers[csrfHeaderName] = csrfHeaderContent;
+        var ans = $(this).closest('.question__answers-list-item');
+        $.ajax({
+            url: "/questions/delete-answer/" + aId,
+            headers: headers,
+            method: 'POST',
+            success: function (response) {
+                ans.remove();
+            }
+        })
+    });
+
+    $body.on('change', '.asnwer-correct', function (e) {
+        var checked = e.target.checked;
+        var id = $(this).data('id');
+        var csrfHeaderName = $("meta[name='_csrf_header']").attr('content');
+        var csrfHeaderContent = $("meta[name='_csrf']").attr('content');
+        var headers = {};
+        headers[csrfHeaderName] = csrfHeaderContent;
+
+        $.ajax({
+            url: "/questions/answer/correct/" + id + "/" + checked,
+            headers: headers,
+            method: 'POST',
+            success: function (response) {
+                ans.remove();
             }
         })
     });
@@ -67,7 +117,7 @@ $(document).ready(function () {
                     //error
                 }
             },
-            error: function(xhr, status, err){
+            error: function (xhr, status, err) {
                 console.log(err);
             }
         })
@@ -106,7 +156,7 @@ $(document).ready(function () {
                     fancyBox.append(response);
                 }
             },
-            error: function(xhr, status, err){
+            error: function (xhr, status, err) {
                 console.log(err);
             }
         })

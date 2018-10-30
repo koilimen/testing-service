@@ -13,10 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.testservice.serviceapp.model.Answer;
 import ru.testservice.serviceapp.model.Question;
 import ru.testservice.serviceapp.model.Test;
+import ru.testservice.serviceapp.repository.AnswerRepository;
 import ru.testservice.serviceapp.repository.QuestionRepository;
 import ru.testservice.serviceapp.repository.TestRepository;
 
-import javax.management.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,13 +26,15 @@ import java.util.List;
 public class QuestionService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final QuestionRepository repository;
+    private final AnswerRepository answerRepository;
     private final TestRepository tr;
     private Question buferQuestion;
     private Test testLink;
 
     @Autowired
-    public QuestionService(QuestionRepository repository, TestRepository tr) {
+    public QuestionService(QuestionRepository repository, AnswerRepository answerRepository, TestRepository tr) {
         this.repository = repository;
+        this.answerRepository = answerRepository;
         this.tr = tr;
     }
 
@@ -163,5 +165,22 @@ public class QuestionService {
     @Transactional
     public void deleteByTestId(@NotNull Long id) {
         repository.deleteAllByTestId(id);
+    }
+
+    @Transactional
+    public Answer saveAnswer(Answer answer) {
+        return answerRepository.save(answer);
+    }
+
+    public Question getQuestion(Long id) {
+        return repository.findById(id).get();
+    }
+
+    public void deleteAnswerById(Long id) {
+        answerRepository.deleteById(id);
+    }
+
+    public Answer getAnswer(Long id) {
+        return answerRepository.findById(id).get();
     }
 }

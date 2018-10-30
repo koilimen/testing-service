@@ -36,7 +36,7 @@ public class QuestionServiceTest {
         Pageable pageable = PageRequest.of(0, 15, Sort.Direction.ASC, "id");
         Long testId = 1L;
         when(rp.findAllByTestId(testId, pageable)).thenReturn(pageQuestions(testId, pageable));
-        service = new QuestionService(rp, tr);
+        service = new QuestionService(rp, null, tr);
     }
 
     private Page<Question> pageQuestions(Long testId, Pageable pageable) {

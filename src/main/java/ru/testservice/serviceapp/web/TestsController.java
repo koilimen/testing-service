@@ -83,11 +83,6 @@ public class TestsController {
         return "test-edit-page";
     }
 
-    @RequestMapping(value = "/render/answer", method = RequestMethod.GET)
-    public String renderAnswerLine(@RequestParam Integer index, Model model) {
-        model.addAttribute("index", index);
-        return "/partials/question :: question";
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getTestPage(Model model, @PathVariable Long id) {

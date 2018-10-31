@@ -29,9 +29,9 @@ public class Test {
     @ManyToOne
     @JoinColumn(name = "section_id")
     private Section section;
-    @Column(name="test_order")
+    @Column(name="test_order", insertable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer order  = 0;
+    private Integer order;
 
     public Test(String title, String description, Long questionsNumber) {
         this.title = title;

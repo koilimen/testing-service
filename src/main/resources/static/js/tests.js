@@ -35,6 +35,7 @@ function swapOrders(prev, next) {
         data: data,
         method: 'POST',
         dataType: 'text',
+        headers: getCSRF(),
         success: function (response) {
             console.log(repsonse)
         },

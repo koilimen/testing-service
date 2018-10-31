@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:fragment="new-question-answer">
+    <div class="form-field row answer-group" >
+        <!--/*@thymesVar id="index" type="java.lang.Integer"*/-->
+        <label th:for="'answer'+${index}"
+               th:text="'Ответ '+${index + 1}"></label>
+        <textarea class="new-question-form__answer-textarea" th:id="'answer'+${index}"
+                  th:name="'answers['+${index}+'].answerText'">
+                        </textarea>
+
+        <div class="checkbox checkbox-green new-question-form__checkbox">
+            <label>
+                <input type="checkbox" th:id="'answer'+${index}+'-correct'"
+                       th:name="'answers['+${index}+'].correct'">
+                <div class="check"></div>
+                <span class="label">Верный ответ</span>
+            </label>
+        </div>
+
+    </div>
+</th:block>
+</html>

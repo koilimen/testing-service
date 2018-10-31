@@ -22,8 +22,44 @@
     </div>
 </th:block>
 
+<th:block th:fragment="test-edit-form">
+    <div class=" edit-section-form"  sec:authorize="${hasRole('ROLE_ADMIN')}">
+        <form  id="test-edit-form" action="#" th:action="@{/section/{id}(id=${test.section.id})}" th:object="${test}"
+              th:method="put">
+            <input type="hidden" th:field="*{section.id}"/>
+            <input type="hidden" th:field="*{order}"/>
+            <input type="hidden" th:field="*{id}"/>
+            <div class="form-field">
+                <label for="title">Название</label>
+                <input id="title" type="text" class="form-control" th:field="*{title}"
+                       style="width:100%"
+                       th:classappend="${#fields.hasErrors('title')} ? 'is-invalid': 'is-valid'"
+                       placeholder="Новый тест"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                    Title errors
+                </div>
+            </div>
+            <div class="form-field">
+                <label for="description">Описание</label>
+                <textarea id="description" class="form-control" th:field="*{description}"
+                          style="width: 100%;"
+                          th:classappend="${#fields.hasErrors('description')} ? 'is-invalid': 'is-valid'"
+                          placeholder="Новое описание"></textarea>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                    Description errors
+                </div>
+            </div>
+            <button type="submit" style="margin:10px 0 0"
+                    class="btn btn-primary ">+Добавить
+            </button>
+        </form>
+    </div>
+</th:block>
+
 <th:block th:fragment="section-edit-form">
-    <div class="row edit-section-form " id="editSection" sec:authorize="${hasRole('ROLE_ADMIN')}"
+    <div class=" edit-section-form " id="editSection" sec:authorize="${hasRole('ROLE_ADMIN')}"
         th:classappend="${hasErrors} ? 'fancybox-content' : ''">
         <!--/*@thymesVar id="newSection" type="ru.testservice.serviceapp.model.Section"*/-->
         <form action="#" id="editSectionForm" th:action="@{/section/{id}/edit(id=${section.id})}" th:object="${section}" th:method="post">

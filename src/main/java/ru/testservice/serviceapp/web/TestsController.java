@@ -15,7 +15,9 @@ import ru.testservice.serviceapp.service.CourseService;
 import ru.testservice.serviceapp.service.QuestionService;
 import ru.testservice.serviceapp.service.TestService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +43,7 @@ public class TestsController {
         List<Test> tests = (List<Test>) ts.getTests();
         model.addAttribute("tests", tests);
         model.addAttribute("editableTest", tests.stream().filter(t -> t.getId().equals(editId)).findFirst().orElseGet(Test::new));
-        return "tests";
+        return "section-page";
     }
 
     @RequestMapping(value = "/{id}/edit", method = {RequestMethod.GET})
@@ -78,9 +80,27 @@ public class TestsController {
             newQuestion.getAnswers().add(new Answer());
             newQuestion.getAnswers().add(new Answer());
             model.addAttribute("newQuestion", newQuestion);
+            return "redirect:/tests/" + id + "/edit";
         }
         model.addAttribute("test", test);
         return "test-edit-page";
+    }
+
+    @RequestMapping(value = "/{id}/edit-modal", method = {RequestMethod.GET})
+    public String getModalEdit(Model model, @PathVariable Long id) {
+        model.addAttribute("test", ts.getTest(id));
+        return "blocks/modals::test-edit-form";
+    }
+
+    @RequestMapping(value = "/edit", method = {RequestMethod.PUT})
+    public String editNewQuestion(@RequestBody @Valid Test test, BindingResult result, Model model, HttpServletResponse response) throws IOException {
+        if (result.hasErrors()) {
+            model.addAttribute("test",test);
+            return "blocks/modals::test-edit-form";
+        }
+        ts.save(test);
+        response.getWriter().write("OK");
+        return null;
     }
 
 
@@ -116,7 +136,7 @@ public class TestsController {
             model.addAttribute("newTest", new Test());
         }
         model.addAttribute("tests", ts.getTests());
-        return "tests";
+        return "section-page";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -127,7 +147,7 @@ public class TestsController {
         model.addAttribute("tests", ts.getTests());
         model.addAttribute("newTest", new Test());
         model.addAttribute("editableTest", new Test());
-        return "tests";
+        return "section-page";
     }
 
     @RequestMapping(value = "/update-orders", method = RequestMethod.POST)
@@ -142,5 +162,12 @@ public class TestsController {
         ts.remove(testId);
         return "OK";
     }
+
+    @RequestMapping(value = "/render-answer", method = RequestMethod.GET)
+    public String renderAnswer(@RequestParam Integer index, Model model) {
+        model.addAttribute("index", index);
+        return "blocks/new-question-answer :: new-question-answer";
+    }
+
 
 }

@@ -50,7 +50,48 @@
         </div>
     </div>
     <div class="row">
-        <p><strong>3. Редактирование вопросов</strong></p>
+        <p><strong>3. Редактирование вопросов</strong> <a th:href="@{/tests/{id}/delete-all-questions(id=${test.id})}">Удалить
+            все вопросы</a></p>
+        <div class="new-question-form question">
+
+            <form action="" th:method="put" th:object="${newQuestion}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                <input type="hidden" th:for="*{id}"/>
+                <div class="form-field row">
+                    <label for="questionText" class="col-sm-2 col-form-label">Текст вопроса</label>
+                    <div class="col-sm-10">
+                <textarea class="new-question-form__textarea" id="questionText" th:field="*{questionText}">
+                </textarea>
+                    </div>
+                </div>
+                <div class="form-field row answer-group" th:each="answer, iter: *{answers}">
+                    <label th:for="'answer'+${iter.index}" class="col-sm-2 col-form-label"
+                           th:text="'Ответ '+${iter.index + 1}"></label>
+                    <textarea class="new-question-form__answer-textarea" th:id="'answer'+${iter.index}"
+                              th:field="*{answers[__${iter.index}__].answerText}">
+                        </textarea>
+
+                    <div class="checkbox checkbox-green new-question-form__checkbox">
+                        <label>
+                            <input type="checkbox" th:id="'answer'+${iter.index}+'-correct'"
+                                   th:field="*{answers[__${iter.index}__].correct}">
+                            <div class="check"></div>
+                            <span class="label">Верный ответ</span>
+                        </label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <button class="btn btn-link add-answer-nq">
+                        Добавить ответ
+                    </button>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Добавить вопрос
+                </button>
+            </form>
+        </div>
         <div class="question" th:each="question : ${questions.getContent()}">
             <a th:href="@{/questions/delete/{id}(id=${question.id})}" title="Удалить"
                class="question__remove fa fa-trash-alt"></a>

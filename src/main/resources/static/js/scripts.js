@@ -9,7 +9,39 @@ $(document).ready(function () {
         })
     });
 
-
+    $body.on('submit', '#test-edit-form', function (e) {
+        e.preventDefault();
+        var data = {};
+        $(this).find('input, textarea').each(function (i, el) {
+            var name = $(el).attr('name');
+            var value = $(el).val();
+            if (name === 'section.id') {
+                data['section'] = {
+                    id: value
+                }
+            } else
+                data[name] = value;
+        });
+        $.ajax({
+            data: JSON.stringify(data),
+            url: "/tests/edit",
+            method: 'PUT',
+            contentType: 'application/json; charset=utf-8',
+            headers: getCSRF(),
+            success: function (response) {
+                if (response === 'OK')
+                    window.location.reload(true);
+                else {
+                    var fancyBox = $("#test-edit-form").parent();
+                    $("#test-edit-form").remove();
+                    fancyBox.append($(response).find('#test-edit-form'));
+                }
+            },
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        })
+    });
     $body.on('submit', '.add-answer-form', function (e) {
         e.preventDefault();
         var form = $(this);
@@ -35,6 +67,20 @@ $(document).ready(function () {
             success: function (response) {
                 $(response).insertAfter(question.find('.question__answers-list-item').last());
                 form.find('input[name="additionalAnswer"]').val('');
+            }
+        })
+    });
+
+    $body.on('click', '.add-answer-nq', function (e) {
+        e.preventDefault();
+        var length = $('.new-question-form .answer-group').length;
+        $.ajax({
+            url: "/tests/render-answer",
+            data: {index: length},
+            headers: getCSRF(),
+            method: 'GET',
+            success: function (response) {
+                $(response).insertAfter($('.new-question-form .answer-group').last());
             }
         })
     });
@@ -162,3 +208,11 @@ $(document).ready(function () {
         })
     })
 });
+
+function getCSRF() {
+    var csrfHeaderName = $("meta[name='_csrf_header']").attr('content');
+    var csrfHeaderContent = $("meta[name='_csrf']").attr('content');
+    var headers = {};
+    headers[csrfHeaderName] = csrfHeaderContent;
+    return headers;
+}

@@ -38,7 +38,7 @@ public class SectionController {
         Section section = sectionService.getById(id);
         prepareModel(section, model, testEditId, pageable);
         model.addAttribute("newTest", new Test(section));
-        return "tests";
+        return "section-page";
     }
 
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
@@ -72,7 +72,7 @@ public class SectionController {
         Section section = sectionService.getById(id);
         prepareModel(section, model, null, pageable);
         model.addAttribute("newTest", new Test(section));
-        return "tests";
+        return "section-page";
     }
 
     @RequestMapping(value = "/{id}/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
@@ -92,7 +92,7 @@ public class SectionController {
         }
         Section section = sectionService.getById(id);
         prepareModel(section, model, null, pageable);
-        return "tests";
+        return "section-page";
     }
 
     private void prepareModel(Section section, Model model, Long testEditId, Pageable pageable) {

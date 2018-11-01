@@ -108,6 +108,9 @@ public class Test {
     }
 
     public void increaseQN() {
+        if(this.questionsNumber == null){
+            this.questionsNumber = 0L;
+        }
         this.questionsNumber++;
     }
 }

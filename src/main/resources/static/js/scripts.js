@@ -206,6 +206,41 @@ $(document).ready(function () {
                 console.log(err);
             }
         })
+    });
+    $body.on('click', '#file-upload-trigger', function (e) {
+        e.preventDefault();
+        $("#file-upload").click();
+    });
+    $("#file-upload").on('change', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var form = $this.closest('form');
+        var formData = new FormData(form[0]);
+        $this.closest('.docs-form').addClass('loading');
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: formData,
+            cache: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            headers: getCSRF(),
+            success: function (data) {
+                if (data !== 'ok') {
+                    console.log(data);
+                } else {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000)
+                }
+
+            },
+            error: function (request, status, error) {
+                console.log("Status: " + status);
+                console.log("Error: " + error);
+            }
+        });
     })
 });
 

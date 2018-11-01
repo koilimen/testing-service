@@ -1,12 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <th:block th:fragment="nav">
-    <nav class="nav " >
+    <nav class="nav ">
 
-        <a class="nav-link " th:classappend="${isMain == true} ? 'active': ''" href="/">Главная</a>
-        <a class="nav-link "  href="/">Главная</a>
-        <a class="nav-link " href="/">Главная</a>
-        <a class="nav-link " href="/">Главная</a>
+        <a class="nav-link " th:classappend="${isMain eq true} ? 'active': ''" href="/">Главная</a>
+        <a class="nav-link " th:classappend="${isDocs eq true and rootFolder ne null and rootFolder.id == folder.id} ? 'active': ''" th:href="@{/docs(id=${folder.id})}"
+           th:each="folder : ${topFolders}" th:text="${folder.title}">Нормативная документация</a>
 
     </nav>
 </th:block>

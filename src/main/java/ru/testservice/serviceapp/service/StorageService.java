@@ -12,7 +12,10 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.thymeleaf.util.StringUtils.repeat;
 
 @Service
 public class StorageService {
@@ -55,6 +58,21 @@ public class StorageService {
 
     public Folder getRootFolder() {
         return fr.findById(1L).orElse(null);
+    }
+    public void flattenFolders(Folder rootFolder,  List<Folder> flatFolders) {
+        flatFolders.add(rootFolder);
+        rootFolder.setFlatTitle(rootFolder.getTitle());
+        rootFolder.getChildFolders().forEach(f -> flattenFolders(f, flatFolders));
+
+    }
+    public void flattenFoldersTop(Folder rootFolder,  List<Folder> flatFolders) {
+        flatFolders.add(rootFolder);
+        rootFolder.setFlatTitle(rootFolder.getTitle());
+        rootFolder.getChildFolders().forEach(f -> {
+            f.setFlatTitle(f.getTitle());
+            flatFolders.add(f);
+        });
+
     }
 
     @Transactional

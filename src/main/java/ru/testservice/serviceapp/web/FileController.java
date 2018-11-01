@@ -38,28 +38,30 @@ public class FileController {
     public String getDocs(Model model, @RequestParam(required = false, defaultValue = "false",
             name = "folder_exists") Boolean folderExists,
                           @RequestParam(value = "empty_title", defaultValue = "false") Boolean emptyFolderTitle,
-                          @RequestParam(value = "ftitle", defaultValue = "") String folderTitle
+                          @RequestParam(value = "ftitle", defaultValue = "") String folderTitle,
+                          @RequestParam(value = "id") Long folderId
+
     ) {
         Folder rootFolder = storageService.getRootFolder();
         model.addAttribute("folderExists", folderExists);
         model.addAttribute("emptyTitle", emptyFolderTitle);
         model.addAttribute("folderTitle", folderTitle);
-        List<Folder> flatFolders = new ArrayList();
-        flattenFolders(rootFolder, flatFolders, 0);
+        List<Folder> flatFolders = new ArrayList<>();
+        storageService.flattenFolders(rootFolder, flatFolders);
         List<StorageEntity> rootFilderFiles = storageService.getFiles(rootFolder.getId());
         model.addAttribute("rootFolder", rootFolder);
         model.addAttribute("storageEntities", rootFilderFiles);
         model.addAttribute("flatFolders", flatFolders);
+        model.addAttribute("isDocs", true);
+        model.addAttribute("showNav", true);
+        if(folderId != null){
+            List<StorageEntity> openedFolderFiles = storageService.getFiles(folderId);
+            model.addAttribute("openedFolderFiles", openedFolderFiles);
+        }
+        model.addAttribute("openFolderId", folderId);
         return "documents";
     }
 
-    private void flattenFolders(Folder rootFolder, List<Folder> flatFolders, int depth) {
-        flatFolders.add(rootFolder);
-        String prefix = depth == 0 ? "" : repeat("--", depth);
-        rootFolder.setFlatTitle(prefix.concat(rootFolder.getTitle()));
-        rootFolder.getChildFolders().forEach(f -> flattenFolders(f, flatFolders, depth + 1));
-
-    }
 
     @RequestMapping(value = "/docs/folder/{id}", method = RequestMethod.GET)
     public String getFolder(Model model, @PathVariable("id") Long folderId) {
@@ -70,18 +72,20 @@ public class FileController {
         return "blocks/tree-node::node-body";
     }
 
-    @RequestMapping(value = "/docs/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Resource> getDoc(@PathVariable Long id) {
+    @RequestMapping(value = "/docs/{id}/{filename}", method = RequestMethod.GET)
+    public ResponseEntity<Resource> getDoc(@PathVariable Long id, @PathVariable("filename") String filename) {
         StorageEntity file = storageService.getFile(id);
         ByteArrayResource resource = new ByteArrayResource(file.getFile());
         HttpHeaders headers = new HttpHeaders();
 
         headers.add("Content-Disposition",
-                "inline; filename=\"" + file.getName() + "\"");
+                "inline");
+        headers.add("Content-Type",
+                file.getContentType() + "; charset=utf-8");
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(resource.contentLength())
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .contentType(MediaType.parseMediaType(file.getContentType()))
                 .body(resource);
     }
 
@@ -109,13 +113,14 @@ public class FileController {
     }
 
     @RequestMapping(value = "/docsupload/", method = RequestMethod.POST)
-    public String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("folderId") Long folderId) {
+    public @ResponseBody
+    String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("folderId") Long folderId) {
         try {
             storageService.store(file, folderId);
         } catch (IOException e) {
 
             log.error("FileUploading troubles", e);
         }
-        return "redirect:/docs";
+        return "ok";
     }
 }

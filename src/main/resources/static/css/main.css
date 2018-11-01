@@ -115,12 +115,11 @@ form small {
     width: 100%;
     clear: both;
     margin: 5px 0 10px;
-    float:left;
+    float: left;
 }
 
-
 .btn {
-    margin: 5px;
+    margin: 5px 0;
     border: none;
     outline: none;
     font-style: normal;
@@ -191,16 +190,28 @@ label {
     background: url(../img/checkbox-checked.png);
 }
 
-.checkbox-green input:checked ~ .check {
-    background: url(../img/checkbox-checked-green.png);
-}
-
 .checkbox input:checked ~ .label, .radio input:checked ~ .label {
     color: #1B65C0;
 }
 
+.checkbox-green input:checked ~ .check , .checkbox-green-checked input:checked ~ .check {
+    background: url(../img/checkbox-checked-green.png);
+}
+
 .checkbox-green input:checked ~ .label {
     color: #219653;
+}
+
+.checkbox-green-checked input:checked ~ .label, .checkbox-green-checked .label {
+    color: #219653;
+}
+
+.checkbox-red input:checked ~ .check {
+    background: url(../img/checkbox-checked-red.png);
+}
+
+.checkbox-red input:checked ~ .label {
+    color: #EB5757;
 }
 
 .radio .check {
@@ -237,8 +248,9 @@ table tr th {
     box-sizing: border-box;
     padding: 0 10px;
 }
-.table{
-    width:100%;
+
+.table {
+    width: 100%;
 }
 
 .table-headless tr:first-child td {
@@ -522,6 +534,7 @@ header div {
 .content-main {
     width: 720px;
     float: right;
+    min-height: 450px;
 }
 
 /*FOOTER*/
@@ -822,7 +835,7 @@ footer, .footer__sub {
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
 
-.new-course-form, .edit-section-form, .new-question-form {
+.new-course-form, .edit-section-form, .new-question-form, .form-frame {
     padding: 19px 17px 22px 20px;
     border: 1px solid #C4C4C4;
 }
@@ -833,11 +846,12 @@ footer, .footer__sub {
 
 .new-question-form__answer-textarea {
     width: 520px;
-    display:block;
-    float:left
+    display: block;
+    float: left
 }
-.new-question-form__checkbox{
-    float:right;
+
+.new-question-form__checkbox {
+    float: right;
 
 }
 
@@ -845,7 +859,7 @@ footer, .footer__sub {
     width: 100%;
 }
 
-.new-course-form__heading, .edit-section-form__heading {
+.new-course-form__heading, .edit-section-form__heading, .docs-form__heading{
     font-style: normal;
     font-weight: 500;
     line-height: 27px;
@@ -982,7 +996,24 @@ footer, .footer__sub {
     position: relative;
     margin-bottom: 24px;
 }
+.question__number{
+    width: 146px;
+    height: 30px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 17px;
+    font-size: 12px;
+    color: #1B65C0;
 
+}
+.question.has-errors{
+    background: #FFEEEE;
+    border: 1px solid #E5C2C2;
+}
+.question.no-errors{
+    background: #EEFFF5;
+    border: 1px solid #ABD6BD;
+}
 .question__remove {
     cursor: pointer;
     position: absolute;
@@ -1064,6 +1095,41 @@ footer, .footer__sub {
     vertical-align: middle;
 }
 
+.heading {
+    font-style: normal;
+    font-weight: 500;
+    line-height: 27px;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.87);
+}
+
 .page-link:hover, .page-item.active .page-link {
     background: #F2F2F2;
 }
+.errors-heading{
+    font-style: normal;
+    font-weight: 500;
+    line-height: 27px;
+    font-size: 18px;
+    color: #EB5757;
+}
+.docs-form{
+    float:left;
+    width: 338px;
+    height: 256px;
+}
+.docs-form input, .docs-form .select{
+    width: 100%;
+}
+.docs-form .form-field{
+    margin-bottom: 15px;
+}
+.docs-form .loader, .docs-form .load, .docs-form.loading .btn, .docs-form.loading .info{
+    display: none;
+}
+.docs-form.loading .loader, .docs-form.loading .load{
+    margin:5px auto;
+    display: block;
+    text-align: center;
+}
+

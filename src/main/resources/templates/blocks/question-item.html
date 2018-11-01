@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<!--/*@thymesVar id="question" type="ru.testservice.serviceapp.model.Question"*/-->
+<th:block th:fragment="question-item(question, index)">
+    <div class="question row"
+         th:classappend="${question.hasErrors()} ? 'has-errors': (${ticketChecked} ? 'no-errors' : '')">
+        <input type="hidden"
+               th:name="'questionList['+${index}+'].id'"
+               th:value="${question.id}"
+        />
+        <input type="hidden"
+               th:name="'questionList['+${index}+'].questionText'"
+               th:value="${question.questionText}"/>
+        <div class="question__number" th:text="${'Вопрос #'+(index+1)}"></div>
+        <div class="question__text" th:text="${question.questionText}">
+        </div>
+        <small th:if="${question.multiAnswer}"> *Может быть несколько верных вариантов</small>
+        <div class="question__answers-list">
+            <div class="question__answers-list-item" th:each="answer, answIter : ${question.answers}">
+                <input type="hidden"
+                       th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].id'"
+                       th:value="${answer.id}"/>
+                <input type="hidden"
+                       th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].answerText'"
+                       th:value="${answer.answerText}"/>
+                <input type="hidden"
+                       th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].correct'"
+                       th:value="${answer.correct}"/>
+
+                <th:block
+                        th:if="${ticketChecked and (answer.checked and answer.correct or (not answer.checked) and answer.correct)}">
+                    <div class="checkbox checkbox-green-checked ">
+                        <label>
+                            <input type="checkbox"
+                                   th:disabled="${true}"
+                                   th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"
+                                   th:checked="${answer.checked}">
+                            <div class="check"></div>
+                            <span class="label" th:text="${answer.answerText}"></span>
+                        </label>
+                    </div>
+                </th:block>
+                <th:block th:if="${ticketChecked and answer.checked and not answer.correct}">
+                    <div class="checkbox checkbox-red">
+                        <label>
+                            <input type="checkbox"
+                                   th:disabled="${true}"
+                                   th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"
+                                   th:checked="${answer.checked}">
+                            <div class="check"></div>
+                            <span class="label" th:text="${answer.answerText}"></span>
+                        </label>
+                    </div>
+                </th:block>
+                <th:block th:if="${ticketChecked and not answer.checked and not answer.correct}">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                   th:disabled="${true}"
+                                   th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"
+                            >
+                            <div class="check"></div>
+                            <span class="label" th:text="${answer.answerText}"></span>
+                        </label>
+                    </div>
+                </th:block>
+                <th:block th:if="${not ticketChecked }">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                   th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"
+                            >
+                            <div class="check"></div>
+                            <span class="label" th:text="${answer.answerText}"></span>
+                        </label>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

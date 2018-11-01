@@ -20,20 +20,16 @@
             <div class="footer__main-col3">
                 <div class="footer__col-heading">Карта сайта:</div>
                 <ul class="footer-nav">
-                    <li><a href="#">Нормативные документы</a></li>
-                    <li><a href="№">Экзаменационные билеты и тесты</a></li>
-                    <li><a href="№">Порядок аттестации</a></li>
-                    <li><a href="№">Области аттестации</a></li>
-                    <li><a href="№">Гос. Пошлина</a></li>
-                    <li><a href="№">Нормативная документация</a></li>
-                    <li><a href="№">Адреса комиссий</a></li>
-                    <li><a href="№">Учебные центры</a></li>
+                    <li th:each="folder : ${topFolders}"><a th:href="@{/docs(id=${folder.id})}"
+                                                            th:text="${folder.title}">Нормативная документация</a></li>
                 </ul>
             </div>
 
         </div>
         <div class="footer__sub">
-            <div class="copyright" >PromBez24.ru © <th:block th:text="${#dates.year(#dates.createNow())}"></th:block></div>
+            <div class="copyright">PromBez24.ru ©
+                <th:block th:text="${#dates.year(#dates.createNow())}"></th:block>
+            </div>
         </div>
 
     </footer>

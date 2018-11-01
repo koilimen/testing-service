@@ -1,24 +1,78 @@
-.tree input[type="checkbox"]{
-    display:none;
+.tree input[type="checkbox"] {
+    display: none;
 }
-.tree__node label{
-    cursor:pointer
+
+.tree__node {
+    position: relative;
 }
-.tree__node label:before{
-    display: inline-block;
-    width:15px;
-    content: '+';
-    cursor:pointer;
+
+.tree__node label {
+    cursor: pointer;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 23px;
+    font-size: 16px;
+    color: #000000;
+    text-decoration: none;
+    padding-top: 3px;
+    height:32px;
+    border: 1px solid rgba(255, 255, 255, 1);
 }
-.tree__node-checkbox:checked ~ label:before{
-    content: '-';
+.tree__node label:hover{
+    background: rgba(27, 101, 192, 0.1);
+    border: 1px solid rgba(27, 101, 192, 0.3);
 }
-.tree__node-body{
-    display:none;
+
+.tree__node .label-before {
+    display: block;
+    float: left;
+    margin: 11px 5px 0 7px;
+    width: 10px;
+    height: 8px;
+    transform: rotate(-90deg);
+    background: url(../img/triangle.png);
 }
-.tree__node-checkbox:checked ~ .tree__node-body{
-    display:block;
+
+.tree__node-checkbox:checked ~ .label-before {
+    margin: 13px 5px 0 7px;
+    transform: rotate(0deg);
 }
+
+.tree__node-body {
+    display: none;
+}
+
+.tree__node-checkbox:checked ~ .tree__node-body {
+    display: block;
+}
+
 .tree li {
     list-style: none;
+}
+
+.folder-icon {
+    display: block;
+    float: left;
+    margin-right: 5px;
+    margin-top: 3px;
+    width: 24px;
+    height: 24px;
+    background: url(../img/folder.png);
+}
+
+.depth1{
+    margin-left: 49px;
+}
+
+.pdf-icon, .doc-icon{
+    width: 24px;
+    height: 24px;
+    float:left;
+    margin-right: 4px;
+}
+.pdf-icon {
+    background: url('../img/pdf-icon.png');
+}
+.doc-icon {
+    background: url('../img/doc-icon.png');
 }

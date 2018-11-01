@@ -63,7 +63,7 @@ public class QuestionService {
         if (isQuestionText) {
             // Текст вопроса - нужно создавать новый вопрос
             if (text.indexOf(".") <= 3 && text.indexOf(".") > 0) {
-                text = text.substring(text.indexOf(".") + 1).trim();
+                text = text.substring(text.indexOf(".") + 1);
             }
             if (buferQuestion != null) {
                 if (!buferQuestion.getAnswers().isEmpty()) {
@@ -71,13 +71,13 @@ public class QuestionService {
                     log.debug("{}", buferQuestion.toString());
                 }
             }
-            buferQuestion = new Question(text, new ArrayList<>(), testLink);
+            buferQuestion = new Question(text.trim(), new ArrayList<>(), testLink);
         } else {
             // Текст ответа - если создан новый вопрос - добавляем ответ, если нет - прерываемся
             if (text.charAt(1) == ')') text = text.substring(2);
             if (buferQuestion == null) return;
             XWPFRun isItalic = paragraph.getRuns().stream().filter(XWPFRun::isItalic).findFirst().orElse(null);
-            Answer ans = new Answer(text, null != isItalic, buferQuestion);
+            Answer ans = new Answer(text.trim(), null != isItalic, buferQuestion);
             buferQuestion.getAnswers().add(ans);
         }
     }

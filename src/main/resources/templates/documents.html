@@ -9,73 +9,104 @@
     <h2>
         Документы
     </h2>
+    <div class="tow">
+        Здесь вы можете скачать нормативные документы для подготовки к тестам.
+    </div>
     <div class="row">
-        <div class="col-lg-6 col-md-6">
-            <div sec:authorize="${hasRole('ROLE_ADMIN')}">
-                <div class="row">
-
-                    <div class="col-lg-5 col-md-5">
-                        <form th:method="POST" enctype="multipart/form-data" th:action="@{/docsupload/}">
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                            <div class="form-group">
-                                <input type="file" name="file" multiple="multiple"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="mr-sm-2" for="fileFolder">Папка</label>
-                                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="fileFolder" name="folderId">
-                                    <option th:each="folder : ${flatFolders}" th:value="${folder.id}"
-                                            th:text="${folder.flatTitle}">
-                                    </option>
-                                </select>
-                            </div>
-                            <input type="submit" value="Загрузить"/>
-                        </form>
+        <div sec:authorize="${hasRole('ROLE_ADMIN')}">
+            <div class="row">
+                <div class="form-frame docs-form">
+                    <div class="docs-form__heading">
+                        Добавление папки
                     </div>
-                    <div class="col-lg-2 col-md-2"></div>
-                    <div class="col-lg-5 col-md-5">
-                        <form th:method="POST"  th:action="@{/folder/add}">
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                            <div class="form-group">
-                                <input type="text" name="folderTitle"
-                                       th:classappend="${folderExists or emptyTitle} ? 'is-invalid': 'is-valid'"
-                                       th:value="${folderTitle}"
-                                       placeholder="Новая папка"/>
-                                <div class="invalid-feedback"
-                                     style="display:block"
-                                     th:if="${folderExists}">
-                                    Папка уже существует. Смените название или выберите другую родительскую папку.
-                                </div>
-                                <div class="invalid-feedback"
-                                     style="display:block"
-                                     th:if="${emptyTitle}">
-                                    Укажите название папки.
-                                </div>
+                    <form th:method="POST" th:action="@{/folder/add}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <div class="form-field">
+                            <label for="parentFolder">Родительская папка</label>
+                            <div class="select">
+                                <input type="hidden" id="parentFolder" name="parentFolderId"
+                                       th:value="${flatFolders.get(0).id}"/>
+                                <div class="select__trigger" th:text="${flatFolders.get(0).flatTitle}"></div>
+                                <span class="select__trigger-arrow"></span>
+                                <ul class="select__list">
+                                    <li class="select__list-item" th:attr="data-value=${folder.id}"
+                                        th:each="folder : ${flatFolders}" th:text="${folder.flatTitle}">Option1
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="form-group">
-                                <label class="mr-sm-2" for="fileFolder">Папка</label>
-                                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="fileFolder" name="parentFolderId">
-                                    <option th:each="folder : ${flatFolders}" th:value="${folder.id}"
-                                            th:text="${folder.flatTitle}">
-                                    </option>
-                                </select>
-
+                        </div>
+                        <div class="form-field">
+                            <label for="folderTitle">Наименование папки</label>
+                            <input type="text" name="folderTitle"
+                                   id="folderTitle"
+                                   th:classappend="${folderExists or emptyTitle} ? 'is-invalid': 'is-valid'"
+                                   th:value="${folderTitle}"
+                                   placeholder="Новая папка"/>
+                            <div class="invalid-feedback"
+                                 style="display:block"
+                                 th:if="${folderExists}">
+                                Папка уже существует. Смените название или выберите другую родительскую папку.
                             </div>
-                            <input type="submit" value="Добавить"/>
-                        </form>
-                    </div>
+                            <div class="invalid-feedback"
+                                 style="display:block"
+                                 th:if="${emptyTitle}">
+                                Укажите название папки.
+                            </div>
+                        </div>
 
+                        <button type="submit" class="btn btn-primary">+Добавить папку</button>
+                    </form>
                 </div>
+
+                <div class="form-frame docs-form" style="margin-left:34px;">
+                    <div class="docs-form__heading">
+                        Добавление файла
+                    </div>
+                    <form th:method="POST" enctype="multipart/form-data" th:action="@{/docsupload/}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="file" id="file-upload" style="display: none;" name="file" multiple="multiple"/>
+                        <div class="form-field">
+                            <label for="fileFolder">Родительская папка</label>
+                            <div class="select">
+                                <input type="hidden" id="fileFolder" name="folderId"
+                                       th:value="${flatFolders.get(0).id}"/>
+                                <div class="select__trigger" th:text="${flatFolders.get(0).flatTitle}"></div>
+                                <span class="select__trigger-arrow"></span>
+                                <ul class="select__list">
+                                    <li class="select__list-item" th:attr="data-value=${folder.id}"
+                                        th:each="folder : ${flatFolders}" th:text="${folder.flatTitle}">Option1
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-field">
+                        <button type="submit" id="file-upload-trigger" class="btn btn-primary">Загрузить файлы
+                        </button>
+                        <small class="info">Поддерживаемые форматы: pdf, doc, xls</small>
+                        <div class="loader"></div>
+                        <small class="load">Загружаю...</small>
+                    </div>
+                </div>
+
+
             </div>
+        </div>
+        <div class="row">
+
             <div class="tree">
                 <div class="tree__node">
-                    <input type="checkbox" class="tree__node-checkbox" id="checbkox1"/>
+                    <input type="checkbox" class="tree__node-checkbox" th:checked="${openFolderId ne null}" id="checbkox1"/>
+                    <i class="label-before"></i>
+                    <i class="folder-icon"></i>
+
                     <label for="checbkox1" class="opened">Документы</label>
                     <th:block
                             th:replace="blocks/tree-node::node-body(rootFolder=${rootFolder}, storageEntities=${storageEntities})"></th:block>
                 </div>
             </div>
-
         </div>
+
     </div>
 
 </th:block>

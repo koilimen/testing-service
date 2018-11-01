@@ -75,7 +75,8 @@ public class TicketController {
         cookie.setPath("/ticket");
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
-
+        model.addAttribute("ticketNum", ticketNum);
+        model.addAttribute("allCourses", Collections.singleton(test.getSection().getCourse()));
         model.addAttribute("ticketDto", ticketDTO);
         model.addAttribute("test", test);
         model.addAttribute("ticketChecked", false);
@@ -91,10 +92,14 @@ public class TicketController {
     }
 
     @RequestMapping(value = "/check/", method = RequestMethod.POST)
-    public String checkTicket(@ModelAttribute TicketDTO ticketDto, Model model) {
+    public String checkTicket(@ModelAttribute TicketDTO ticketDto, @RequestParam("ticketNum") Integer ticketNum, Model model) {
         Collection<Answer> ticketAnswers = getAnswersList(ticketDto.getQuestionList());
         long incorrectCount = ticketAnswers.stream().filter(a -> a.isCorrect() != a.isChecked()).count();
-
+        long correctCount = ticketAnswers.stream().filter(Answer::isCorrect).count();
+        long correctCheckedCount = ticketAnswers.stream().filter(a -> a.isCorrect() && a.isChecked()).count();
+        model.addAttribute("checkedCorrect", correctCheckedCount);
+        model.addAttribute("corrects", correctCount);
+        model.addAttribute("ticketNum", ticketNum);
         model.addAttribute("incorrectCount", incorrectCount);
         model.addAttribute("ticketDto", ticketDto);
         model.addAttribute("test", ts.getTest(ticketDto.getTestId()));

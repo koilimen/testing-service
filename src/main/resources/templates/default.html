@@ -24,18 +24,18 @@
         <!--empty-->
     </th:block>
     <div class="wrapper">
-        <div class="left-sidebar" th:if="${isMain}">
+        <div class="left-sidebar" th:if="${showNav}">
             <th:block th:replace="includes/nav :: nav">
                 <!--empty-->
             </th:block>
 
         </div>
-        <div class="content" th:classappend="${isMain} ? 'content-main'">
+        <div class="content" th:classappend="${showNav } ? 'content-main'">
             <th:block layout:fragment="content">
                 <!--empty-->
             </th:block>
         </div>
-        <div class="right-sidebar" th:if="${isMain eq null or not isMain}">
+        <div class="right-sidebar" th:if="${not showNav}">
             <div class="row">
                 <div class="ad-block ">
                     РЕКЛАМА

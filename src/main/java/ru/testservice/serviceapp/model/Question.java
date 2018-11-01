@@ -21,6 +21,7 @@ public class Question {
     private Test test;
 
 
+
     public Question() {
     }
 
@@ -36,6 +37,23 @@ public class Question {
             a.setQuestion(this);
         });
     }
+
+    public boolean hasErrors() {
+        if(answers == null) return false;
+        int correctCount = 0;
+        int checkedCount = 0;
+        for (Answer answer : answers) {
+            if(answer.isChecked()){
+                checkedCount++;
+            }
+            if (answer.isChecked() && answer.isCorrect()) {
+                correctCount++;
+            }
+        }
+        return correctCount != checkedCount;
+    }
+
+
 
     public Test getTest() {
         return test;

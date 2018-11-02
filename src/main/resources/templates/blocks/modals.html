@@ -113,4 +113,53 @@
         </form>
     </div>
 </th:block>
+
+<th:block th:fragment="folderEdit">
+    <div class="form-frame docs-form-modal">
+        <div class="docs-form__heading">
+            Добавление папки
+        </div>
+        <!--/*@thymesVar id="editFolder" type="ru.testservice.serviceapp.model.Folder"*/-->
+        <form th:method="POST" id="edit-folder-form" th:action="@{/folder/add}" th:object="${editFolder}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" id="folderIdEdit" th:field="*{id}"/>
+            <div class="docs-form__form-field">
+                <label for="parentFolderEdit">Родительская папка</label>
+                <div class="select docs-form__select">
+                    <input type="hidden" id="parentFolderEdit" name="parentFolderId"
+                           th:field="*{parentFolder.id}"/>
+                    <div class="select__trigger" th:text="${parentFolder.flatTitle}"></div>
+                    <span class="select__trigger-arrow"></span>
+                    <ul class="select__list">
+                        <li class="select__list-item" th:attr="data-value=${folder.id}"
+                            th:each="folder : ${flatFolders}" th:text="${folder.flatTitle}">Option1
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="docs-form__form-field">
+                <label for="folderTitleEdit">Наименование папки</label>
+                <input type="text" name="folderTitle"
+                       id="folderTitleEdit"
+                       class="docs-form__input"
+                       th:field="*{title}"
+                       placeholder="Новая папка"/>
+                <div class="invalid-feedback"
+                     style="display:none"
+                     id="folderExist">
+                    Папка уже существует. Смените название или выберите другую родительскую папку.
+                </div>
+                <div class="invalid-feedback"
+                     id="emptyTitle"
+                     style="display:none"
+                     >
+                    Укажите название папки.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Сохранить папку</button>
+        </form>
+    </div>
+
+</th:block>
 </html>

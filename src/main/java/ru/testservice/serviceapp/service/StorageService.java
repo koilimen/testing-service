@@ -8,11 +8,9 @@ import ru.testservice.serviceapp.model.Folder;
 import ru.testservice.serviceapp.model.StorageEntity;
 import ru.testservice.serviceapp.repository.FolderRepository;
 import ru.testservice.serviceapp.repository.StorageRepository;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.thymeleaf.util.StringUtils.repeat;
@@ -32,12 +30,16 @@ public class StorageService {
         this.fr = fr;
     }
 
+    public List<Folder> getChildFolders(Long folderId){
+        return fr.findAllByParentFolderId(folderId);
+    }
+
     public void store(MultipartFile file, Long folderId) throws IOException {
         String contentType = file.getContentType();
         String originalFilename = file.getOriginalFilename();
 
         StorageEntity entity = new StorageEntity(originalFilename, LINK_PREFIX + originalFilename, contentType, file.getBytes());
-        if(folderId != null) {
+        if (folderId != null) {
             Folder folder = new Folder(folderId);
             entity.setFolder(folder);
         }
@@ -59,16 +61,20 @@ public class StorageService {
     public Folder getRootFolder() {
         return fr.findById(1L).orElse(null);
     }
-    public void flattenFolders(Folder rootFolder,  List<Folder> flatFolders) {
+
+
+    public void flattenFolders(Folder rootFolder, List<Folder> flatFolders, int depth) {
         flatFolders.add(rootFolder);
-        rootFolder.setFlatTitle(rootFolder.getTitle());
-        rootFolder.getChildFolders().forEach(f -> flattenFolders(f, flatFolders));
+        String prefix = depth == 0 ? "" : repeat("--", depth);
+        rootFolder.setFlatTitle(prefix.concat(rootFolder.getTitle()));
+        getChildFolders(rootFolder.getId()).forEach(f -> flattenFolders(f, flatFolders, depth + 1));
 
     }
-    public void flattenFoldersTop(Folder rootFolder,  List<Folder> flatFolders) {
+
+    public void flattenFoldersTop(Folder rootFolder, List<Folder> flatFolders) {
         flatFolders.add(rootFolder);
         rootFolder.setFlatTitle(rootFolder.getTitle());
-        rootFolder.getChildFolders().forEach(f -> {
+        getChildFolders(rootFolder.getId()).forEach(f -> {
             f.setFlatTitle(f.getTitle());
             flatFolders.add(f);
         });
@@ -84,11 +90,25 @@ public class StorageService {
         return fr.findById(folderId).orElse(null);
     }
 
-    public void saveFolder(String title, Folder parentFolder) {
+    public void saveFolder(String title, Long parentFolderId) {
         Folder f = new Folder();
         f.setTitle(title);
+        f.setParentFolder(new Folder(parentFolderId));
+        fr.save(f);
+    }
 
-        parentFolder.getChildFolders().add(f);
-        fr.save(parentFolder);
+    @Transactional
+    public void removeFolder(Long folderId) {
+        fr.deleteAllByParentFolderId(folderId);
+        repository.deleteAllByFolderId(folderId);
+        fr.deleteById(folderId);
+    }
+
+    public void removeFile(Long fileId) {
+        repository.deleteById(fileId);
+    }
+
+    public void updateFolder(Folder folder) {
+        fr.save(folder);
     }
 }

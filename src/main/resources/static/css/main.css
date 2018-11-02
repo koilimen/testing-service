@@ -40,7 +40,7 @@ h5 {
     background-color: #E8EDF4;
 }
 
-a, .btn-link {
+a, .btn-link, .btn-link-red {
     cursor: pointer;
     font-style: normal;
     font-weight: normal;
@@ -48,6 +48,9 @@ a, .btn-link {
     font-size: 16px;
     text-decoration-line: underline;
     color: #1B65C0;
+}
+.btn-link-red{
+    color: #EB5757;
 }
 
 a:hover, a:hover * {
@@ -1118,10 +1121,14 @@ footer, .footer__sub {
     width: 338px;
     height: 256px;
 }
-.docs-form input, .docs-form .select{
+.docs-form-modal{
+    width: 338px;
+    height: 256px;
+}
+.docs-form input, .docs-form .select, .docs-form__input, .docs-form__select{
     width: 100%;
 }
-.docs-form .form-field{
+.docs-form .form-field, .docs-form__form-field{
     margin-bottom: 15px;
 }
 .docs-form .loader, .docs-form .load, .docs-form.loading .btn, .docs-form.loading .info{

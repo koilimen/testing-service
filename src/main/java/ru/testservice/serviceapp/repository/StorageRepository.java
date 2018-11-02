@@ -13,4 +13,6 @@ import java.util.List;
 
 public interface StorageRepository extends CrudRepository<StorageEntity, Long> {
     List<StorageEntity> findAllByFolderId(Long folderId);
+
+    void deleteAllByFolderId(Long folderId);
 }

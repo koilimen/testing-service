@@ -18,9 +18,15 @@
     height:32px;
     border: 1px solid rgba(255, 255, 255, 1);
 }
+.tree__node label .btn-link, .tree__node label .btn-link-red {
+    display:none;
+}
 .tree__node label:hover{
     background: rgba(27, 101, 192, 0.1);
     border: 1px solid rgba(27, 101, 192, 0.3);
+}
+.tree__node label:hover .btn-link, .tree__node label:hover .btn-link-red{
+    display:block;
 }
 
 .tree__node .label-before {
@@ -69,6 +75,7 @@
     height: 24px;
     float:left;
     margin-right: 4px;
+    margin-top: 4px;
 }
 .pdf-icon {
     background: url('../img/pdf-icon.png');

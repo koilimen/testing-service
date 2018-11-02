@@ -17,11 +17,10 @@ import ru.testservice.serviceapp.model.Folder;
 import ru.testservice.serviceapp.model.StorageEntity;
 import ru.testservice.serviceapp.service.StorageService;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.thymeleaf.util.StringUtils.repeat;
 
 @Controller
 public class FileController {
@@ -39,7 +38,7 @@ public class FileController {
             name = "folder_exists") Boolean folderExists,
                           @RequestParam(value = "empty_title", defaultValue = "false") Boolean emptyFolderTitle,
                           @RequestParam(value = "ftitle", defaultValue = "") String folderTitle,
-                          @RequestParam(value = "id") Long folderId
+                          @RequestParam(value = "id", required = false) Long openFolderId
 
     ) {
         Folder rootFolder = storageService.getRootFolder();
@@ -47,18 +46,20 @@ public class FileController {
         model.addAttribute("emptyTitle", emptyFolderTitle);
         model.addAttribute("folderTitle", folderTitle);
         List<Folder> flatFolders = new ArrayList<>();
-        storageService.flattenFolders(rootFolder, flatFolders);
+        storageService.flattenFolders(rootFolder, flatFolders, 0);
         List<StorageEntity> rootFilderFiles = storageService.getFiles(rootFolder.getId());
         model.addAttribute("rootFolder", rootFolder);
+        model.addAttribute("rootChildFolders", storageService.getChildFolders(rootFolder.getId()));
         model.addAttribute("storageEntities", rootFilderFiles);
         model.addAttribute("flatFolders", flatFolders);
         model.addAttribute("isDocs", true);
         model.addAttribute("showNav", true);
-        if(folderId != null){
-            List<StorageEntity> openedFolderFiles = storageService.getFiles(folderId);
+        if (openFolderId != null) {
+            List<StorageEntity> openedFolderFiles = storageService.getFiles(openFolderId);
             model.addAttribute("openedFolderFiles", openedFolderFiles);
+            model.addAttribute("openedFolderChilds", storageService.getChildFolders(openFolderId));
         }
-        model.addAttribute("openFolderId", folderId);
+        model.addAttribute("openFolderId", openFolderId);
         return "documents";
     }
 
@@ -68,8 +69,46 @@ public class FileController {
         Folder folder = storageService.getFolder(folderId);
         List<StorageEntity> rootFilderFiles = storageService.getFiles(folderId);
         model.addAttribute("rootFolder", folder);
+        model.addAttribute("childFolders", storageService.getChildFolders(folderId));
         model.addAttribute("storageEntities", rootFilderFiles);
         return "blocks/tree-node::node-body";
+    }
+
+    @RequestMapping(value = "/docs/folder/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody
+    String deleteFolder(@PathVariable("id") Long folderId) {
+        storageService.removeFolder(folderId);
+        return "ok";
+    }
+
+    @RequestMapping(value = "/docs/folder-edit/{id}", method = RequestMethod.GET)
+    public String editFolder(@PathVariable("id") Long folderId, Model model) {
+        Folder folder = storageService.getFolder(folderId);
+        List<Folder> flatFolders = new ArrayList<>();
+        storageService.flattenFolders(storageService.getRootFolder(), flatFolders, 0);
+        Folder parentFolder = flatFolders.stream().filter(f -> f.getId().equals(folder.getParentFolder().getId())).findFirst().get();
+        model.addAttribute("flatFolders", flatFolders);
+        model.addAttribute("parentFolder", parentFolder);
+        model.addAttribute("editFolder", folder);
+        return "blocks/modals::folderEdit";
+    }
+
+    @RequestMapping(value = "/docs/folder-edit", method = RequestMethod.POST)
+    public @ResponseBody String editFolderPOST(@RequestBody @Valid Folder folder) {
+        List<Folder> parentFolderChildren = storageService.getChildFolders(folder.getParentFolder().getId());
+        long dups = parentFolderChildren.stream().filter(f -> !f.getId().equals(folder.getId()) && f.getTitle().equals(folder.getTitle())).count();
+        if(dups > 0){
+            return "1";
+        }
+        storageService.updateFolder(folder);
+        return "0";
+    }
+
+    @RequestMapping(value = "/docs/file/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody
+    String deleteFile(@PathVariable("id") Long fileId) {
+        storageService.removeFile(fileId);
+        return "ok";
     }
 
     @RequestMapping(value = "/docs/{id}/{filename}", method = RequestMethod.GET)
@@ -98,7 +137,7 @@ public class FileController {
         if (StringUtils.isEmpty(title)) {
             return "redirect:/docs?empty_title=true";
         }
-        for (Folder f : parentFolder.getChildFolders()) {
+        for (Folder f : storageService.getChildFolders(parentFolderId)) {
             if (f.getTitle().equals(title)) {
                 isDuplicate = true;
                 break;
@@ -107,7 +146,7 @@ public class FileController {
         if (isDuplicate) {
             return "redirect:/docs?folder_exists=true&ftitle=" + title;
         }
-        storageService.saveFolder(title, parentFolder);
+        storageService.saveFolder(title, parentFolderId);
         return "redirect:/docs";
 
     }

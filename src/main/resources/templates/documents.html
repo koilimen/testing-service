@@ -102,7 +102,7 @@
 
                     <label for="checbkox1" class="opened">Документы</label>
                     <th:block
-                            th:replace="blocks/tree-node::node-body(rootFolder=${rootFolder}, storageEntities=${storageEntities})"></th:block>
+                            th:replace="blocks/tree-node::node-body(rootFolder=${rootFolder}, storageEntities=${storageEntities}, childFolders=${rootChildFolders})"></th:block>
                 </div>
             </div>
         </div>

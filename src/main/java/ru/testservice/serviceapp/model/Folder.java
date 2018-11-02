@@ -8,9 +8,9 @@ import java.util.List;
 public class Folder extends AbstractEntity {
     @Column
     private String title;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "parent_folder_id")
-    private List<Folder> childFolders;
+    private Folder parentFolder;
     private transient String flatTitle;
 
     public Folder() {
@@ -36,13 +36,11 @@ public class Folder extends AbstractEntity {
         this.title = title;
     }
 
-    public List<Folder> getChildFolders() {
-        return childFolders;
+    public Folder getParentFolder() {
+        return parentFolder;
     }
 
-    public void setChildFolders(List<Folder> childFolders) {
-        this.childFolders = childFolders;
+    public void setParentFolder(Folder parentFolder) {
+        this.parentFolder = parentFolder;
     }
-
-
 }

@@ -64,8 +64,8 @@
         <!--/*@thymesVar id="newSection" type="ru.testservice.serviceapp.model.Section"*/-->
         <form action="#" id="editSectionForm" th:action="@{/section/{id}/edit(id=${section.id})}" th:object="${section}" th:method="post">
             <div class="edit-section-form__heading">Добавление нового раздела</div>
-            <input type="hidden" id="id" th:field="*{course.id}">
-            <input type="hidden" id="courseId" th:field="*{id}">
+            <input type="hidden" id="id" th:field="*{id}">
+            <input type="hidden" id="courseId" th:field="*{course.id}">
             <div class="form-field-inline" style="width:172px;">
                 <label for="code">Область аттестации</label>
                 <input type="text" id="code" class="form-control" th:field="*{code}"
@@ -108,7 +108,7 @@
             </div>
             <div class="form-field-inline" style="width: 215px"></div>
             <div class="form-field-inline" >
-                <button type="submit" class=" btn btn-primary">+Добавить</button>
+                <button type="submit" class=" btn btn-primary">Сохранить</button>
             </div>
         </form>
     </div>

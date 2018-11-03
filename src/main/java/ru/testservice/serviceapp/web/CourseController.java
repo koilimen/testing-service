@@ -68,7 +68,7 @@ public class CourseController {
         Course course = courseService.getById(id);
         if (!result.hasErrors()) {
             sectionService.save(newSection);
-            model.addAttribute("newSection", new Section(course));
+            return "redirect:/course/"+id;
         }
         prepareModel(course, model, pageable);
         return "course";

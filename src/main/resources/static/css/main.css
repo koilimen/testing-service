@@ -242,6 +242,7 @@ table tr td {
     height: 60px;
     border-bottom: 1px solid #C4C4C4;
     box-sizing: border-box;
+    padding: 0 10px;
 }
 
 table tr th {

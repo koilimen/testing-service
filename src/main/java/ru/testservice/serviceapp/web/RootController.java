@@ -40,10 +40,8 @@ public class RootController {
                                 @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
         if (!result.hasErrors()) {
             courseService.save(newCourse);
-            model.addAttribute("newCourse", new Course());
         }
-        prepareMainModel(model, pageable);
-        return "main";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)

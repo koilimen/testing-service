@@ -100,6 +100,9 @@ public class Test {
     }
 
     public Long getQuestionsNumber() {
+        if(questionsNumber == null){
+            questionsNumber = 0L;
+        }
         return questionsNumber;
     }
 

@@ -61,8 +61,7 @@
         <table class="table ">
             <thead>
             <tr>
-                <th scope="col" style="width: 87px;">Наименование</th>
-                <th scope="col" style="width: 500px;">Описание</th>
+                <th scope="col" style="min-width: 550px;">Наименование</th>
                 <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -71,11 +70,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="test, status : ${tests}" class="tests-list__item" th:attr="data-order=${test.order}, data-id=${test.id}">
-                <td>
-                    <a th:href="@{/tests/{id}(id=${test.id})}" th:text="${test.title}"></a>
+            <tr th:each="test, status : ${tests}" class="tests-list__item" th:attr="data-order=${test.order}, data-id=${test.id}"
+            >
+                <td style="text-align: left;">
+                    <a th:href="@{/tests/{id}(id=${test.id})}"  th:text="${test.title}"></a>
                 </td>
-                <td th:text="${test.description}"></td>
                 <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
                     <td>
                         <a href="javascript:void(0)" th:attr="data-src=@{/tests/{id}/edit-modal(id=${test.id})}"

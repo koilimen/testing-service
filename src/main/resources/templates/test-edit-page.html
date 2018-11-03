@@ -5,7 +5,7 @@
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
     <div class="row">
-        <button class="btn btn-inline" onclick="window.history.back()">Назад</button>
+        <a class="btn btn-inline" th:href="@{/tests/{id}(id=${test.id})}">Назад</a>
         <h5 style="display:inline-block" th:text="'Редактирование теста '+ ${test.title}"></h5>
     </div>
 

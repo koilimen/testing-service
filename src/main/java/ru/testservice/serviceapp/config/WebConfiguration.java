@@ -28,7 +28,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
-                .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
+                .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS).setCachePeriod(3600*24*7);
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -27,6 +27,8 @@ public class MoreCoursesInterceptor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
         if (!"XMLHttpRequest".equals(request.getHeader("X-Requested-With")) && modelAndView != null) {
+            String viewName = modelAndView.getViewName();
+            modelAndView.addObject("viewName", viewName == null ? "null": viewName);
             String requestURI = request.getRequestURI();
             Folder rootFolder = storageService.getRootFolder();
             List<Folder> flatFolders = new ArrayList<>();

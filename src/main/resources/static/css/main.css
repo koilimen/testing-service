@@ -1037,10 +1037,9 @@ footer, .footer__sub {
 .question__answers-list-item__remove {
     color: #C4C4C4;
     position: absolute;
-    right: 5px;
-    top: 20%;
+    left: 55px;
+    top: 5px;
     cursor: pointer;
-    display: none;
 }
 
 .question__additional-answer input {
@@ -1141,3 +1140,6 @@ footer, .footer__sub {
     text-align: center;
 }
 
+.answer-group{
+    position:relative;
+}

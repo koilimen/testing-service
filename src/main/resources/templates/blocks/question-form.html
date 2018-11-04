@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:fragment="question-edit(question)">
+    <a th:href="@{/questions/delete/{id}(id=${question.id})}" title="Удалить"
+       class="question__remove fa fa-trash-alt"></a>
+    <form action="" th:method="put" >
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="hidden" name="id" th:value="${question.id}"/>
+        <input type="hidden" name="test.id" th:value="${question.test.id}"/>
+        <div class="form-field row">
+            <label for="questionText" class="col-sm-2 col-form-label">Текст вопроса</label>
+            <div class="col-sm-10">
+                <textarea class="new-question-form__textarea" id="questionText" name="questionText"
+                          th:text="${question.questionText}">
+                </textarea>
+            </div>
+        </div>
+        <div class="form-field row answer-group" th:each="answer, iter: ${question.answers}">
+            <input type="hidden" th:name="'answers['+${iter.index}+'].question.id'" th:value="${question.id}">
+            <label th:for="'answer'+${iter.index}" class="col-sm-2 col-form-label"
+                   th:text="'Ответ '+${iter.index + 1}"></label>
+            <textarea class="new-question-form__answer-textarea" th:id="'answer'+${iter.index}"
+                      th:name="'answers['+${iter.index}+'].answerText'"
+                      th:text="${answer.answerText}"
+                      >
+                        </textarea>
+
+            <div class="checkbox checkbox-green new-question-form__checkbox">
+                <label>
+                    <input type="checkbox" th:id="'answer'+${iter.index}+'-correct'"
+                           th:name="'answers['+${iter.index}+'].correct'"
+                           th:checked="${answer.correct}"
+                           >
+                    <div class="check"></div>
+                    <span class="label">Верный ответ</span>
+                </label>
+            </div>
+            <div class="question__answers-list-item__remove fa fa-times" title="Удалить"
+                 th:attr="data-id=${answer.id}"></div>
+        </div>
+        <div class="row">
+            <button class="btn btn-link add-answer-nq" th:attr="data-qid=${question.id}">
+                Добавить ответ
+            </button>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            Сохранить вопрос
+        </button>
+    </form>
+</th:block>
+</html>

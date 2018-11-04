@@ -73,14 +73,22 @@ $(document).ready(function () {
 
     $body.on('click', '.add-answer-nq', function (e) {
         e.preventDefault();
-        var length = $('.new-question-form .answer-group').length;
+        var parentForm = $(this).closest('form');
+        var qid = $(this).data('qid');
+        var length = parentForm.find('.answer-group').length;
+        var data = {
+            index: length
+        };
+        if (qid) {
+            data['qid'] = qid;
+        }
         $.ajax({
             url: "/tests/render-answer",
-            data: {index: length},
+            data: data,
             headers: getCSRF(),
             method: 'GET',
             success: function (response) {
-                $(response).insertAfter($('.new-question-form .answer-group').last());
+                $(response).insertAfter(parentForm.find('.answer-group').last());
             }
         })
     });
@@ -90,7 +98,7 @@ $(document).ready(function () {
         var csrfHeaderContent = $("meta[name='_csrf']").attr('content');
         var headers = {};
         headers[csrfHeaderName] = csrfHeaderContent;
-        var ans = $(this).closest('.question__answers-list-item');
+        var ans = $(this).closest('.answer-group');
         $.ajax({
             url: "/questions/delete-answer/" + aId,
             headers: headers,

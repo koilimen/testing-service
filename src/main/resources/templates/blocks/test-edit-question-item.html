@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<!--/*@thymesVar id="question" type="ru.testservice.serviceapp.model.Question"*/-->
+<th:block th:fragment="question-item(question)">
+    <a th:href="@{/questions/delete/{id}(id=${question.id})}" title="Удалить"
+       class="question__remove fa fa-trash-alt"></a>
+    <div class="question__text" th:text="${question.questionText}"> Кто в соответствии с Федеральным законом от
+        27.07.2010 № 190-ФЗ «О
+        теплоснабжении» является потребителем тепловой энергии?
+    </div>
+
+    <div class="question__answers-list">
+        <div class="question__answers-list-item" th:each="answer : ${question.answers}">
+            <div class="checkbox checkbox-green">
+                <label>
+                    <input type="checkbox" th:checked="${answer.correct}" class="asnwer-correct"
+                           th:attr="data-id=${answer.id}">
+                    <div class="check"></div>
+                    <span class="label" th:text="${answer.answerText}"></span>
+                </label>
+            </div>
+            <div class="question__answers-list-item__remove fa fa-times" title="Удалить"
+                 th:attr="data-id=${answer.id}"
+            ></div>
+        </div>
+
+    </div>
+    <div class="question__additional-answer">
+        <form th:action="@{/questions/add-answer}" th:method="post" class="add-answer-form">
+            <input type="hidden" name="questionId" th:value="${question.id}">
+            <input type="text" name="additionalAnswer" placeholder="Еще один ответ">
+            <button type="submit" class="btn btn-primary add-answer">Добавить ответ</button>
+        </form>
+    </div>
+</th:block>
+</html>

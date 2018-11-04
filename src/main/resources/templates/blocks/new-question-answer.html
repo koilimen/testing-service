@@ -3,6 +3,7 @@
 <th:block th:fragment="new-question-answer">
     <div class="form-field row answer-group" >
         <!--/*@thymesVar id="index" type="java.lang.Integer"*/-->
+        <input type="hidden" th:if="${questionId ne null}" th:name="'answers['+${index}+'].question.id'" th:value="${questionId}">
         <label th:for="'answer'+${index}"
                th:text="'Ответ '+${index + 1}"></label>
         <textarea class="new-question-form__answer-textarea" th:id="'answer'+${index}"

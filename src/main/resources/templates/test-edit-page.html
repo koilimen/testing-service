@@ -50,14 +50,14 @@
         </div>
     </div>
     <div class="row">
-        <p><strong>3. Редактирование вопросов</strong> <a th:href="@{/tests/{id}/delete-all-questions(id=${test.id})}">Удалить
+        <p><strong>3. Редактирование вопросов</strong> <a th:if="${questions.getContent().size() > 0}" th:href="@{/tests/{id}/delete-all-questions(id=${test.id})}">Удалить
             все вопросы</a></p>
         <div class="new-question-form question">
 
             <form action="" th:method="put" th:object="${newQuestion}">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-                <input type="hidden" th:for="*{id}"/>
+                <input type="hidden" th:field="*{id}"/>
                 <div class="form-field row">
                     <label for="questionText" class="col-sm-2 col-form-label">Текст вопроса</label>
                     <div class="col-sm-10">
@@ -93,36 +93,7 @@
             </form>
         </div>
         <div class="question" th:each="question : ${questions.getContent()}">
-            <a th:href="@{/questions/delete/{id}(id=${question.id})}" title="Удалить"
-               class="question__remove fa fa-trash-alt"></a>
-            <div class="question__text" th:text="${question.questionText}"> Кто в соответствии с Федеральным законом от
-                27.07.2010 № 190-ФЗ «О
-                теплоснабжении» является потребителем тепловой энергии?
-            </div>
-
-            <div class="question__answers-list">
-                <div class="question__answers-list-item" th:each="answer : ${question.answers}">
-                    <div class="checkbox checkbox-green">
-                        <label>
-                            <input type="checkbox" th:checked="${answer.correct}" class="asnwer-correct"
-                                   th:attr="data-id=${answer.id}">
-                            <div class="check"></div>
-                            <span class="label" th:text="${answer.answerText}"></span>
-                        </label>
-                    </div>
-                    <div class="question__answers-list-item__remove fa fa-times" title="Удалить"
-                         th:attr="data-id=${answer.id}"
-                    ></div>
-                </div>
-
-            </div>
-            <div class="question__additional-answer">
-                <form th:action="@{/questions/add-answer}" th:method="post" class="add-answer-form">
-                    <input type="hidden" name="questionId" th:value="${question.id}">
-                    <input type="text" name="additionalAnswer" placeholder="Еще один ответ">
-                    <button type="submit" class="btn btn-primary add-answer">Добавить ответ</button>
-                </form>
-            </div>
+            <th:block th:replace="blocks/question-form::question-edit(${question})"></th:block>
         </div>
     </div>
     <br>

@@ -2,6 +2,7 @@ package ru.testservice.serviceapp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +48,8 @@ public class TestsController {
     }
 
     @RequestMapping(value = "/{id}/edit", method = {RequestMethod.GET})
-    public String getTestEditPage(Model model, @PathVariable Long id, @PageableDefault(page = 0, size = 15) Pageable pageable) {
+    public String getTestEditPage(Model model, @PathVariable Long id, @PageableDefault(page = 0, size = 15, sort = "id",
+    direction = Sort.Direction.DESC) Pageable pageable) {
         Test test = ts.getTest(id);
         test.setQuestionsNumber(qs.countTestQuestions(id));
         model.addAttribute("test", test);
@@ -67,13 +69,17 @@ public class TestsController {
                                   BindingResult result) {
         Test test = ts.getTest(id);
         if (!result.hasErrors()) {
+            if (question.getId() != null && question.getId() > 0) {
+                qs.save(question);
+                return "redirect:/tests/" + id + "/edit";
+            }
             question.setId(null);
             question.setTest(test);
             question.setId(qs.save(question).getId());
             question.getAnswers().forEach(a -> a.setQuestion(question));
             qs.save(question);
             test.setQuestionsNumber(qs.countTestQuestions(test.getId()));
-            test = ts.save(test);
+            ts.save(test);
             Question newQuestion = new Question();
             newQuestion.setAnswers(new ArrayList<>());
             newQuestion.getAnswers().add(new Answer());
@@ -95,7 +101,7 @@ public class TestsController {
     @RequestMapping(value = "/edit", method = {RequestMethod.PUT})
     public String editNewQuestion(@RequestBody @Valid Test test, BindingResult result, Model model, HttpServletResponse response) throws IOException {
         if (result.hasErrors()) {
-            model.addAttribute("test",test);
+            model.addAttribute("test", test);
             return "blocks/modals::test-edit-form";
         }
         ts.save(test);
@@ -164,8 +170,9 @@ public class TestsController {
     }
 
     @RequestMapping(value = "/render-answer", method = RequestMethod.GET)
-    public String renderAnswer(@RequestParam Integer index, Model model) {
+    public String renderAnswer(@RequestParam Integer index, @RequestParam(required = false) Long qid, Model model) {
         model.addAttribute("index", index);
+        model.addAttribute("questionId", qid);
         return "blocks/new-question-answer :: new-question-answer";
     }
 

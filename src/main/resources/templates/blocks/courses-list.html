@@ -7,7 +7,6 @@
         <!--/*@thymesVar id="courses" type="java.util.List<ru.testservice.serviceapp.model.Course>"*/-->
         <!--/*@thymesVar id="editCourse" type="ru.testservice.serviceapp.model.Course"*/-->
         <tr th:each="course, status : ${courses}"  >
-            <td ></td>
             <td th:if="${editCourse eq null or editCourse.id ne course.id}" >
                 <a th:href="@{/course/{id}(id=${course.id})}" th:text="${course.name}"></a>
             </td>

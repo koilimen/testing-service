@@ -63,6 +63,8 @@
             <tr>
                 <th scope="col" style="min-width: 550px;">Наименование</th>
                 <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
+                    <th scope="col">Кол-во вопросов в билете</th>
+                    <th scope="col">Кол-во билетов</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -70,15 +72,22 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="test, status : ${tests}" class="tests-list__item" th:attr="data-order=${test.order}, data-id=${test.id}"
+            <tr th:each="test, status : ${tests}" class="tests-list__item"
+                th:attr="data-order=${test.order}, data-id=${test.id}"
             >
                 <td style="text-align: left;">
-                    <a th:href="@{/tests/{id}(id=${test.id})}"  th:text="${test.title}"></a>
+                    <a th:href="@{/tests/{id}(id=${test.id})}" th:text="${test.title}"></a>
                 </td>
                 <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
+                    <td th:text="${section.questionsCount}">
+                        Mark
+                    </td>
+                    <td th:text="${test.questionsNumber / section.questionsCount }">
+                        Mark
+                    </td>
                     <td>
                         <a href="javascript:void(0)" th:attr="data-src=@{/tests/{id}/edit-modal(id=${test.id})}"
-                           data-fancybox data-type="ajax" >
+                           data-fancybox data-type="ajax">
                             <i class="sections-table__control far fa-edit" title="Редактировать"></i>
                         </a>
                     </td>

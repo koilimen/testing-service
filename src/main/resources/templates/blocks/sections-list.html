@@ -8,7 +8,7 @@
             <th scope="col" style="width: 500px; text-align:left;">Наименование</th>
             <th scope="col" sec:authorize="${hasRole('ROLE_ADMIN')}"></th>
             <th scope="col" sec:authorize="${hasRole('ROLE_ADMIN')}"></th>
-            <th scope="col" sec:authorize="{hasRole('ROLE_ADMIN')}">Кол-во вопросов в билете</th>
+
         </tr>
         </thead>
         <tbody>
@@ -35,9 +35,7 @@
                     </a>
                 </td>
             </th:block>
-            <td th:text="${section.questionsCount}"
-                sec:authorize="{hasRole('ROLE_ADMIN')}">Mark
-            </td>
+
         </tr>
 
         </tbody>

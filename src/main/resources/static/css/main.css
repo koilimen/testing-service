@@ -49,12 +49,18 @@ a, .btn-link, .btn-link-red {
     text-decoration-line: underline;
     color: #1B65C0;
 }
-.btn-link-red{
+
+.btn-link-red {
     color: #EB5757;
 }
 
 a:hover, a:hover * {
     color: #F58522;
+}
+
+.social a:hover, .social a:hover * {
+    color: #fff;
+    text-decoration: none;
 }
 
 p {
@@ -197,7 +203,7 @@ label {
     color: #1B65C0;
 }
 
-.checkbox-green input:checked ~ .check , .checkbox-green-checked input:checked ~ .check {
+.checkbox-green input:checked ~ .check, .checkbox-green-checked input:checked ~ .check {
     background: url(../img/checkbox-checked-green.png);
 }
 
@@ -863,7 +869,7 @@ footer, .footer__sub {
     width: 100%;
 }
 
-.new-course-form__heading, .edit-section-form__heading, .docs-form__heading{
+.new-course-form__heading, .edit-section-form__heading, .docs-form__heading {
     font-style: normal;
     font-weight: 500;
     line-height: 27px;
@@ -885,6 +891,16 @@ footer, .footer__sub {
 
 .courses-table td {
     text-align: left;
+}
+
+.courses-table td {
+    height: 40px;
+    font-size: 12px;
+}
+
+.courses-table td a {
+
+    font-size: 14px;
 }
 
 .fa-trash-alt {
@@ -1000,7 +1016,8 @@ footer, .footer__sub {
     position: relative;
     margin-bottom: 24px;
 }
-.question__number{
+
+.question__number {
     width: 146px;
     height: 30px;
     font-style: normal;
@@ -1010,14 +1027,17 @@ footer, .footer__sub {
     color: #1B65C0;
 
 }
-.question.has-errors{
+
+.question.has-errors {
     background: #FFEEEE;
     border: 1px solid #E5C2C2;
 }
-.question.no-errors{
+
+.question.no-errors {
     background: #EEFFF5;
     border: 1px solid #ABD6BD;
 }
+
 .question__remove {
     cursor: pointer;
     position: absolute;
@@ -1109,37 +1129,62 @@ footer, .footer__sub {
 .page-link:hover, .page-item.active .page-link {
     background: #F2F2F2;
 }
-.errors-heading{
+
+.errors-heading {
     font-style: normal;
     font-weight: 500;
     line-height: 27px;
     font-size: 18px;
     color: #EB5757;
 }
-.docs-form{
-    float:left;
+
+.docs-form {
+    float: left;
     width: 338px;
     height: 256px;
 }
-.docs-form-modal{
+
+.docs-form-modal {
     width: 338px;
     height: 256px;
 }
-.docs-form input, .docs-form .select, .docs-form__input, .docs-form__select{
+
+.docs-form input, .docs-form .select, .docs-form__input, .docs-form__select {
     width: 100%;
 }
-.docs-form .form-field, .docs-form__form-field{
+
+.docs-form .form-field, .docs-form__form-field {
     margin-bottom: 15px;
 }
-.docs-form .loader, .docs-form .load, .docs-form.loading .btn, .docs-form.loading .info{
+
+.docs-form .loader, .docs-form .load, .docs-form.loading .btn, .docs-form.loading .info {
     display: none;
 }
-.docs-form.loading .loader, .docs-form.loading .load{
-    margin:5px auto;
+
+.docs-form.loading .loader, .docs-form.loading .load {
+    margin: 5px auto;
     display: block;
     text-align: center;
 }
 
-.answer-group{
-    position:relative;
+.answer-group {
+    position: relative;
+}
+
+.insta-soc {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    border-radius: 36px;
+    font-size: 24px;
+    text-align: center;
+    padding-top: 6px;
+    display: block;
+    margin: auto;
+    font-weight: bold;
+}
+
+.insta-soc-col {
+    background: #0088CC;
 }

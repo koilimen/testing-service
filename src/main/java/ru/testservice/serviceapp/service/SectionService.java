@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.model.Section;
 import ru.testservice.serviceapp.repository.CourseRepository;
@@ -27,5 +28,10 @@ public class SectionService  extends CommonService<SectionRepository, Long>{
 
     public List<Section> getByCourseId(Long id, Pageable pageable) {
         return repository.findAllByCourseId(id, pageable);
+    }
+
+    @Transactional
+    public void deleteByCourseId(Long id) {
+        repository.deleteAllByCourseId(id);
     }
 }

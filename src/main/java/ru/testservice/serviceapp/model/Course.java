@@ -12,8 +12,7 @@ public class Course extends AbstractEntity {
     @NotNull(message = "Название курса не может быть пустым")
     @NotEmpty(message = "Название курса не может быть пустым")
     private String name;
-    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<Section> sectionList;
+
 
     public String getName() {
         return name;

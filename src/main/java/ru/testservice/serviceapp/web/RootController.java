@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.service.CourseService;
+import ru.testservice.serviceapp.service.SectionService;
 import ru.testservice.serviceapp.service.StorageService;
 
 import javax.validation.Valid;
@@ -17,11 +18,13 @@ import javax.validation.Valid;
 public class RootController {
     private final CourseService courseService;
     private final StorageService storageService;
+    private final SectionService sectionService;
 
     @Autowired
-    public RootController(CourseService courseService, StorageService storageService) {
+    public RootController(CourseService courseService, StorageService storageService, SectionService sectionService) {
         this.courseService = courseService;
         this.storageService = storageService;
+        this.sectionService = sectionService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -72,6 +75,7 @@ public class RootController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteCourse(@PathVariable Long id, Model model) {
+        sectionService.deleteByCourseId(id);
         courseService.deleteCourse(id);
         return "redirect:/";
     }

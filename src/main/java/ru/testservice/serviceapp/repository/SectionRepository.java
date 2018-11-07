@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface SectionRepository extends PagingAndSortingRepository<Section, Long> {
     List<Section> findAllByCourseId(Long courseId, Pageable pageable);
+    void deleteAllByCourseId(Long id);
 }

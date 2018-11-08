@@ -18,7 +18,7 @@
     </div>
     <div class="row heading" th:text="'Билет №'+${ ticketNum}"></div>
     <div class="row " th:if="${ticketChecked and incorrectCount > ticketDto.errorsCount }">
-        <p class="errors-heading"> Тест не пройден! Вы совершили больше
+        <p class="errors-heading"> Тест не пройден! Вы совершили более
             <th:block th:text="${ticketDto.errorsCount}"></th:block>
             ошибок.
         </p>
@@ -39,6 +39,8 @@
         <button type="submit" class="btn btn-primary"
                 style="float:right; margin-right:0;"
                 th:if="${not ticketChecked}">Проверить</button>
+        <a th:href="@{/tests/{id}(id=${ticketDto.testId})}">Назад к билетам</a>
+
 
     </form>
 

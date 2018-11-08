@@ -51,8 +51,38 @@
                     Description errors
                 </div>
             </div>
+            <div class="form-field-inline" style="width:172px">
+                <label for="qCount">Кол-во вопросов в билете</label>
+                <input type="text" id="qCount" class="form-control" th:field="*{questionsCount}"
+                       th:classappend="${#fields.hasErrors('questionsCount')} ? 'is-invalid': 'is-valid'"
+                />
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('questionsCount')}" th:errors="*{questionsCount}">
+                    Title errors
+                </div>
+            </div>
+            <div class="form-field-inline" style="width: 172px;">
+                <label for="errCount">Кол-во ошибок в билете</label>
+                <input type="text" id="errCount" class="form-control" th:field="*{errorsCount}"
+                       th:classappend="${#fields.hasErrors('errorsCount')} ? 'is-invalid': 'is-valid'"
+                />
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('errorsCount')}" th:errors="*{errorsCount}">
+                    Title errors
+                </div>
+            </div>
+            <div class="form-field-inline" style="width: 172px;">
+                <label for="ticketsCount">Кол-во билетов в тесте</label>
+                <input type="text" id="ticketsCount" class="form-control" th:field="*{ticketsCount}"
+                       th:classappend="${#fields.hasErrors('ticketsCount')} ? 'is-invalid': 'is-valid'"
+                />
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('ticketsCount')}" th:errors="*{ticketsCount}">
+                    Title errors
+                </div>
+            </div>
             <button type="submit" style="margin:10px 0 0"
-                    class="btn btn-primary ">+Добавить
+                    class="btn btn-primary ">Сохранить
             </button>
         </form>
     </div>
@@ -83,26 +113,6 @@
                 />
                 <div class="invalid-feedback"
                      th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-                    Title errors
-                </div>
-            </div>
-            <div class="form-field-inline" style="width:172px">
-                <label for="qCount">Кол-во вопросов в билете</label>
-                <input type="text" id="qCount" class="form-control" th:field="*{questionsCount}"
-                       th:classappend="${#fields.hasErrors('questionsCount')} ? 'is-invalid': 'is-valid'"
-                />
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('questionsCount')}" th:errors="*{questionsCount}">
-                    Title errors
-                </div>
-            </div>
-            <div class="form-field-inline" style="width: 172px;">
-                <label for="errCount">Кол-во ошибок в билете</label>
-                <input type="text" id="errCount" class="form-control" th:field="*{errorsCount}"
-                       th:classappend="${#fields.hasErrors('errorsCount')} ? 'is-invalid': 'is-valid'"
-                />
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('errorsCount')}" th:errors="*{errorsCount}">
                     Title errors
                 </div>
             </div>

@@ -7,6 +7,7 @@
     <div class="row">
         <a class="btn btn-inline" th:href="@{/tests/{id}(id=${test.id})}">Назад</a>
         <h5 style="display:inline-block" th:text="'Редактирование теста '+ ${test.title}"></h5>
+        <small th:text="${'Всего вопросов: '+test.questionsNumber}"></small>
     </div>
 
     </p>

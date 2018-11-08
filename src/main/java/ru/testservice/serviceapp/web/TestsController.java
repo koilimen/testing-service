@@ -115,16 +115,16 @@ public class TestsController {
         Test test = ts.getTest(id);
         Set<Course> courses = Collections.singleton(cs.getById(test.getSection().getCourse().getId()));
         test.setQuestionsNumber(qs.countTestQuestions(id));
-        int ticketsCount = test.getQuestionsNumber().intValue() / test.getSection().getQuestionsCount();
-        if (ticketsCount <= 10) {
+
+        if (test.getTicketsCount() <= 10) {
             model.addAttribute("colsCount", 1);
-        } else if (ticketsCount <= 20) {
+        } else if (test.getTicketsCount() <= 20) {
             model.addAttribute("colsCount", 2);
         } else {
             model.addAttribute("colsCount", 3);
         }
         model.addAttribute("test", test);
-        model.addAttribute("ticketsCount", ticketsCount);
+        model.addAttribute("ticketsCount", test.getTicketsCount());
         model.addAttribute("allCourses", courses);
         return "test-page";
     }

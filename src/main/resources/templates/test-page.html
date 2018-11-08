@@ -21,6 +21,9 @@
         </div>
     </div>
     <div class="row">
+        <a th:href="@{/section/{id}(id=${test.section.id})}" th:text="${test.section.name}"></a>
+    </div>
+    <div class="row">
         <h5 >
             <strong th:text="${test.title}"></strong>
             <a sec:authorize="${hasRole('ROLE_ADMIN')}"
@@ -31,11 +34,11 @@
     </div>
 
     <div class="row tickets">
-        <th:block th:if="${test.questionsNumber > 0}">
+        <th:block th:if="${ticketsCount > 0}">
             <th:block th:if="${colsCount == 1}">
                 <ul class="list list-striped">
                     <li class="list__item"
-                        th:each="i : ${#numbers.sequence( 0, test.questionsNumber/test.section.questionsCount -1) }">
+                        th:each="i : ${#numbers.sequence( 0, ticketsCount -1) }">
                         <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i+1})}">
                             Билет №
                             <th:block th:text="${i+1}"></th:block>
@@ -54,7 +57,7 @@
                 </ul>
                 <ul class="list list-striped">
                     <li class="list__item"
-                        th:each="i : ${#numbers.sequence( 11, test.questionsNumber/test.section.questionsCount -1) }">
+                        th:each="i : ${#numbers.sequence( 11, ticketsCount -1) }">
                         <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i+1})}">
                             Билет №
                             <th:block th:text="${i+1}"></th:block>
@@ -80,7 +83,7 @@
                     </li>
                 </ul>
                 <ul class="list list-striped">
-                    <li class="list__item" th:each="i : ${#numbers.sequence( 2*ticketsCount/3+2, ticketsCount) }">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( 2*ticketsCount/3+2, ticketsCount-1 ) }">
                         <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i+1})}">
                             Билет №
                             <th:block th:text="${i+1}"></th:block>

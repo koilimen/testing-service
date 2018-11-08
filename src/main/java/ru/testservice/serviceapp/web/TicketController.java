@@ -40,7 +40,7 @@ public class TicketController {
                          HttpServletResponse response,
                          Model model) {
         Test test = ts.getTest(testId);
-        Pageable pg = PageRequest.of(0, test.getSection().getQuestionsCount(), Sort.Direction.ASC, "id");
+        Pageable pg = PageRequest.of(0, test.getQuestionsCount(), Sort.Direction.ASC, "id");
 
         List<Long> vqIds = viewedQuestions != null ? Arrays.stream(viewedQuestions.split("\\|")).map(Long::parseLong).collect(Collectors.toList()) : Collections.emptyList();
         Long count = qs.countTestQuestions(test.getId());
@@ -58,7 +58,7 @@ public class TicketController {
             vqIds = Collections.emptyList();
         }
 
-        TicketDTO ticketDTO = makeTicketDto(test.getId(), test.getSection().getErrorsCount(), qs.getQuestions(test, vqIds, pg).getContent());
+        TicketDTO ticketDTO = makeTicketDto(test.getId(), test.getErrorsCount(), qs.getQuestions(test, vqIds, pg).getContent());
         StringBuilder sb = new StringBuilder();
         ticketDTO.getQuestionList().forEach(q -> {
             sb.append(q.getId()).append("|");

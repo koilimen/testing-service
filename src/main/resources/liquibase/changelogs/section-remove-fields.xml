@@ -7,9 +7,11 @@
    http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-   <include file="/liquibase/changelogs/test-change-fields-length.xml"/>
-   <include file="/liquibase/changelogs/section-add-questions-count-column.xml"/>
-   <include file="/liquibase/changelogs/tests-change-title-length.xml"/>
-   <include file="/liquibase/changelogs/section-remove-fields.xml"/>
-   <include file="/liquibase/changelogs/tests-add-fields.xml"/>
+    <changeSet author="imilienko" id="section-remove-fields" context="prod">
+        <sql dbms="postgresql">
+            ALTER TABLE public.sections DROP questions_count;
+            ALTER TABLE public.sections DROP errors_count;
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

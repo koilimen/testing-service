@@ -4,6 +4,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -32,6 +33,18 @@ public class Test {
     @Column(name="test_order", insertable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer order;
+    @Column(name = "questions_count")
+    @ColumnDefault(value = "5")
+    @NotNull(message = "Укажите кол-во вопросов в билете")
+    @Min(value = 1, message = "Кол-во вопросов в билете не может быть меньше 1")
+    private Integer questionsCount;
+    @Column(name = "errors_count")
+    @ColumnDefault(value = "1")
+    @NotNull(message = "Укажите допустимое кол-во ошибок в билете")
+    private Integer errorsCount;
+    @Column(name = "tickets_count")
+    @NotNull(message = "Укажите кол-во билетов в тесте")
+    private Integer ticketsCount;
 
     public Test(String title, String description, Long questionsNumber) {
         this.title = title;
@@ -48,6 +61,30 @@ public class Test {
         Test t = new Test();
         t.setId(id);
         return t;
+    }
+
+    public Integer getTicketsCount() {
+        return ticketsCount;
+    }
+
+    public void setTicketsCount(Integer ticketsCount) {
+        this.ticketsCount = ticketsCount;
+    }
+
+    public Integer getQuestionsCount() {
+        return questionsCount;
+    }
+
+    public void setQuestionsCount(Integer questionsCount) {
+        this.questionsCount = questionsCount;
+    }
+
+    public Integer getErrorsCount() {
+        return errorsCount;
+    }
+
+    public void setErrorsCount(Integer errorsCount) {
+        this.errorsCount = errorsCount;
     }
 
     public Integer getOrder() {

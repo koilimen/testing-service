@@ -15,7 +15,7 @@
         <!--/*@thymesVar id="course" type="ru.testservice.serviceapp.model.Course"*/-->
         <tr th:each="section, status : ${sections}">
             <td style="text-align: left;">
-                <a th:href="@{/section/{id}(id=${section.id})}" th:text="${section.code + ' ' +section.name}">
+                <a th:href="@{/section/{id}(id=${section.id})}" th:text="${section.name}">
                 </a>
             </td>
 

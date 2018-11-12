@@ -76,6 +76,7 @@ public class Test {
     }
 
     public Integer getTicketsCount() {
+        if(ticketsCount == null) return 0;
         return ticketsCount;
     }
 

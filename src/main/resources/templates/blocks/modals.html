@@ -41,14 +41,14 @@
                 </div>
             </div>
             <div class="form-field">
-                <label for="description">Описание</label>
-                <textarea id="description" class="form-control" th:field="*{description}"
+                <label for="cipher">Описание</label>
+                <input id="cipher" class="form-control" th:field="*{cipher}"
                           style="width: 100%;"
-                          th:classappend="${#fields.hasErrors('description')} ? 'is-invalid': 'is-valid'"
-                          placeholder="Новое описание"></textarea>
+                          th:classappend="${#fields.hasErrors('cipher')} ? 'is-invalid': 'is-valid'"
+                          placeholder="Новый шифр"/>
                 <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
-                    Description errors
+                     th:if="${#fields.hasErrors('cipher')}" th:errors="*{cipher}">
+                    cipher errors
                 </div>
             </div>
             <div class="form-field-inline" style="width:172px">

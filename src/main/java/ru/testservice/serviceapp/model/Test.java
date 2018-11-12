@@ -18,13 +18,13 @@ public class Test {
     @Column
     @NotNull
     @NotEmpty(message = "Название не может быть пустым.")
-    @Length(min = 3, max = 1024 , message = "Длина названия должна быть от 3 до 512 символов.")
+    @Length(min = 3, max = 1024 , message = "Длина названия должна быть от 3 до 1024 символов.")
     private String title;
-    @Column
+    @Column(name = "cipher")
     @NotNull
-    @NotEmpty(message = "Описание не может быть пустым.")
-    @Length( max = 1024, message = "Длина описнаие должна быть не более 512 символов.")
-    private String description;
+    @NotEmpty(message = "Шифр не может быть пустым.")
+    @Length( max = 255, message = "Длина шифра должна быть не более 255 символов.")
+    private String cipher;
     @Column
     private Long questionsNumber;
     @ManyToOne
@@ -46,9 +46,9 @@ public class Test {
     @NotNull(message = "Укажите кол-во билетов в тесте")
     private Integer ticketsCount;
 
-    public Test(String title, String description, Long questionsNumber) {
+    public Test(String title, String cipher, Long questionsNumber) {
         this.title = title;
-        this.description = description;
+        this.cipher = cipher;
         this.questionsNumber = questionsNumber;
     }
 
@@ -128,12 +128,12 @@ public class Test {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCipher() {
+        return cipher;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCipher(String cipher) {
+        this.cipher = cipher;
     }
 
     public Long getQuestionsNumber() {

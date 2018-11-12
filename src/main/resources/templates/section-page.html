@@ -42,13 +42,13 @@
                 </div>
             </div>
             <div class="form-field">
-                <label for="description">Описание</label>
-                <textarea name="description" id="description" class="form-control" th:field="*{description}"
+                <label for="cipher">Шифр</label>
+                <input  id="cipher" class="form-control" th:field="*{cipher}"
                           style="width: 100%;"
-                          th:classappend="${#fields.hasErrors('description')} ? 'is-invalid': 'is-valid'"
-                          placeholder="Новое описание"></textarea>
+                          th:classappend="${#fields.hasErrors('cipher')} ? 'is-invalid': 'is-valid'"
+                          placeholder="Новый шифр"/>
                 <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                     th:if="${#fields.hasErrors('cipher')}" th:errors="*{cipher}">
                     Description errors
                 </div>
             </div>
@@ -91,7 +91,10 @@
         <table class="table ">
             <thead>
             <tr>
-                <th scope="col" style="min-width: 442px;">Наименование</th>
+                <th scope="col" style="width: 44px;">Область аттестации</th>
+                <th scope="col" sec:authorize="${hasRole('ROLE_ADMIN')}" style="width: 44px;">Шифр</th>
+                <th scope="col" sec:authorize="${!hasRole('ROLE_ADMIN')}" style="width: 100px;">Шифр</th>
+                <th scope="col" style="min-width: 272px;">Наименование</th>
                 <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
                     <th scope="col">Кол-во вопросов в билете</th>
                     <th scope="col">Кол-во билетов</th>
@@ -105,6 +108,12 @@
             <tr th:each="test, status : ${tests}" class="tests-list__item"
                 th:attr="data-order=${test.order}, data-id=${test.id}"
             >
+                <td style="text-align: left; word-break: break-all;" th:text="${test.section.code}">
+
+                </td>
+                <td style="text-align: left; word-break: break-all;" th:text="${test.cipher}">
+
+                </td>
                 <td style="text-align: left;">
                     <a th:href="@{/tests/{id}(id=${test.id})}" th:text="${test.title}"></a>
                 </td>

@@ -8,7 +8,7 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet author="imilienko" id="tests-change-title-length" context="prod">
-        <sql    dbms="postgesql">
+        <sql    dbms="postgresql">
             ALTER TABLE public.tests ALTER COLUMN description TYPE varchar(1024);
             ALTER TABLE public.tests ALTER COLUMN title TYPE varchar(1024);
 

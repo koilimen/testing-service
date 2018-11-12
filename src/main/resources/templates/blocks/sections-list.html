@@ -4,7 +4,6 @@
     <table class="table ">
         <thead>
         <tr>
-            <th scope="col" style="width: 87px;">Область аттестации</th>
             <th scope="col" style="width: 500px; text-align:left;">Наименование</th>
             <th scope="col" sec:authorize="${hasRole('ROLE_ADMIN')}"></th>
             <th scope="col" sec:authorize="${hasRole('ROLE_ADMIN')}"></th>
@@ -15,9 +14,8 @@
         <!--/*@thymesVar id="editSection" type="ru.testservice.serviceapp.model.Section"*/-->
         <!--/*@thymesVar id="course" type="ru.testservice.serviceapp.model.Course"*/-->
         <tr th:each="section, status : ${sections}">
-            <td th:text="${section.code}">Mark</td>
             <td style="text-align: left;">
-                <a th:href="@{/section/{id}(id=${section.id})}"  th:text="${section.name}">
+                <a th:href="@{/section/{id}(id=${section.id})}" th:text="${section.code + ' ' +section.name}">
                 </a>
             </td>
 
@@ -25,7 +23,7 @@
             <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
                 <td>
                     <a href="javascript:void(0)" th:attr="data-src=@{/section/{id}/edit(id=${section.id})}"
-                       data-fancybox data-type="ajax" >
+                       data-fancybox data-type="ajax">
                         <i class="sections-table__control far fa-edit" title="Редактировать"></i>
                     </a>
                 </td>

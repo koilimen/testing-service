@@ -20,6 +20,10 @@ public class Test {
     @NotEmpty(message = "Название не может быть пустым.")
     @Length(min = 3, max = 1024 , message = "Длина названия должна быть от 3 до 1024 символов.")
     private String title;
+    @Column(name = "code")
+    @NotNull(message = "Область аттестации не может быть пустой")
+    @NotEmpty(message = "Область аттестации не может быть пустой")
+    private String code;
     @Column(name = "cipher")
     @NotNull
     @NotEmpty(message = "Шифр не может быть пустым.")
@@ -61,6 +65,14 @@ public class Test {
         Test t = new Test();
         t.setId(id);
         return t;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Integer getTicketsCount() {

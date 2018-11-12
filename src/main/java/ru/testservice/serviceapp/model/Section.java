@@ -11,10 +11,7 @@ public class Section extends AbstractEntity {
     @NotNull(message = "Название раздела не может быть пустым")
     @NotEmpty(message = "Название раздела не может быть пустым")
     private String name;
-    @Column(name = "section_code")
-    @NotNull(message = "Область аттестации не может быть пустой")
-    @NotEmpty(message = "Область аттестации не может быть пустой")
-    private String code;
+
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
@@ -44,11 +41,4 @@ public class Section extends AbstractEntity {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 }

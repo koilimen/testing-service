@@ -13,4 +13,5 @@
    <include file="/liquibase/changelogs/section-remove-fields.xml"/>
    <include file="/liquibase/changelogs/tests-add-fields.xml"/>
    <include file="/liquibase/changelogs/tests-description-to-cipher.xml"/>
+   <include file="/liquibase/changelogs/tests-code-from-sections.xml"/>
 </databaseChangeLog>

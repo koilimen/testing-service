@@ -41,6 +41,16 @@
                     Title errors
                 </div>
             </div>
+            <div class="form-field-inline" style="width:172px;">
+                <label for="code">Область аттестации</label>
+                <input type="text" id="code" class="form-control" th:field="*{code}"
+                       th:classappend="${#fields.hasErrors('code')} ? 'is-invalid': 'is-valid'"
+                />
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('code')}" th:errors="*{code}">
+                    Title errors
+                </div>
+            </div>
             <div class="form-field">
                 <label for="cipher">Шифр</label>
                 <input  id="cipher" class="form-control" th:field="*{cipher}"
@@ -108,7 +118,7 @@
             <tr th:each="test, status : ${tests}" class="tests-list__item"
                 th:attr="data-order=${test.order}, data-id=${test.id}"
             >
-                <td style="text-align: left; word-break: break-all;" th:text="${test.section.code}">
+                <td style="text-align: left; word-break: break-all;" th:text="${test.code}">
 
                 </td>
                 <td style="text-align: left; word-break: break-all;" th:text="${test.cipher}">

@@ -7,16 +7,7 @@
             <div class="new-course-form__heading">Добавление нового раздела</div>
             <input type="hidden" th:field="*{course.id}">
             <input type="hidden" th:field="*{id}">
-            <div class="form-field-inline" style="width:172px;">
-                <label for="code">Область аттестации</label>
-                <input type="text" id="code" class="form-control" th:field="*{code}"
-                       th:classappend="${#fields.hasErrors('code')} ? 'is-invalid': 'is-valid'"
-                />
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('code')}" th:errors="*{code}">
-                    Title errors
-                </div>
-            </div>
+
             <div class="form-field-inline" style="width:546px;">
                 <label for="name">Наименование раздела</label>
                 <input type="text" id="name" class="form-control" th:field="*{name}"

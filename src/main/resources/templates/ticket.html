@@ -16,7 +16,7 @@
     <div class="row">
         <a th:href="@{/section/{id}(id=${test.section.id})}" th:text="${test.section.name}"></a>
     </div>
-    <div class="row heading" th:text="'Билет №'+${ ticketNum} + '  '+ ${test.section.code}+' '+${test.title}"></div>
+    <div class="row heading" th:text="'Билет №'+${ ticketNum} + '  '+ ${test.code}+' '+${test.title}"></div>
     <div class="row " th:if="${ticketChecked and incorrectCount > ticketDto.errorsCount }">
         <p class="errors-heading"> Тест не пройден! Вы совершили более
             <th:block th:text="${ticketDto.errorsCount}"></th:block>

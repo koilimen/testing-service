@@ -1,12 +1,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<th:block th:fragment="question-edit(question)">
+<th:block th:fragment="question-edit(question, index)">
     <a th:href="@{/questions/delete/{id}(id=${question.id})}" title="Удалить"
        class="question__remove fa fa-trash-alt"></a>
     <form action="" th:method="put" >
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <input type="hidden" name="id" th:value="${question.id}"/>
         <input type="hidden" name="test.id" th:value="${question.test.id}"/>
+        <div class="question__number" th:text="${'Вопрос #'+(index+1)}"></div>
         <div class="form-field row">
             <label for="questionText" class="col-sm-2 col-form-label">Текст вопроса</label>
             <div class="col-sm-10">

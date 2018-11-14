@@ -24,29 +24,31 @@
         <!--empty-->
     </th:block>
     <div class="wrapper">
-        <div class="left-sidebar" th:if="${viewName eq 'main' or viewName eq 'documents'}">
+        <!--<div class="left-sidebar" th:if="${viewName eq 'main' or viewName eq 'documents'}">-->
+        <div class="left-sidebar">
             <th:block th:replace="includes/nav :: nav">
                 <!--empty-->
             </th:block>
 
         </div>
-        <div class="content" th:classappend="${viewName eq 'main' or viewName eq 'documents' } ? 'content-main'">
+        <!--<div class="content" th:classappend="${viewName eq 'main' or viewName eq 'documents' } ? 'content-main'">-->
+        <div class="content content-main">
             <th:block layout:fragment="content">
                 <!--empty-->
             </th:block>
         </div>
-        <div class="right-sidebar" th:if="${viewName ne 'main'}">
-            <div class="row">
-                <div class="ad-block ">
-                    РЕКЛАМА
-                </div>
-            </div>
-            <div class="row">
-                <div class="ad-block">
-                    РЕКЛАМА
-                </div>
-            </div>
-        </div>
+        <!--<div class="right-sidebar" th:if="${viewName ne 'main'}">-->
+            <!--<div class="row">-->
+                <!--<div class="ad-block ">-->
+                    <!--РЕКЛАМА-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="ad-block">-->
+                    <!--РЕКЛАМА-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
     <th:block th:replace="includes/footer :: footer ">
         <!--empty-->

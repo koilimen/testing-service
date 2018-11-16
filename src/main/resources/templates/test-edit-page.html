@@ -14,7 +14,7 @@
     <div class="row">
 
         <strong>1. Редактирование теста</strong>
-        <div class=" edit-section-form" >
+        <div class=" edit-section-form">
             <form id="test-edit-form" action="#" th:action="@{/section/{id}(id=${test.section.id})}" th:object="${test}"
                   th:method="put">
                 <input type="hidden" th:field="*{section.id}"/>
@@ -88,9 +88,27 @@
             </form>
         </div>
     </div>
+    <div class="row edit-section-form">
+        <strong>2. Список литературы</strong>
+        <form method="post" id="add-literature">
+            <input type="hidden" name="testId" th:value="${test.id}"/>
+            <input type="text" name="title" style="width:100%"/>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+        <table class="table table-headless">
+            <tr th:each="lit : ${testLiterature}">
+                <td th:text="${lit.title}" style="text-align:left;"></td>
+                <td>
+                    <a href="#" class="delete-literature" th:attr="data-id=${lit.id}" >
+                        <i class="far fa-trash-alt" title="Удалить"></i>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
     <div class="row">
 
-        <label for="docxFile"><strong>2. Загрузка вопросов из файла</strong></label>
+        <label for="docxFile"><strong>3. Загрузка вопросов из файла</strong></label>
 
         <div class="form-field-framed file-input-wrapper ">
             <form th:action="@{/questions/upload}" id="questionFilesForm">
@@ -117,7 +135,7 @@
         </div>
     </div>
     <div class="row">
-        <p><strong>3. Редактирование вопросов</strong> <a th:if="${questions.getContent().size() > 0}"
+        <p><strong>4. Редактирование вопросов</strong> <a th:if="${questions.getContent().size() > 0}"
                                                           th:href="@{/tests/{id}/delete-all-questions(id=${test.id})}">Удалить
             все вопросы</a></p>
         <div class="new-question-form question">

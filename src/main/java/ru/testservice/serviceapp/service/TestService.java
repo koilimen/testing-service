@@ -7,24 +7,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.testservice.serviceapp.model.Answer;
-import ru.testservice.serviceapp.model.Question;
+import org.thymeleaf.util.StringUtils;
 import ru.testservice.serviceapp.model.Test;
+import ru.testservice.serviceapp.model.TestLiterature;
+import ru.testservice.serviceapp.repository.LiteratureRepository;
 import ru.testservice.serviceapp.repository.TestRepository;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class TestService {
     private final TestRepository repository;
+    private final LiteratureRepository litRepo;
 
     @Autowired
-    public TestService(TestRepository repository) {
+    public TestService(TestRepository repository, LiteratureRepository litRepo) {
         this.repository = repository;
+        this.litRepo = litRepo;
     }
 
 
@@ -64,5 +64,21 @@ public class TestService {
     @Transactional
     public void removeBySectionId(Long sid) {
         repository.deleteAllBySectionId(sid);
+    }
+
+    public void addLiterature(Long id, String title) {
+        if(StringUtils.isEmpty(title)) return;
+        TestLiterature lit = new TestLiterature();
+        lit.setTitle(title);
+        lit.setTest(new Test(id));
+        litRepo.save(lit);
+    }
+
+    public List<TestLiterature> getLiterature(Long id) {
+        return litRepo.findAllByTestId(id);
+    }
+
+    public void delLiterature(Long id) {
+        litRepo.deleteById(id);
     }
 }

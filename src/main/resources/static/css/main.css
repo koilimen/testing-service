@@ -46,7 +46,7 @@ a, .btn-link, .btn-link-red {
     font-weight: normal;
     line-height: 26px;
     font-size: 16px;
-    text-decoration-line: underline;
+    text-decoration-line: none;
     color: #1B65C0;
 }
 

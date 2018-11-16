@@ -97,6 +97,14 @@
             В тесте еще нет вопросов.
         </th:block>
     </div>
+    <div class="row">
+        <strong>Литература для подготовки</strong>
+        <table class="table table-headless">
+            <tr th:each="lit : ${testLiterature}">
+                <td th:text="${lit.title}" style="text-align:left;"></td>
+            </tr>
+        </table>
+    </div>
     <br>
     <br>
 </th:block>

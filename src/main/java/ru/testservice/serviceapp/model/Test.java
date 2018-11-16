@@ -18,21 +18,21 @@ public class Test {
     @Column
     @NotNull
     @NotEmpty(message = "Название не может быть пустым.")
-    @Length(min = 3, max = 1024 , message = "Длина названия должна быть от 3 до 1024 символов.")
+    @Length(min = 3, max = 1024, message = "Длина названия должна быть от 3 до 1024 символов.")
     private String title;
     @Column(name = "code")
     private String code;
     @Column(name = "cipher")
     @NotNull
     @NotEmpty(message = "Шифр не может быть пустым.")
-    @Length( max = 255, message = "Длина шифра должна быть не более 255 символов.")
+    @Length(max = 255, message = "Длина шифра должна быть не более 255 символов.")
     private String cipher;
     @Column
     private Long questionsNumber;
     @ManyToOne
     @JoinColumn(name = "section_id")
     private Section section;
-    @Column(name="test_order", insertable = false)
+    @Column(name = "test_order", insertable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer order;
     @Column(name = "questions_count")
@@ -74,7 +74,7 @@ public class Test {
     }
 
     public Integer getTicketsCount() {
-        if(ticketsCount == null) return 0;
+        if (ticketsCount == null) return 0;
         return ticketsCount;
     }
 
@@ -111,6 +111,9 @@ public class Test {
     }
 
 
+    public Test(Long id) {
+        this.id = id;
+    }
 
     public Test() {
     }
@@ -148,7 +151,7 @@ public class Test {
     }
 
     public Long getQuestionsNumber() {
-        if(questionsNumber == null){
+        if (questionsNumber == null) {
             questionsNumber = 0L;
         }
         return questionsNumber;
@@ -159,7 +162,7 @@ public class Test {
     }
 
     public void increaseQN() {
-        if(this.questionsNumber == null){
+        if (this.questionsNumber == null) {
             this.questionsNumber = 0L;
         }
         this.questionsNumber++;

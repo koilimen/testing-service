@@ -38,6 +38,17 @@ public class TestsController {
         this.cs = cs;
     }
 
+    @RequestMapping(value = "/add-literature", method = RequestMethod.POST)
+    public @ResponseBody String addLiterature(@RequestParam Long testId, @RequestParam String title){
+        ts.addLiterature(testId, title);
+        return "SUCCESS";
+    }
+    @RequestMapping(value = "/del-literature/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody String addLiterature(@PathVariable Long id){
+        ts.delLiterature(id);
+        return "SUCCESS";
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public String getPage(Model model, @RequestParam(required = false) Long editId) {
         model.addAttribute("newTest", new Test());
@@ -53,6 +64,7 @@ public class TestsController {
         Test test = ts.getTest(id);
         test.setQuestionsNumber(qs.countTestQuestions(id));
         model.addAttribute("test", test);
+        model.addAttribute("testLiterature", ts.getLiterature(id));
         Question newQuestion = new Question();
         newQuestion.setAnswers(new ArrayList<>());
         newQuestion.getAnswers().add(new Answer());
@@ -125,6 +137,7 @@ public class TestsController {
         }
         model.addAttribute("test", test);
         model.addAttribute("ticketsCount", test.getTicketsCount());
+        model.addAttribute("testLiterature", ts.getLiterature(id));
         model.addAttribute("allCourses", courses);
         return "test-page";
     }

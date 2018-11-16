@@ -177,6 +177,45 @@ $(document).ready(function () {
         })
     });
 
+    $body.on('submit', "#add-literature", function (e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+        $.ajax({
+            data: data,
+            url: "/tests/add-literature",
+            method: 'POST',
+            headers: getCSRF(),
+            success: function (response) {
+                if (response === 'SUCCESS') {
+                    window.location.reload(true);
+                }
+                console.log(response);
+            },
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        })
+    });
+
+    $body.on('click', ".delete-literature", function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var row = $(this).closest('tr');
+        $.ajax({
+            url: "/tests/del-literature/"+id,
+            method: 'DELETE',
+            headers: getCSRF(),
+            success: function (response) {
+                if (response === 'SUCCESS') {
+                    row.remove();
+                }
+                console.log(response);
+            },
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        })
+    });
 
     $body.on('submit', '#editSectionForm', function (e) {
         e.preventDefault();
@@ -259,11 +298,11 @@ $(document).ready(function () {
         if (prev) {
             prev.insertAfter(parent);
             var url;
-            if(parent.hasClass('course-item')){
+            if (parent.hasClass('course-item')) {
                 url = "/course/update-orders";
-            } else if(parent.hasClass('section-item')){
+            } else if (parent.hasClass('section-item')) {
                 url = "/section/update-orders";
-            } else if(parent.hasClass('test-item')){
+            } else if (parent.hasClass('test-item')) {
                 url = "/tests/update-orders";
             }
             swapOrders(parent, prev, url);
@@ -276,14 +315,14 @@ $(document).ready(function () {
         if (next) {
             next.insertBefore(parent);
             var url;
-            if(parent.hasClass('course-item')){
+            if (parent.hasClass('course-item')) {
                 url = "/course/update-orders";
-            } else if(parent.hasClass('section-item')){
+            } else if (parent.hasClass('section-item')) {
                 url = "/section/update-orders";
-            } else if(parent.hasClass('test-item')){
+            } else if (parent.hasClass('test-item')) {
                 url = "/tests/update-orders";
             }
-            swapOrders(next, parent,  url);
+            swapOrders(next, parent, url);
         }
     })
 });

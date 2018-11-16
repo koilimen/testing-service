@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(schema = "public", name = "sections")
-public class Section extends AbstractEntity {
+public class Section extends AbstractOrderedEntity {
     @Column(name = "section_name")
     @NotNull(message = "Название раздела не может быть пустым")
     @NotEmpty(message = "Название раздела не может быть пустым")

@@ -95,6 +95,12 @@ public class SectionController {
         return "section-page";
     }
 
+    @RequestMapping(value = "/update-orders", method = RequestMethod.POST)
+    public @ResponseBody
+    String updateOrder(@RequestParam("ids[]") List<Long> ids, @RequestParam("orders[]") List<Integer> orders) {
+        return sectionService.uppdateOrders(ids, orders);
+    }
+
     private void prepareModel(Section section, Model model, Long testEditId, Pageable pageable) {
         model.addAttribute("section", section);
         List<Test> tests = testService.findAllBySectionId(section.getId(), pageable).getContent();

@@ -4,8 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.testservice.serviceapp.model.Course;
+import ru.testservice.serviceapp.model.Test;
 import ru.testservice.serviceapp.repository.CourseRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseService {
@@ -39,5 +44,18 @@ public class CourseService {
 
     public Iterable<Course> getAllExcept(Course course) {
         return repository.findAllExcept(course.getId());
+    }
+
+    @Transactional
+    public String uppdateOrders(List<Long> ids, List<Integer> orders) {
+        for(int i = 0; i< ids.size(); i++){
+            Optional<Course> byId = repository.findById(ids.get(i));
+            if(byId.isPresent()){
+                Course course = byId.get();
+                course.setOrder(orders.get(i));
+                repository.save(course);
+            }
+        }
+        return "SUCCESS";
     }
 }

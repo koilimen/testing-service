@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(schema = "public", name = "courses")
-public class Course extends AbstractEntity {
+public class Course extends AbstractOrderedEntity {
     @Column(name = "course_name")
     @NotNull(message = "Название курса не может быть пустым")
     @NotEmpty(message = "Название курса не может быть пустым")

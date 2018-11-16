@@ -15,6 +15,7 @@ import ru.testservice.serviceapp.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/course")
@@ -31,7 +32,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String main(@PathVariable Long id, Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable,
+    public String main(@PathVariable Long id, Model model, @PageableDefault(size = 15, sort = {"order"}) Pageable pageable,
                        HttpServletRequest request) {
         Course course = courseService.getById(id);
         Iterable<Course> allExcept = courseService.getAllExcept(course);
@@ -63,7 +64,7 @@ public class CourseController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public String main(@PathVariable Long id, Model model,
-                       @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable,
+                       @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable,
                        @ModelAttribute("newSection") @Valid Section newSection, BindingResult result) {
         Course course = courseService.getById(id);
         if (!result.hasErrors()) {
@@ -83,7 +84,7 @@ public class CourseController {
 
     @RequestMapping(value = "/{cid}/edit/{sid}", method = RequestMethod.GET)
     public String editSection(@PathVariable Long cid, @PathVariable Long sid, Model model,
-                              @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+                              @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         Course course = courseService.getById(cid);
         prepareModel(course, model, pageable);
         model.addAttribute("newSection", new Section(course));
@@ -94,7 +95,7 @@ public class CourseController {
 
     @RequestMapping(value = "/{cid}/edit/{sid}", method = RequestMethod.POST)
     public String editSectionPost(@PathVariable Long cid, @PathVariable Long sid, Model model,
-                                  @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable,
+                                  @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable,
                                   @ModelAttribute("editSection") @Valid Section editSection, BindingResult result) {
         if (!result.hasErrors()) {
             sectionService.save(editSection);
@@ -106,7 +107,11 @@ public class CourseController {
         return "course";
 
     }
-
+    @RequestMapping(value = "/update-orders", method = RequestMethod.POST)
+    public @ResponseBody
+    String updateOrder(@RequestParam("ids[]") List<Long> ids, @RequestParam("orders[]") List<Integer> orders) {
+        return courseService.uppdateOrders(ids, orders);
+    }
     private void prepareModel(Course course, Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
         model.addAttribute("course", course);
         model.addAttribute("sections", sectionService.getByCourseId(course.getId(), pageable));

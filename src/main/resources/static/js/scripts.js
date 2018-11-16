@@ -250,6 +250,42 @@ $(document).ready(function () {
             }
         });
     })
+
+
+    $body.on('click', '.sort-up', function (e) {
+        e.preventDefault();
+        var parent = $(this).closest('.orderable:not(.new)');
+        var prev = parent.prev(".orderable");
+        if (prev) {
+            prev.insertAfter(parent);
+            var url;
+            if(parent.hasClass('course-item')){
+                url = "/course/update-orders";
+            } else if(parent.hasClass('section-item')){
+                url = "/section/update-orders";
+            } else if(parent.hasClass('test-item')){
+                url = "/tests/update-orders";
+            }
+            swapOrders(parent, prev, url);
+        }
+    })
+    $body.on('click', '.sort-down', function (e) {
+        e.preventDefault();
+        var parent = $(this).closest('.orderable');
+        var next = parent.next(".orderable");
+        if (next) {
+            next.insertBefore(parent);
+            var url;
+            if(parent.hasClass('course-item')){
+                url = "/course/update-orders";
+            } else if(parent.hasClass('section-item')){
+                url = "/section/update-orders";
+            } else if(parent.hasClass('test-item')){
+                url = "/tests/update-orders";
+            }
+            swapOrders(next, parent,  url);
+        }
+    })
 });
 
 function getCSRF() {
@@ -259,3 +295,30 @@ function getCSRF() {
     headers[csrfHeaderName] = csrfHeaderContent;
     return headers;
 }
+
+
+function swapOrders(prev, next, url) {
+    var prevOrder = prev.data('order');
+    var nextOrder = next.data('order');
+    next.data('order', prevOrder);
+    prev.data('order', nextOrder);
+    var data = {
+        "ids[]": [next.data('id'), prev.data('id')],
+        'orders[]': [prevOrder, nextOrder]
+    };
+    $.ajax({
+        url: url,
+        data: data,
+        method: 'POST',
+        dataType: 'text',
+        headers: getCSRF(),
+        success: function (response) {
+            console.log(repsonse)
+        },
+        error: function (xhr, status, err) {
+            console.error(url + " -> " + status);
+            console.error(err);
+        }
+    })
+}
+

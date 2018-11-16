@@ -5,6 +5,8 @@
         <!--/*@thymesVar id="newCourse" type="ru.testservice.serviceapp.model.Course"*/-->
         <form action="#" id="editCourseForm" th:action="@{/course/edit}" th:object="${newCourse}" th:method="put" >
             <input type="hidden" th:field="*{id}" id="id"/>
+            <input type="hidden" th:field="*{order}">
+
             <div class="new-course-form__heading">Редактирование курса</div>
             <span class="add-img"></span>
             <input type="text"  th:field="*{name}" class="form-control-inline"

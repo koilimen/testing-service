@@ -7,13 +7,15 @@
             <th scope="col" style="width: 500px; text-align:left;">Наименование</th>
             <th scope="col" sec:authorize="${hasRole('ROLE_ADMIN')}"></th>
             <th scope="col" sec:authorize="${hasRole('ROLE_ADMIN')}"></th>
+            <th scope="col" sec:authorize="${hasRole('ROLE_ADMIN')}"></th>
 
         </tr>
         </thead>
         <tbody>
         <!--/*@thymesVar id="editSection" type="ru.testservice.serviceapp.model.Section"*/-->
         <!--/*@thymesVar id="course" type="ru.testservice.serviceapp.model.Course"*/-->
-        <tr th:each="section, status : ${sections}">
+        <tr th:each="section, status : ${sections}" class="section-item orderable"
+            th:attr="data-order=${section.order}, data-id=${section.id}">
             <td style="text-align: left;">
                 <a th:href="@{/section/{id}(id=${section.id})}" th:text="${section.name}">
                 </a>
@@ -31,6 +33,14 @@
                     <a th:href="@{/course/{cid}/deletesecton/{id}(id=${section.id}, cid=${course.id})}">
                         <i class="sections-table__control far fa-trash-alt" title="Удалить"></i>
                     </a>
+                </td>
+                <td>
+                    <div class="sort-up btn-link">
+                        <i class="fas fa-caret-up"></i>
+                    </div>
+                    <div class="sort-down btn-link">
+                        <i class="fas fa-caret-down"></i>
+                    </div>
                 </td>
             </th:block>
 

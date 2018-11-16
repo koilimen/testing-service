@@ -28,7 +28,7 @@ public class RootController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String main(Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+    public String main(Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         model.addAttribute("newCourse", new Course());
         model.addAttribute("isMain", true);
         model.addAttribute("showNav", true);
@@ -39,8 +39,7 @@ public class RootController {
 
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public String saveNewCourse(@ModelAttribute("newCourse") @Valid Course newCourse, BindingResult result, Model model,
-                                @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+    public String saveNewCourse(@ModelAttribute("newCourse") @Valid Course newCourse, BindingResult result) {
         if (!result.hasErrors()) {
             courseService.save(newCourse);
         }
@@ -48,7 +47,7 @@ public class RootController {
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editCourse(@PathVariable Long id, Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+    public String editCourse(@PathVariable Long id, Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         prepareMainModel(model, pageable);
         Course course = courseService.getById(id);
         model.addAttribute("editCourse", course);
@@ -60,7 +59,7 @@ public class RootController {
     public String editCoursePost(@PathVariable Long id, Model model,
                                  @ModelAttribute("editCourse") @Valid Course course,
                                  BindingResult result,
-                                 @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+                                 @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         if (!result.hasErrors()) {
             courseService.save(course);
             return "redirect:/";

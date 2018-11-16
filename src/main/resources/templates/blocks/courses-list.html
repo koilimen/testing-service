@@ -6,22 +6,9 @@
         <tbody>
         <!--/*@thymesVar id="courses" type="java.util.List<ru.testservice.serviceapp.model.Course>"*/-->
         <!--/*@thymesVar id="editCourse" type="ru.testservice.serviceapp.model.Course"*/-->
-        <tr th:each="course, status : ${courses}"  >
-            <td th:if="${editCourse eq null or editCourse.id ne course.id}" >
+        <tr th:each="course, status : ${courses}" th:attr="data-order=${course.order}, data-id=${course.id}" class="course-item orderable">
+            <td th:if="${editCourse eq null or editCourse.id ne course.id}"  style="width:575px">
                 <a th:href="@{/course/{id}(id=${course.id})}" th:text="${course.name}"></a>
-            </td>
-            <td th:if="${editCourse ne null and editCourse.id eq course.id}">
-                <form class="form-inline" th:action="@{/edit/{id}(id=${course.id})}" th:object="${editCourse}"
-                      th:method="post">
-                    <input type="text" class="form-control" th:field="*{name}"
-                           th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': 'is-valid'"
-                           placeholder="Новый курс"/>
-                    <div class="invalid-feedback"
-                         th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-                        Title errors
-                    </div>
-                    <button type="submit" class="tests-list__item-link btn btn-link add-test">Сохранить</button>
-                </form>
             </td>
             <th:block th:if="${(showControls eq null or showControls) and (editCourse == null or editCourse.id ne course.id)}">
                 <td>
@@ -34,17 +21,23 @@
                         <a data-fancybox data-type="ajax" th:attr="data-src=@{/course/edit/{id}(id=${course.id})}">
                             <i class="courses-table__control far fa-edit" title="Редактировать"></i>
                         </a>
-                    </td>
-                    <td>
+
                         <a th:href="@{/delete/{id}(id=${course.id})}">
                             <i class="courses-table__control far fa-trash-alt" title="Удалить"></i>
                         </a>
                     </td>
+                    <td>
+
+                        <div class="sort-up btn-link">
+                            <i class="fas fa-caret-up"></i>
+                        </div>
+                        <div class="sort-down btn-link">
+                            <i class="fas fa-caret-down"></i>
+                        </div>
+                    </td>
                 </th:block>
             </th:block>
-            </td>
         </tr>
-
         </tbody>
     </table>
 </th:block>

@@ -14,4 +14,5 @@
    <include file="/liquibase/changelogs/tests-add-fields.xml"/>
    <include file="/liquibase/changelogs/tests-description-to-cipher.xml"/>
    <include file="/liquibase/changelogs/tests-code-from-sections.xml"/>
+   <include file="/liquibase/changelogs/sections-courses-ordering.xml"/>
 </databaseChangeLog>

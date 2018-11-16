@@ -97,7 +97,7 @@
             В тесте еще нет вопросов.
         </th:block>
     </div>
-    <div class="row">
+    <div class="row" th:if="${testLiterature ne null and testLiterature.size() > 0}">
         <strong>Литература для подготовки</strong>
         <table class="table table-headless">
             <tr th:each="lit : ${testLiterature}">

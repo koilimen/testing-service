@@ -135,8 +135,12 @@ public class QuestionService {
                 parseByLists(f, questions);
             }
         });
-        log.info("Parsed questions: {}", questions.size());
-        testLink.setQuestionsNumber(testLink.getQuestionsNumber() + questions.size());
+        int size = questions.size();
+        log.info("Parsed questions: {}", size);
+        testLink.setQuestionsNumber(testLink.getQuestionsNumber() + size);
+        for (Question question : questions) {
+            question.setOrder(size--);
+        }
         repository.saveAll(questions);
         tr.save(testLink);
         testLink = null;

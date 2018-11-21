@@ -20,6 +20,9 @@ public class Question {
     @JoinColumn(name = "test_id")
     private Test test;
 
+    @Column(name="orderr")
+    private Integer order;
+
 
 
     public Question() {
@@ -36,6 +39,14 @@ public class Question {
         this.answers.forEach( a -> {
             a.setQuestion(this);
         });
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     public boolean hasErrors() {

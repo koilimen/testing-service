@@ -59,13 +59,14 @@ public class TestsController {
     }
 
     @RequestMapping(value = "/{id}/edit", method = {RequestMethod.GET})
-    public String getTestEditPage(Model model, @PathVariable Long id, @PageableDefault(page = 0, size = 15, sort = "id",
+    public String getTestEditPage(Model model, @PathVariable Long id, @PageableDefault(page = 0, size = 15, sort = "order",
     direction = Sort.Direction.DESC) Pageable pageable) {
         Test test = ts.getTest(id);
         test.setQuestionsNumber(qs.countTestQuestions(id));
         model.addAttribute("test", test);
         model.addAttribute("testLiterature", ts.getLiterature(id));
         Question newQuestion = new Question();
+        newQuestion.setOrder(test.getQuestionsNumber().intValue()+1);
         newQuestion.setAnswers(new ArrayList<>());
         newQuestion.getAnswers().add(new Answer());
         newQuestion.getAnswers().add(new Answer());

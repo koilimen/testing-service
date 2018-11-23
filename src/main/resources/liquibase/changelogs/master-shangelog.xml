@@ -13,4 +13,5 @@
    <include file="/liquibase/changelogs/tests-code-from-sections.xml"/>
    <include file="/liquibase/changelogs/sections-courses-ordering.xml"/>
    <include file="/liquibase/changelogs/questions-add-order.xml"/>
+   <include file="/liquibase/changelogs/literature-change-constraint.xml"/>
 </databaseChangeLog>

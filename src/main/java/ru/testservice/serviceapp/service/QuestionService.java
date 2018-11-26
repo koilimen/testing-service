@@ -60,6 +60,7 @@ public class QuestionService {
     private void extract(XWPFParagraph paragraph, List<Question> questions, boolean isQuestionText) {
         String text = paragraph.getText().trim();
         if (text.isEmpty() || text.length() < 3) return;
+
         if (isQuestionText) {
             // Текст вопроса - нужно создавать новый вопрос
             if (text.indexOf(".") <= 3 && text.indexOf(".") > 0) {
@@ -102,6 +103,7 @@ public class QuestionService {
                     }
                 }
             }
+            questions.add(this.buferQuestion.clone());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -127,8 +129,13 @@ public class QuestionService {
     public void uploadQuestions(List<MultipartFile> files) {
         List<Question> questions = new ArrayList<>();
         files.forEach(f -> {
-            boolean tabled = f.getName().contains("__tabled");
-            log.debug("File {} {} tabled ", f.getName(), tabled ? "is" : "is not");
+            boolean tabled = false;
+            if (f.getOriginalFilename() == null) {
+                log.error("File has null original name. Will try simple strategy");
+            } else {
+                tabled = f.getOriginalFilename().contains("__tabled");
+                log.debug("File {} {} tabled ", f.getOriginalFilename(), "is");
+            }
             if (tabled) {
                 parseTables(f, questions);
             } else {
@@ -151,7 +158,7 @@ public class QuestionService {
     }
 
     public Page<Question> getQuestions(@NotNull Test test, List<Long> except, @NotNull Pageable pageable) {
-        if(except == null || except.size() == 0 ){
+        if (except == null || except.size() == 0) {
             return repository.findAllByTestId(test.getId(), pageable);
         }
         return repository.findAllByTestIdExcpet(test, except, pageable);

@@ -47,6 +47,11 @@ public class Test {
     @Column(name = "tickets_count")
     @NotNull(message = "Укажите кол-во билетов в тесте")
     private Integer ticketsCount;
+    @Column(name="descr_title")
+    @Length(max=255, message = "Слишком длинный заголовок. Максимальная длина - 255 символов.")
+    public String descriptionTitle;
+    @Column(name="descr_content")
+    public String descriptionContent;
 
     public Test(String title, String cipher, Long questionsNumber) {
         this.title = title;
@@ -63,6 +68,22 @@ public class Test {
         Test t = new Test();
         t.setId(id);
         return t;
+    }
+
+    public String getDescriptionTitle() {
+        return descriptionTitle;
+    }
+
+    public void setDescriptionTitle(String descriptionTitle) {
+        this.descriptionTitle = descriptionTitle;
+    }
+
+    public String getDescriptionContent() {
+        return descriptionContent;
+    }
+
+    public void setDescriptionContent(String descriptionContent) {
+        this.descriptionContent = descriptionContent;
     }
 
     public String getCode() {

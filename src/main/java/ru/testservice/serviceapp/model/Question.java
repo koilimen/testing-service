@@ -61,7 +61,8 @@ public class Question {
                 correctCount++;
             }
         }
-        return correctCount != checkedCount;
+
+        return checkedCount == 0 || correctCount != checkedCount;
     }
 
 

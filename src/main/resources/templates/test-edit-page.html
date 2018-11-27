@@ -31,6 +31,7 @@
                         Title errors
                     </div>
                 </div>
+
                 <div class="form-field-inline" style="width:172px;">
                     <label for="code">Область аттестации</label>
                     <input type="text" id="code" class="form-control" th:field="*{code}"
@@ -79,6 +80,28 @@
                     />
                     <div class="invalid-feedback"
                          th:if="${#fields.hasErrors('ticketsCount')}" th:errors="*{ticketsCount}">
+                        Title errors
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="descr-heading">Описание заголовок</label>
+                    <input id="descr-heading" type="text" class="form-control" th:field="*{descriptionTitle}"
+                           style="width:100%"
+                           th:classappend="${#fields.hasErrors('descriptionTitle')} ? 'is-invalid': 'is-valid'"
+                           placeholder="Описание заголовок"/>
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('descriptionTitle')}" th:errors="*{descriptionTitle}">
+                        Title errors
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="descr-content">Описание текст</label>
+                    <textarea id="descr-content" type="text" class="form-control" th:field="*{descriptionContent}"
+                           style="width:100%"
+                           th:classappend="${#fields.hasErrors('descriptionContent')} ? 'is-invalid': 'is-valid'"
+                              placeholder="Описание"></textarea>
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('descriptionContent')}" th:errors="*{descriptionContent}">
                         Title errors
                     </div>
                 </div>

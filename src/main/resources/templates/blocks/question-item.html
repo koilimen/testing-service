@@ -4,7 +4,7 @@
 <!--/*@thymesVar id="question" type="ru.testservice.serviceapp.model.Question"*/-->
 <th:block th:fragment="question-item(question, index)">
     <div class="question row"
-         th:classappend="${question.hasErrors()} ? 'has-errors': (${ticketChecked} ? 'no-errors' : '')">
+         th:classappend="${ticketChecked and question.hasErrors()} ? 'has-errors': (${ticketChecked} ? 'no-errors' : '')">
         <input type="hidden"
                th:name="'questionList['+${index}+'].id'"
                th:value="${question.id}"

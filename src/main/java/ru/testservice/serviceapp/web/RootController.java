@@ -30,11 +30,39 @@ public class RootController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String main(Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         model.addAttribute("newCourse", new Course());
-        model.addAttribute("isMain", true);
         model.addAttribute("showNav", true);
         model.addAttribute("files", storageService.getAll());
         prepareMainModel(model, pageable);
         return "main";
+    }
+
+    @RequestMapping(value = "/attestation-organization", method = RequestMethod.GET)
+    public String attestationOrganization(Model model) {
+        model.addAttribute("showNav", true);
+        return "attestation-organization";
+    }
+
+    @RequestMapping(value = "/state-tax", method = RequestMethod.GET)
+    public String stateTax(Model model) {
+        model.addAttribute("showNav", true);
+        return "state-tax";
+    }
+
+    @RequestMapping(value = "/attestation-order", method = RequestMethod.GET)
+    public String attestationOrder(Model model) {
+        model.addAttribute("showNav", true);
+        return "attestation-order";
+    }
+
+    @RequestMapping(value = "/commission-creation", method = RequestMethod.GET)
+    public String commissionCreation(Model model) {
+        model.addAttribute("showNav", true);
+        return "commission-creation";
+    }
+    @RequestMapping(value = "/contacts", method = RequestMethod.GET)
+    public String contacts(Model model) {
+        model.addAttribute("showNav", true);
+        return "contacts";
     }
 
 
@@ -86,10 +114,11 @@ public class RootController {
     }
 
     @RequestMapping(value = "/splash", method = {RequestMethod.GET, RequestMethod.POST})
-    public String splash(Model model, @RequestParam(value = "error",defaultValue = "false") Boolean error) {
+    public String splash(Model model, @RequestParam(value = "error", defaultValue = "false") Boolean error) {
         model.addAttribute("error", error);
         return "splash";
     }
+
     @RequestMapping(value = "/uikit", method = {RequestMethod.GET, RequestMethod.POST})
     public String uikit(Model model) {
         return "ui-kit";

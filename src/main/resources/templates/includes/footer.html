@@ -12,7 +12,7 @@
             <div class="footer__main-col2">
                 <div class="footer__col-heading">Мы в соцсетях:</div>
                 <div class="socials">
-                    <div class="social"><a href="https://vk.com/id439124185" >
+                    <div class="social"><a href="https://vk.com/id439124185">
                         <i class="vk vk-colored"></i>
                     </a></div>
                     <div class="social"><i class="fb fb-colored"></i></div>
@@ -25,8 +25,25 @@
             <div class="footer__main-col3">
                 <div class="footer__col-heading">Карта сайта:</div>
                 <ul class="footer-nav">
-                    <li th:each="folder : ${topFolders}"><a th:href="@{/docs(id=${folder.id})}"
-                                                            th:text="${folder.title}">Нормативная документация</a></li>
+
+                    <li><a
+                            href="/">Главная</a></li>
+                    <li><a
+                            href="/attestation-organization">Организация аттестации</a></li>
+                    <li><a href="/state-tax">Государственная
+                        пошлина</a></li>
+                    <li><a
+                            href="/attestation-order">Порядок аттестации и проверки знаний</a></li>
+                    <li><a
+                            href="/commission-creation">
+                        Пример создания комиссии по проверке знаний (аттестационной)
+                    </a></li>
+                    <li><a
+                            href="/docs">Нормативная документация</a></li>
+                    <li><a
+                            href="/contacts">Обратная связь</a></li>
+
+
                 </ul>
             </div>
 

@@ -520,13 +520,15 @@ header div {
 .nav-link {
     font-style: normal;
     font-weight: normal;
-    line-height: 40px;
     font-size: 16px;
-    height: 40px;
-    padding: 0px 10px 12px 20px;
+    line-height:20px;
+    padding: 10px 10px 12px 20px;
     display: block;
     width: 100%;
     color: #000000;
+}
+.nav-link-standard{
+    height: 40px;
 }
 
 .nav-link.active {
@@ -1186,5 +1188,6 @@ footer, .footer__sub {
 }
 
 .insta-soc-col {
-    background: #0088CC;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    font-weight: 100;
 }

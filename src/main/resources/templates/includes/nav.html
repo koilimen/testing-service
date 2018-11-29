@@ -3,9 +3,15 @@
 <th:block th:fragment="nav">
     <nav class="nav ">
 
-        <a class="nav-link " th:classappend="${isMain eq true} ? 'active': ''" href="/">Главная</a>
-        <a class="nav-link " th:classappend="${isDocs eq true and rootFolder ne null and rootFolder.id == folder.id} ? 'active': ''" th:href="@{/docs(id=${folder.id})}"
-           th:each="folder : ${topFolders}" th:text="${folder.title}">Нормативная документация</a>
+        <a class="nav-link nav-link-standard " th:classappend="${isMain eq true} ? 'active': ''" href="/">Главная</a>
+        <a class="nav-link nav-link-standard" th:classappend="${viewName eq 'attestation-organization'} ? 'active': ''" href="/attestation-organization">Организация аттестации</a>
+        <a class="nav-link nav-link-standard" th:classappend="${viewName eq 'state-tax'} ? 'active': ''" href="/state-tax">Государственная пошлина</a>
+        <a class="nav-link " th:classappend="${viewName eq 'attestation-order'} ? 'active': ''" href="/attestation-order">Порядок аттестации и проверки знаний</a>
+        <a class="nav-link " th:classappend="${viewName eq 'commission-creation'} ? 'active': ''" href="/commission-creation">
+            Пример создания комиссии по проверке знаний (аттестационной)
+        </a>
+        <a class="nav-link nav-link-standard" th:classappend="${isDocs eq true } ? 'active': ''" href="/docs">Нормативная документация</a>
+        <a class="nav-link nav-link-standard" th:classappend="${viewName eq 'contacts'} ? 'active': ''" href="/contacts">Обратная связь</a>
 
     </nav>
 </th:block>

@@ -31,7 +31,6 @@ public class RootController {
     public String main(Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         model.addAttribute("newCourse", new Course());
         model.addAttribute("showNav", true);
-        model.addAttribute("files", storageService.getAll());
         prepareMainModel(model, pageable);
         return "main";
     }

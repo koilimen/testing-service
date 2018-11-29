@@ -76,7 +76,7 @@ public class TicketController {
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
         model.addAttribute("ticketNum", ticketNum);
-        model.addAttribute("allCourses", Collections.singleton(test.getSection().getCourse()));
+//        model.addAttribute("allCourses", Collections.singleton(test.getSection().getCourse()));
         model.addAttribute("ticketDto", ticketDTO);
         model.addAttribute("test", test);
         model.addAttribute("ticketChecked", false);

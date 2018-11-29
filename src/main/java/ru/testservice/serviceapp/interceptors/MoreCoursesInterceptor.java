@@ -29,22 +29,18 @@ public class MoreCoursesInterceptor extends HandlerInterceptorAdapter {
         if (!"XMLHttpRequest".equals(request.getHeader("X-Requested-With")) && modelAndView != null) {
             String viewName = modelAndView.getViewName();
             modelAndView.addObject("viewName", viewName == null ? "null": viewName);
-            String requestURI = request.getRequestURI();
-            Folder rootFolder = storageService.getRootFolder();
-            List<Folder> flatFolders = new ArrayList<>();
-            storageService.flattenFoldersTop(rootFolder, flatFolders);
-            modelAndView.addObject("topFolders", flatFolders);
-            for (String url : urls) {
-                if (requestURI.startsWith(url)) {
-                    Course course = (Course) modelAndView.getModel().get("course");
-                    if (course != null) {
-                        modelAndView.addObject("allCourses", cs.getAllExcept(course));
-                    } else {
-                        modelAndView.addObject("allCourses", cs.getAll());
-                    }
-                    break;
-                }
-            }
+//            String requestURI = request.getRequestURI();
+//            for (String url : urls) {
+//                if (requestURI.startsWith(url)) {
+//                    Course course = (Course) modelAndView.getModel().get("course");
+//                    if (course != null) {
+//                        modelAndView.addObject("allCourses", cs.getAllExcept(course));
+//                    } else {
+//                        modelAndView.addObject("allCourses", cs.getAll());
+//                    }
+//                    break;
+//                }
+//            }
         }
 
         super.postHandle(request, response, handler, modelAndView);

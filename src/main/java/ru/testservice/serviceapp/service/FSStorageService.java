@@ -161,7 +161,7 @@ public class FSStorageService implements IStorageService {
 
     public void removeFile(Long fileId) {
         StorageEntity storageEntity = repository.findById(fileId).get();
-        File file = new File(storageEntity.getLink());
+        File file = new File(FS_PREFIX + storageEntity.getLink());
         if (file.exists()) {
             file.delete();
         }

@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 @SpringBootApplication
 @PropertySources({
+        @PropertySource(value = "file:/opt/config/prombez-web.properties"),
         @PropertySource(value = "classpath:/application.properties"),
         @PropertySource(value = "classpath:/application-${spring.profiles.active}.properties", ignoreResourceNotFound = true)
 } )

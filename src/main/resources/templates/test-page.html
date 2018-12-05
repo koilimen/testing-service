@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
     <div class="row" th:if="${not #strings.isEmpty(test.descriptionTitle)}">
@@ -19,10 +20,10 @@
         </div>
     </div>
     <!--<div class="row">-->
-        <!--<a th:href="@{/section/{id}(id=${test.section.id})}" th:text="${test.section.name}"></a>-->
+    <!--<a th:href="@{/section/{id}(id=${test.section.id})}" th:text="${test.section.name}"></a>-->
     <!--</div>-->
     <div class="row">
-        <h5 >
+        <h5>
             <strong th:text="${test.title}"></strong>
             <a sec:authorize="${hasRole('ROLE_ADMIN')}"
                th:href="@{/tests/{id}/edit(id=${test.id})}" class="edit-link">
@@ -33,61 +34,38 @@
 
     <div class="row tickets">
         <th:block th:if="${test.questionsNumber > 0}">
-            <th:block th:if="${colsCount == 1}">
+            <th:block th:if="${fcc > 0}">
                 <ul class="list list-striped">
                     <li class="list__item"
-                        th:each="i : ${#numbers.sequence( 0, ticketsCount -1) }">
-                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i+1})}">
+                        th:each="i : ${#numbers.sequence( 1, fcc ) }">
+                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}">
                             Билет №
-                            <th:block th:text="${i+1}"></th:block>
+                            <th:block th:text="${i}"></th:block>
                         </a>
                     </li>
                 </ul>
             </th:block>
-            <th:block th:if="${colsCount == 2}">
+            <th:block th:if="${scc > 0}">
                 <ul class="list list-striped">
-                    <li class="list__item" th:each="i : ${#numbers.sequence( 0, 10)}">
-                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i+1})}">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( fcc+1, scc )}">
+                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}">
                             Билет №
-                            <th:block th:text="${i+1}"></th:block>
+                            <th:block th:text="${i}"></th:block>
                         </a>
                     </li>
                 </ul>
-                <ul class="list list-striped">
-                    <li class="list__item"
-                        th:each="i : ${#numbers.sequence( 11, ticketsCount -1) }">
-                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i+1})}">
-                            Билет №
-                            <th:block th:text="${i+1}"></th:block>
-                        </a>
-                    </li>
-                </ul>
+
             </th:block>
-            <th:block th:if="${colsCount == 3}">
+            <th:block th:if="${tcc > 0}">
                 <ul class="list list-striped">
-                    <li class="list__item" th:each="i : ${#numbers.sequence( 0, ticketsCount/3 )}">
-                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i+1})}">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( scc+1,  scc + tcc )}">
+                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}">
                             Билет №
-                            <th:block th:text="${i+1}"></th:block>
+                            <th:block th:text="${i}"></th:block>
                         </a>
                     </li>
                 </ul>
-                <ul class="list list-striped">
-                    <li class="list__item" th:each="i : ${#numbers.sequence( ticketsCount/3+1, 2*ticketsCount/3+1) }">
-                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i+1})}">
-                            Билет №
-                            <th:block th:text="${i+1}"></th:block>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="list list-striped">
-                    <li class="list__item" th:each="i : ${#numbers.sequence( 2*ticketsCount/3+2, ticketsCount-1 ) }">
-                        <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i+1})}">
-                            Билет №
-                            <th:block th:text="${i+1}"></th:block>
-                        </a>
-                    </li>
-                </ul>
+
             </th:block>
 
         </th:block>

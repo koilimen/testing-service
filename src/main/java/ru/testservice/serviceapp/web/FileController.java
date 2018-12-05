@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 import ru.testservice.serviceapp.model.Folder;
 import ru.testservice.serviceapp.model.StorageEntity;
-import ru.testservice.serviceapp.service.StorageService;
+import ru.testservice.serviceapp.service.IStorageService;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -25,11 +25,11 @@ import java.util.List;
 @Controller
 public class FileController {
     private final static Logger log = LoggerFactory.getLogger(FileController.class);
-    private final StorageService storageService;
+    private final IStorageService IStorageService;
 
     @Autowired
-    public FileController(StorageService storageService) {
-        this.storageService = storageService;
+    public FileController(IStorageService IStorageService) {
+        this.IStorageService = IStorageService;
 
     }
 
@@ -41,23 +41,23 @@ public class FileController {
                           @RequestParam(value = "id", required = false) Long openFolderId
 
     ) {
-        Folder rootFolder = storageService.getRootFolder();
+        Folder rootFolder = IStorageService.getRootFolder();
         model.addAttribute("folderExists", folderExists);
         model.addAttribute("emptyTitle", emptyFolderTitle);
         model.addAttribute("folderTitle", folderTitle);
         List<Folder> flatFolders = new ArrayList<>();
-        storageService.flattenFolders(rootFolder, flatFolders, 0);
-        List<StorageEntity> rootFilderFiles = storageService.getFiles(rootFolder.getId());
+        IStorageService.flattenFolders(rootFolder, flatFolders, 0);
+        List<StorageEntity> rootFilderFiles = IStorageService.getFiles(rootFolder.getId());
         model.addAttribute("rootFolder", rootFolder);
-        model.addAttribute("rootChildFolders", storageService.getChildFolders(rootFolder.getId()));
+        model.addAttribute("rootChildFolders", IStorageService.getChildFolders(rootFolder.getId()));
         model.addAttribute("storageEntities", rootFilderFiles);
         model.addAttribute("flatFolders", flatFolders);
         model.addAttribute("isDocs", true);
         model.addAttribute("showNav", true);
         if (openFolderId != null) {
-            List<StorageEntity> openedFolderFiles = storageService.getFiles(openFolderId);
+            List<StorageEntity> openedFolderFiles = IStorageService.getFiles(openFolderId);
             model.addAttribute("openedFolderFiles", openedFolderFiles);
-            model.addAttribute("openedFolderChilds", storageService.getChildFolders(openFolderId));
+            model.addAttribute("openedFolderChilds", IStorageService.getChildFolders(openFolderId));
         }
         model.addAttribute("openFolderId", openFolderId);
         return "documents";
@@ -66,10 +66,10 @@ public class FileController {
 
     @RequestMapping(value = "/docs/folder/{id}", method = RequestMethod.GET)
     public String getFolder(Model model, @PathVariable("id") Long folderId) {
-        Folder folder = storageService.getFolder(folderId);
-        List<StorageEntity> rootFilderFiles = storageService.getFiles(folderId);
+        Folder folder = IStorageService.getFolder(folderId);
+        List<StorageEntity> rootFilderFiles = IStorageService.getFiles(folderId);
         model.addAttribute("rootFolder", folder);
-        model.addAttribute("childFolders", storageService.getChildFolders(folderId));
+        model.addAttribute("childFolders", IStorageService.getChildFolders(folderId));
         model.addAttribute("storageEntities", rootFilderFiles);
         return "blocks/tree-node::node-body";
     }
@@ -77,15 +77,15 @@ public class FileController {
     @RequestMapping(value = "/docs/folder/{id}", method = RequestMethod.DELETE)
     public @ResponseBody
     String deleteFolder(@PathVariable("id") Long folderId) {
-        storageService.removeFolder(folderId);
+        IStorageService.removeFolder(folderId);
         return "ok";
     }
 
     @RequestMapping(value = "/docs/folder-edit/{id}", method = RequestMethod.GET)
     public String editFolder(@PathVariable("id") Long folderId, Model model) {
-        Folder folder = storageService.getFolder(folderId);
+        Folder folder = IStorageService.getFolder(folderId);
         List<Folder> flatFolders = new ArrayList<>();
-        storageService.flattenFolders(storageService.getRootFolder(), flatFolders, 0);
+        IStorageService.flattenFolders(IStorageService.getRootFolder(), flatFolders, 0);
         Folder parentFolder = flatFolders.stream().filter(f -> f.getId().equals(folder.getParentFolder().getId())).findFirst().get();
         model.addAttribute("flatFolders", flatFolders);
         model.addAttribute("parentFolder", parentFolder);
@@ -95,49 +95,33 @@ public class FileController {
 
     @RequestMapping(value = "/docs/folder-edit", method = RequestMethod.POST)
     public @ResponseBody String editFolderPOST(@RequestBody @Valid Folder folder) {
-        List<Folder> parentFolderChildren = storageService.getChildFolders(folder.getParentFolder().getId());
+        List<Folder> parentFolderChildren = IStorageService.getChildFolders(folder.getParentFolder().getId());
         long dups = parentFolderChildren.stream().filter(f -> !f.getId().equals(folder.getId()) && f.getTitle().equals(folder.getTitle())).count();
         if(dups > 0){
             return "1";
         }
-        storageService.updateFolder(folder);
+        IStorageService.updateFolder(folder);
         return "0";
     }
 
     @RequestMapping(value = "/docs/file/{id}", method = RequestMethod.DELETE)
     public @ResponseBody
     String deleteFile(@PathVariable("id") Long fileId) {
-        storageService.removeFile(fileId);
+        IStorageService.removeFile(fileId);
         return "ok";
     }
 
-    @RequestMapping(value = "/docs/{id}/{filename}", method = RequestMethod.GET)
-    public ResponseEntity<Resource> getDoc(@PathVariable Long id, @PathVariable("filename") String filename) {
-        StorageEntity file = storageService.getFile(id);
-        ByteArrayResource resource = new ByteArrayResource(file.getFile());
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.add("Content-Disposition",
-                "inline");
-        headers.add("Content-Type",
-                file.getContentType() + "; charset=utf-8");
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentLength(resource.contentLength())
-                .contentType(MediaType.parseMediaType(file.getContentType()))
-                .body(resource);
-    }
 
     @RequestMapping(value = "/folder/add", method = RequestMethod.POST)
     public String getDoc(@RequestParam("folderTitle") String title,
                          @RequestParam("parentFolderId") Long parentFolderId
     ) {
-        Folder parentFolder = storageService.getFolder(parentFolderId);
+        Folder parentFolder = IStorageService.getFolder(parentFolderId);
         boolean isDuplicate = false;
         if (StringUtils.isEmpty(title)) {
             return "redirect:/docs?empty_title=true";
         }
-        for (Folder f : storageService.getChildFolders(parentFolderId)) {
+        for (Folder f : IStorageService.getChildFolders(parentFolderId)) {
             if (f.getTitle().equals(title)) {
                 isDuplicate = true;
                 break;
@@ -146,7 +130,7 @@ public class FileController {
         if (isDuplicate) {
             return "redirect:/docs?folder_exists=true&ftitle=" + title;
         }
-        storageService.saveFolder(title, parentFolderId);
+        IStorageService.saveFolder(title, parentFolderId);
         return "redirect:/docs";
 
     }
@@ -155,7 +139,7 @@ public class FileController {
     public @ResponseBody
     String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("folderId") Long folderId) {
         try {
-            storageService.store(file, folderId);
+            IStorageService.store(file, folderId);
         } catch (IOException e) {
 
             log.error("FileUploading troubles", e);

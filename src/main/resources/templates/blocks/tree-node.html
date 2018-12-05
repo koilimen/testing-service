@@ -1,16 +1,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="node-body(rootFolder, storageEntities, childFolders)">
     <ul class="tree__node-body depth1">
         <li class="tree__node-body__item" th:each="entity : ${storageEntities}">
             <div class="tree__node">
 
                 <span th:classappend="${entity.contentType eq 'application/pdf'} ? 'pdf-icon': 'doc-icon'"></span>
-                <label >
-                    <a th:href="@{/docs/{id}/{filename}(id=${entity.id}, filename=${entity.name})}"
+
+                <label>
+                    <a th:href="@{/documents/{lnk}(lnk=${entity.link})}"
                        th:text="${entity.name}"
                        th:attr="download=${entity.name}"></a>
-                    <div class=" btn-link-red" style="float:right; margin-right: 5px;" th:attr=" onclick='removeFile('+${entity.id}+', event)'" >Удалить</div>
+                    <div sec:authorize="${hasRole('ROLE_ADMIN')}" class=" btn-link-red"
+                         style="float:right; margin-right: 5px;"
+                         th:attr=" onclick='removeFile('+${entity.id}+', event)'">Удалить
+                    </div>
                 </label>
             </div>
         </li>
@@ -20,14 +24,19 @@
                        class="tree__node-checkbox" th:id="${'checkbox'+folder.id}"/>
                 <i class="label-before"></i>
                 <i class="folder-icon"></i>
-                <label th:attr="data-id=${folder.id}" th:for="${'checkbox'+folder.id}" >
+                <label th:attr="data-id=${folder.id}" th:for="${'checkbox'+folder.id}">
                     <th:block th:text="${folder.title}"></th:block>
-                    <div class=" btn-link-red" style="float:right; margin-right: 5px;" th:attr=" onclick='removeFolder('+${folder.id}+', event)'">Удалить</div>
-                    <a href="javascript:void(0)" th:attr="data-src=@{/docs/folder-edit/{id}(id=${folder.id})}"
-                       class="btn-link" style="float:right; margin-right:10px"
-                       data-fancybox data-type="ajax" >
-                        Редактировать
-                    </a>
+                    <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
+
+                        <div class=" btn-link-red" style="float:right; margin-right: 5px;"
+                             th:attr=" onclick='removeFolder('+${folder.id}+', event)'">Удалить
+                        </div>
+                        <a href="javascript:void(0)" th:attr="data-src=@{/docs/folder-edit/{id}(id=${folder.id})}"
+                           class="btn-link" style="float:right; margin-right:10px"
+                           data-fancybox data-type="ajax">
+                            Редактировать
+                        </a>
+                    </th:block>
                 </label>
 
             </div>

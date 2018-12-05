@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "storages", schema = "public")
 public class StorageEntity extends AbstractEntity {
-    @Column
+    @Column(name="file_name")
     private String name;
     @Column
     private String link;
@@ -14,17 +14,14 @@ public class StorageEntity extends AbstractEntity {
     @OneToOne
     @JoinColumn(name = "folder_id")
     private Folder folder;
-    @Lob
-    private byte[] file;
 
     public StorageEntity() {
     }
 
-    public StorageEntity(String name, String link, String contentType, byte[] file) {
+    public StorageEntity(String name, String link, String contentType) {
         this.name = name;
         this.link = link;
         this.contentType = contentType;
-        this.file = file;
     }
 
     public Folder getFolder() {
@@ -43,13 +40,6 @@ public class StorageEntity extends AbstractEntity {
         this.contentType = contentType;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
 
     public String getName() {
         return name;

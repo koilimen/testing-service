@@ -9,21 +9,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.service.CourseService;
+import ru.testservice.serviceapp.service.IStorageService;
 import ru.testservice.serviceapp.service.SectionService;
-import ru.testservice.serviceapp.service.StorageService;
 
 import javax.validation.Valid;
 
 @Controller
 public class RootController {
     private final CourseService courseService;
-    private final StorageService storageService;
+    private final IStorageService IStorageService;
     private final SectionService sectionService;
 
     @Autowired
-    public RootController(CourseService courseService, StorageService storageService, SectionService sectionService) {
+    public RootController(CourseService courseService, IStorageService IStorageService, SectionService sectionService) {
         this.courseService = courseService;
-        this.storageService = storageService;
+        this.IStorageService = IStorageService;
         this.sectionService = sectionService;
     }
 

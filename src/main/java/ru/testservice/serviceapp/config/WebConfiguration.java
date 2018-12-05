@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.testservice.serviceapp.interceptors.MoreCoursesInterceptor;
 import ru.testservice.serviceapp.service.CourseService;
-import ru.testservice.serviceapp.service.StorageService;
+import ru.testservice.serviceapp.service.IStorageService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +23,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Autowired
     private CourseService cs;
     @Autowired
-    private StorageService storageService;
+    private IStorageService IStorageService;
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             "classpath:/META-INF/resources/", "classpath:/resources/",
             "classpath:/static/", "classpath:/public/" };
@@ -36,7 +36,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MoreCoursesInterceptor(cs, storageService));
+        registry.addInterceptor(new MoreCoursesInterceptor(cs, IStorageService));
     }
 
     @Bean

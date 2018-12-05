@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="imilienko" id="remove-file-column" context="prod1">
+        <sql dbms="postgresql">
+            ALTER TABLE public.storages DROP file;
+            ALTER TABLE public.storages RENAME COLUMN name TO file_name;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

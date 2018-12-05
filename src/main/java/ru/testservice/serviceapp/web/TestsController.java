@@ -39,12 +39,15 @@ public class TestsController {
     }
 
     @RequestMapping(value = "/add-literature", method = RequestMethod.POST)
-    public @ResponseBody String addLiterature(@RequestParam Long testId, @RequestParam String title){
+    public @ResponseBody
+    String addLiterature(@RequestParam Long testId, @RequestParam String title) {
         ts.addLiterature(testId, title);
         return "SUCCESS";
     }
+
     @RequestMapping(value = "/del-literature/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody String addLiterature(@PathVariable Long id){
+    public @ResponseBody
+    String addLiterature(@PathVariable Long id) {
         ts.delLiterature(id);
         return "SUCCESS";
     }
@@ -60,13 +63,13 @@ public class TestsController {
 
     @RequestMapping(value = "/{id}/edit", method = {RequestMethod.GET})
     public String getTestEditPage(Model model, @PathVariable Long id, @PageableDefault(page = 0, size = 15, sort = "order",
-    direction = Sort.Direction.DESC) Pageable pageable) {
+            direction = Sort.Direction.DESC) Pageable pageable) {
         Test test = ts.getTest(id);
         test.setQuestionsNumber(qs.countTestQuestions(id));
         model.addAttribute("test", test);
         model.addAttribute("testLiterature", ts.getLiterature(id));
         Question newQuestion = new Question();
-        newQuestion.setOrder(test.getQuestionsNumber().intValue()+1);
+        newQuestion.setOrder(test.getQuestionsNumber().intValue() + 1);
         newQuestion.setAnswers(new ArrayList<>());
         newQuestion.getAnswers().add(new Answer());
         newQuestion.getAnswers().add(new Answer());
@@ -79,12 +82,14 @@ public class TestsController {
 
     @RequestMapping(value = "/{id}/edit", method = {RequestMethod.PUT})
     public String saveNewQuestion(Model model, @PathVariable Long id, @ModelAttribute("newQuestion") Question question,
+                                  @PageableDefault(page = 0, size = 15, sort = "order",
+                                          direction = Sort.Direction.DESC) Pageable pageable,
                                   BindingResult result) {
         Test test = ts.getTest(id);
         if (!result.hasErrors()) {
             if (question.getId() != null && question.getId() > 0) {
                 qs.save(question);
-                return "redirect:/tests/" + id + "/edit";
+                return "redirect:/tests/" + id + "/edit?page=" + pageable.getPageNumber();
             }
             question.setId(null);
             question.setTest(test);
@@ -129,13 +134,30 @@ public class TestsController {
         Set<Course> courses = Collections.singleton(cs.getById(test.getSection().getCourse().getId()));
         test.setQuestionsNumber(qs.countTestQuestions(id));
 
-        if (test.getTicketsCount() <= 10) {
-            model.addAttribute("colsCount", 1);
-        } else if (test.getTicketsCount() <= 20) {
-            model.addAttribute("colsCount", 2);
-        } else {
-            model.addAttribute("colsCount", 3);
+        int firstTwoColsCount = 0;
+        if (test.getTicketsCount() > 3) {
+            firstTwoColsCount = test.getTicketsCount() / 3;
+            if (test.getTicketsCount() % 3 != 0) {
+
+                int cc = test.getTicketsCount() / 3;
+                int c2c = test.getTicketsCount() - cc;
+                if (c2c % 2 != 0) {
+                    c2c = test.getTicketsCount() - cc + 1;
+                }
+                firstTwoColsCount = c2c / 2;
+            }
+            int secColCount = test.getTicketsCount() > 3 ? firstTwoColsCount * 2 : firstTwoColsCount * 2 - 1;
+            model.addAttribute("scc", secColCount);
+            model.addAttribute("tcc", test.getTicketsCount() - secColCount);
+        } else if (test.getTicketsCount() <= 3) {
+            firstTwoColsCount = test.getTicketsCount();
+            model.addAttribute("scc", 0);
+            model.addAttribute("tcc", 0);
+
         }
+
+
+        model.addAttribute("fcc", firstTwoColsCount);
         model.addAttribute("test", test);
         model.addAttribute("ticketsCount", test.getTicketsCount());
         model.addAttribute("testLiterature", ts.getLiterature(id));

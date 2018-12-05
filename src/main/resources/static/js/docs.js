@@ -41,7 +41,8 @@ $(document).ready(function () {
             id: $('#folderIdEdit').val(),
             title: $folderTitle.val(),
             parentFolder: {
-                id: $("#parentFolderEdit").val()
+                id: $("#parentFolderEdit").val(),
+                title: $("#parentFolderEditTitle").val()
             }
 
         };

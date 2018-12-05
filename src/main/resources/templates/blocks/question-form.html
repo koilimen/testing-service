@@ -1,10 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="question-edit(question, index)">
     <a th:href="@{/questions/delete/{id}(id=${question.id})}" title="Удалить"
        class="question__remove fa fa-trash-alt"></a>
     <form action="" th:method="put" >
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="hidden" name="page" th:value="${pageActive}">
         <input type="hidden" name="id" th:value="${question.id}"/>
         <input type="hidden" name="test.id" th:value="${question.test.id}"/>
         <input type="hidden" name="order" th:value="${question.order}"/>

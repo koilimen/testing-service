@@ -95,12 +95,12 @@
         <div class="row">
 
             <div class="tree">
-                <div class="tree__node">
-                    <input type="checkbox" class="tree__node-checkbox" th:checked="${openFolderId ne null}" id="checbkox1"/>
-                    <i class="label-before"></i>
-                    <i class="folder-icon"></i>
-
-                    <label for="checbkox1" class="opened">Документы</label>
+                <div class="tree__node tree__node-root">
+                    <input type="checkbox" class="tree__node-checkbox" th:checked="${true}" id="checbkox1"/>
+                    <!--<i class="label-before"></i>-->
+                    <!--<i class="folder-icon"></i>-->
+<!---->
+                    <!--<label for="checbkox1" class="opened">Документы</label>-->
                     <th:block
                             th:replace="blocks/tree-node::node-body(rootFolder=${rootFolder}, storageEntities=${storageEntities}, childFolders=${rootChildFolders})"></th:block>
                 </div>

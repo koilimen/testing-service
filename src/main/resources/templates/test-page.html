@@ -35,7 +35,7 @@
     <div class="row tickets">
         <th:block th:if="${test.questionsNumber > 0}">
             <th:block th:if="${fcc > 0}">
-                <ul class="list list-striped">
+                <ul class="list list-striped" th:classappend="${tcc == 0} ? 'double-col'">
                     <li class="list__item"
                         th:each="i : ${#numbers.sequence( 1, fcc ) }">
                         <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}">
@@ -46,7 +46,7 @@
                 </ul>
             </th:block>
             <th:block th:if="${scc > 0}">
-                <ul class="list list-striped">
+                <ul class="list list-striped" th:classappend="${tcc == 0} ? 'double-col'">
                     <li class="list__item" th:each="i : ${#numbers.sequence( fcc+1, scc )}">
                         <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}">
                             Билет №
@@ -58,7 +58,7 @@
             </th:block>
             <th:block th:if="${tcc > 0}">
                 <ul class="list list-striped">
-                    <li class="list__item" th:each="i : ${#numbers.sequence( scc+1,  scc + tcc )}">
+                    <li class="list__item" th:each="i : ${#numbers.sequence( scc+1,  tcc )}">
                         <a th:href="@{/ticket/(testId=${test.id},ticketNum=${i})}">
                             Билет №
                             <th:block th:text="${i}"></th:block>

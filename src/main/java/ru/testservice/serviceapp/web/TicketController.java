@@ -94,7 +94,16 @@ public class TicketController {
     @RequestMapping(value = "/check/", method = RequestMethod.POST)
     public String checkTicket(@ModelAttribute TicketDTO ticketDto, @RequestParam("ticketNum") Integer ticketNum, Model model) {
         Collection<Answer> ticketAnswers = getAnswersList(ticketDto.getQuestionList());
-        long incorrectCount = ticketAnswers.stream().filter(a -> a.isCorrect() != a.isChecked()).count();
+//        long incorrectCount = ticketAnswers.stream().filter(a -> a.isCorrect() != a.isChecked()).count();
+        long incorrectCount = 0;
+        for (Question question : ticketDto.getQuestionList()) {
+            for (Answer answer : question.getAnswers()) {
+                if(answer.isCorrect() != answer.isChecked()){
+                    incorrectCount++;
+                    break;
+                }
+            }
+        }
         long correctCount = ticketAnswers.stream().filter(Answer::isCorrect).count();
         long correctCheckedCount = ticketAnswers.stream().filter(a -> a.isCorrect() && a.isChecked()).count();
         model.addAttribute("checkedCorrect", correctCheckedCount);

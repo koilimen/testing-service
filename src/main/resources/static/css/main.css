@@ -794,7 +794,8 @@ footer, .footer__sub {
     border-left: 1px solid #C4C4C4;
     border-right: 1px solid #C4C4C4;
     border-bottom: 1px solid #C4C4C4;
-    padding-left: 58px;
+    /*padding-left: 58px;*/
+    text-align: center;
 }
 
 .quote {
@@ -956,6 +957,10 @@ footer, .footer__sub {
     width: 201px;
     float: left;
     margin-right: 11px;
+}
+
+.tickets .list.double-col{
+    width: 345px;
 }
 
 .tickets .list .list__item {
@@ -1142,6 +1147,13 @@ footer, .footer__sub {
     line-height: 27px;
     font-size: 18px;
     color: #EB5757;
+}
+.success-heading {
+    font-style: normal;
+    font-weight: 500;
+    line-height: 27px;
+    font-size: 18px;
+    color: #219653;
 }
 
 .docs-form {

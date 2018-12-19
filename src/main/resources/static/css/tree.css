@@ -68,6 +68,9 @@
 .depth1{
     margin-left: 49px;
 }
+.tree__node-root > .depth1{
+    margin-left: 0px;
+}
 
 .pdf-icon, .doc-icon{
     width: 24px;

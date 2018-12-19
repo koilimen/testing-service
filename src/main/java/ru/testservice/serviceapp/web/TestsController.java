@@ -134,9 +134,32 @@ public class TestsController {
         Set<Course> courses = Collections.singleton(cs.getById(test.getSection().getCourse().getId()));
         test.setQuestionsNumber(qs.countTestQuestions(id));
 
-        int firstTwoColsCount = 0;
+        prepareCollsCounts(model, test);
+
+
+        model.addAttribute("test", test);
+        model.addAttribute("ticketsCount", test.getTicketsCount());
+        model.addAttribute("testLiterature", ts.getLiterature(id));
+        model.addAttribute("allCourses", courses);
+        return "test-page";
+    }
+
+    private void prepareCollsCounts(Model model, Test test) {
+        if (test.getTicketsCount() % 3 == 0) {
+            model.addAttribute("fcc", test.getTicketsCount() / 3);
+            model.addAttribute("scc", test.getTicketsCount() * 2 / 3);
+            model.addAttribute("tcc", test.getTicketsCount());
+        } else {
+            model.addAttribute("fcc", test.getTicketsCount() / 2);
+            model.addAttribute("scc", test.getTicketsCount() );
+            model.addAttribute("tcc", 0);
+        }
+    }
+
+    private void oldPrepareCollsCounts(Model model, Test test) {
+        Integer firstColsCount = 0;
         if (test.getTicketsCount() > 3) {
-            firstTwoColsCount = test.getTicketsCount() / 3;
+            firstColsCount = test.getTicketsCount() / 3;
             if (test.getTicketsCount() % 3 != 0) {
 
                 int cc = test.getTicketsCount() / 3;
@@ -144,25 +167,19 @@ public class TestsController {
                 if (c2c % 2 != 0) {
                     c2c = test.getTicketsCount() - cc + 1;
                 }
-                firstTwoColsCount = c2c / 2;
+                firstColsCount = c2c / 2;
             }
-            int secColCount = test.getTicketsCount() > 3 ? firstTwoColsCount * 2 : firstTwoColsCount * 2 - 1;
+            int secColCount = test.getTicketsCount() > 3 ? firstColsCount * 2 : firstColsCount * 2 - 1;
             model.addAttribute("scc", secColCount);
             model.addAttribute("tcc", test.getTicketsCount() - secColCount);
         } else if (test.getTicketsCount() <= 3) {
-            firstTwoColsCount = test.getTicketsCount();
+            firstColsCount = test.getTicketsCount();
             model.addAttribute("scc", 0);
             model.addAttribute("tcc", 0);
 
         }
+        model.addAttribute("fcc", firstColsCount);
 
-
-        model.addAttribute("fcc", firstTwoColsCount);
-        model.addAttribute("test", test);
-        model.addAttribute("ticketsCount", test.getTicketsCount());
-        model.addAttribute("testLiterature", ts.getLiterature(id));
-        model.addAttribute("allCourses", courses);
-        return "test-page";
     }
 
     @RequestMapping(value = "/{id}/delete-all-questions", method = RequestMethod.GET)
@@ -194,7 +211,8 @@ public class TestsController {
 
     @RequestMapping(value = "/update-orders", method = RequestMethod.POST)
     public @ResponseBody
-    String updateTestOrder(@RequestParam("ids[]") List<Long> ids, @RequestParam("orders[]") List<Integer> orders) {
+    String updateTestOrder
+            (@RequestParam("ids[]") List<Long> ids, @RequestParam("orders[]") List<Integer> orders) {
         return ts.uppdateOrders(ids, orders);
     }
 

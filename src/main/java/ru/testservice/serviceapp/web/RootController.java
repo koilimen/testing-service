@@ -1,30 +1,39 @@
 package ru.testservice.serviceapp.web;
 
+import com.redfin.sitemapgenerator.WebSitemapGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.testservice.serviceapp.model.Course;
+import ru.testservice.serviceapp.model.Section;
+import ru.testservice.serviceapp.model.Test;
 import ru.testservice.serviceapp.service.CourseService;
 import ru.testservice.serviceapp.service.IStorageService;
 import ru.testservice.serviceapp.service.SectionService;
+import ru.testservice.serviceapp.service.TestService;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.net.MalformedURLException;
 
 @Controller
 public class RootController {
     private final CourseService courseService;
     private final IStorageService IStorageService;
     private final SectionService sectionService;
+    private final TestService testService;
 
     @Autowired
-    public RootController(CourseService courseService, IStorageService IStorageService, SectionService sectionService) {
+    public RootController(CourseService courseService, IStorageService IStorageService, SectionService sectionService, TestService testService) {
         this.courseService = courseService;
         this.IStorageService = IStorageService;
         this.sectionService = sectionService;
+        this.testService = testService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -58,6 +67,7 @@ public class RootController {
         model.addAttribute("showNav", true);
         return "commission-creation";
     }
+
     @RequestMapping(value = "/contacts", method = RequestMethod.GET)
     public String contacts(Model model) {
         model.addAttribute("showNav", true);
@@ -118,8 +128,37 @@ public class RootController {
         return "splash";
     }
 
-    @RequestMapping(value = "/uikit", method = {RequestMethod.GET, RequestMethod.POST})
+    //    @RequestMapping(value = "/uikit", method = {RequestMethod.GET, RequestMethod.POST})
     public String uikit(Model model) {
         return "ui-kit";
     }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    @RequestMapping(value = "/gen-sitemap", method = RequestMethod.GET)
+    public void generateSitemap() {
+        try {
+            WebSitemapGenerator wsg = new WebSitemapGenerator("https://prombez24.ru", new File("/opt/www/tomcat"));
+            wsg.addUrl("https://prombez24.ru/attestation-organization"); // repeat multiple times
+            wsg.addUrl("https://prombez24.ru/splash"); // repeat multiple times
+            wsg.addUrl("https://prombez24.ru/commission-creation"); // repeat multiple times
+            wsg.addUrl("https://prombez24.ru/contacts"); // repeat multiple times
+            wsg.addUrl("https://prombez24.ru/docs"); // repeat multiple times
+            for (Course course : courseService.getAll()) {
+                wsg.addUrl("https://prombez24.ru/course/" + course.getId()); // repeat multiple times
+            }
+            for (Section section : sectionService.getAll()) {
+                wsg.addUrl("https://prombez24.ru/section/" + section.getId()); // repeat multiple times
+            }
+            for (Test test : testService.getTests()) {
+                wsg.addUrl("https://prombez24.ru/tests/" + test.getId()); // repeat multiple times
+                wsg.addUrl("https://prombez24.ru/ticket/?testId=" + test.getId()); // repeat multiple times
+            }
+
+            wsg.write();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

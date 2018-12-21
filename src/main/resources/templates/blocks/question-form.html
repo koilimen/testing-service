@@ -9,7 +9,7 @@
         <input type="hidden" name="id" th:value="${question.id}"/>
         <input type="hidden" name="test.id" th:value="${question.test.id}"/>
         <input type="hidden" name="order" th:value="${question.order}"/>
-        <div class="question__number" th:text="${'Вопрос #'+(index+1)}"></div>
+        <div class="question__number" th:text="${'Вопрос #'+(index+1 + pageActive*15) }"></div>
         <div class="form-field row">
             <label for="questionText" class="col-sm-2 col-form-label">Текст вопроса</label>
             <div class="col-sm-10">

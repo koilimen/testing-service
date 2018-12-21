@@ -116,6 +116,7 @@ public class QuestionService {
             xdoc.getParagraphs().forEach((XWPFParagraph paragraph) -> {
                 extract(paragraph, questions, isBold(paragraph) || paragraph.getText().contains("?"));
             });
+            questions.add(this.buferQuestion.clone());
         } catch (Exception ex) {
             log.error("ParseByLists exception. File name: {}", file.getOriginalFilename(), ex);
         }

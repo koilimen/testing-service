@@ -132,6 +132,13 @@ public class RootController {
     public String uikit(Model model) {
         return "ui-kit";
     }
+    @RequestMapping(value = "/confidentials", method = RequestMethod.GET)
+    public String confidentials(Model model){
+        model.addAttribute("showNav", true);
+
+        return "confid-policy";
+    }
+
 
     @Scheduled(cron = "0 0 0 * * *")
     @RequestMapping(value = "/gen-sitemap", method = RequestMethod.GET)

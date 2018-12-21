@@ -29,7 +29,7 @@ public class Test {
     private String cipher;
     @Column
     private Long questionsNumber;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
     private Section section;
     @Column(name = "test_order", insertable = false)

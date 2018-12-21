@@ -12,7 +12,7 @@ public class Section extends AbstractOrderedEntity {
     @NotEmpty(message = "Название раздела не может быть пустым")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
 

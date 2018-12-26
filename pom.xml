@@ -117,7 +117,7 @@
         <profile>
             <id>prod</id>
             <properties>
-                <spring.profiles.active>prod1</spring.profiles.active>
+                <spring.profiles.active>prod</spring.profiles.active>
                 <deploy.server>prombez</deploy.server>
                 <deploy.path>/</deploy.path>
                 <deploy.url>http://prombez:8080/manager/text</deploy.url>

@@ -62,7 +62,7 @@
                     <div class="docs-form__heading">
                         Добавление файла
                     </div>
-                    <form th:method="POST" enctype="multipart/form-data" th:action="@{/docsupload/}">
+                    <form th:method="POST" enctype="multipart/form-data" th:action="@{/docsupload}">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <input type="file" id="file-upload" style="display: none;" name="file" multiple="multiple"/>
                         <div class="form-field">

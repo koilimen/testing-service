@@ -16,4 +16,5 @@
    <include file="/liquibase/changelogs/literature-change-constraint.xml"/>
    <include file="/liquibase/changelogs/tests-add-description.xml"/>
    <include file="/liquibase/changelogs/remove-file-column.xml"/>
+   <include file="/liquibase/changelogs/storages-long-titles.xml"/>
 </databaseChangeLog>

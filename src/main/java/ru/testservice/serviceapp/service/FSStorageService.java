@@ -27,7 +27,7 @@ import java.util.Optional;
 import static org.thymeleaf.util.StringUtils.repeat;
 
 @Service
-@Profile({"prod1", "dev"})
+@Profile({"prod1", "dev", "prod"})
 public class FSStorageService implements IStorageService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final StorageRepository repository;

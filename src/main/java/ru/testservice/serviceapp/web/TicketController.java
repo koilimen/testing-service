@@ -33,7 +33,7 @@ public class TicketController {
         this.qs = qs;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String ticket(@RequestParam Long testId, @RequestParam Integer ticketNum,
                          @CookieValue(value = "questions", required = false) String viewedQuestions,
                          @CookieValue(value = "testId", required = false) String testIdSaved,
@@ -91,7 +91,7 @@ public class TicketController {
         return t;
     }
 
-    @RequestMapping(value = "/check/", method = RequestMethod.POST)
+    @RequestMapping(value = "/check", method = RequestMethod.POST)
     public String checkTicket(@ModelAttribute TicketDTO ticketDto, @RequestParam("ticketNum") Integer ticketNum, Model model) {
         Collection<Answer> ticketAnswers = getAnswersList(ticketDto.getQuestionList());
 //        long incorrectCount = ticketAnswers.stream().filter(a -> a.isCorrect() != a.isChecked()).count();

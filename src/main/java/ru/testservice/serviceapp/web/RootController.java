@@ -1,6 +1,8 @@
 package ru.testservice.serviceapp.web;
 
 import com.redfin.sitemapgenerator.WebSitemapGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -23,6 +25,7 @@ import java.net.MalformedURLException;
 
 @Controller
 public class RootController {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final CourseService courseService;
     private final IStorageService IStorageService;
     private final SectionService sectionService;
@@ -36,7 +39,7 @@ public class RootController {
         this.testService = testService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
     public String main(Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         model.addAttribute("newCourse", new Course());
         model.addAttribute("showNav", true);
@@ -75,7 +78,7 @@ public class RootController {
     }
 
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(value = {"/", ""}, method = RequestMethod.PUT)
     public String saveNewCourse(@ModelAttribute("newCourse") @Valid Course newCourse, BindingResult result) {
         if (!result.hasErrors()) {
             courseService.save(newCourse);
@@ -162,6 +165,7 @@ public class RootController {
             }
 
             wsg.write();
+            logger.info("sitemap generated");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

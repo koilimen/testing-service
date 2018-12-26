@@ -1,4 +1,3 @@
 User-agent: *
-Disallow: /
-
+Disallow: /ticket/check
 Sitemap: https://prombez24.ru/sitemap.xml

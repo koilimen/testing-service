@@ -3,7 +3,7 @@
 <th:block th:fragment="add-section-form">
     <div class="row new-course-form " sec:authorize="${hasRole('ROLE_ADMIN')}">
         <!--/*@thymesVar id="newSection" type="ru.testservice.serviceapp.model.Section"*/-->
-        <form action="#" th:action="@{/course/{id}(id=${course.id})}" th:object="${newSection}" th:method="put">
+        <form action="#" th:action="@{/course{id}(id=${course.id})}" th:object="${newSection}" th:method="put">
             <div class="new-course-form__heading">Добавление нового раздела</div>
             <input type="hidden" th:field="*{course.id}">
             <input type="hidden" th:field="*{id}">

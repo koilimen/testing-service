@@ -135,7 +135,7 @@ public class FileController {
 
     }
 
-    @RequestMapping(value = "/docsupload/", method = RequestMethod.POST)
+    @RequestMapping(value = {"/docsupload/", "/docsupload"}, method = RequestMethod.POST)
     public @ResponseBody
     String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("folderId") Long folderId) {
         try {

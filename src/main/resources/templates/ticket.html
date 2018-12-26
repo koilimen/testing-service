@@ -28,7 +28,7 @@
         </p>
         <p th:text="'Правильных ответов: '+${checkedCorrect}+' из '+${corrects}"></p>
     </div>
-    <form th:action="@{/ticket/check/(ticketNum=${ticketNum})}" th:method="post" th:object="${ticketDto}">
+    <form th:action="@{/ticket/check(ticketNum=${ticketNum})}" th:method="post" th:object="${ticketDto}">
         <input type="hidden" th:field="${ticketDto.testId}"/>
         <input type="hidden" th:field="${ticketDto.testId}"/>
         <input type="hidden" th:field="${ticketDto.errorsCount}"/>

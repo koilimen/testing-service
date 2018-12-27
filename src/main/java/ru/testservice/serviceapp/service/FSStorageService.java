@@ -3,7 +3,6 @@ package ru.testservice.serviceapp.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +14,9 @@ import ru.testservice.serviceapp.repository.StorageRepository;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
@@ -33,6 +31,7 @@ public class FSStorageService implements IStorageService {
     private final StorageRepository repository;
     private final FolderRepository fr;
     private final static String FS_PREFIX = "/opt/content/";
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddhhmmss");
 
     @Autowired
     public FSStorageService(StorageRepository repository, FolderRepository fr) {
@@ -54,7 +53,9 @@ public class FSStorageService implements IStorageService {
             folderExists = fsFolder.mkdirs();
         }
         if (folderExists) {
-            String filePath = folderPath + file.getOriginalFilename();
+//            String filePath = folderPath + file.getOriginalFilename();
+            String ext = file.getOriginalFilename().substring(file.getOriginalFilename().length() - 5);
+            String filePath = folderPath + "doc" +dtf.format(LocalDateTime.now())+ext;
             File storageFile = new File(filePath);
             if (!storageFile.exists()) {
                 file.transferTo(storageFile);
@@ -170,11 +171,11 @@ public class FSStorageService implements IStorageService {
 
     public void updateFolder(Folder folder) {
         Optional<Folder> oldFolder = fr.findById(folder.getId());
-        if(oldFolder.isPresent()){
+        if (oldFolder.isPresent()) {
             File oldFolderFile = new File(getFolderPath(oldFolder.get()));
-            if(oldFolderFile.exists()){
+            if (oldFolderFile.exists()) {
                 try {
-                    log.info("MOving {} to {}",oldFolderFile.getAbsolutePath(),  getFolderPath(folder));
+                    log.info("MOving {} to {}", oldFolderFile.getAbsolutePath(), getFolderPath(folder));
                     Files.move(oldFolderFile.toPath(), new File(getFolderPath(folder)).toPath());
                 } catch (IOException e) {
                     log.error("err", e);

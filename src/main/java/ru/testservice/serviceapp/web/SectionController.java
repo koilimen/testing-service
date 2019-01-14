@@ -38,6 +38,8 @@ public class SectionController {
         Section section = sectionService.getById(id);
         prepareModel(section, model, testEditId, pageable);
         model.addAttribute("newTest", new Test(section));
+        model.addAttribute("htmlTitle", section.getName());
+
         return "section-page";
     }
 

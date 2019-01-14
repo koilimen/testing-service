@@ -80,6 +80,8 @@ public class TicketController {
         model.addAttribute("ticketDto", ticketDTO);
         model.addAttribute("test", test);
         model.addAttribute("ticketChecked", false);
+        model.addAttribute("htmlTitle",  "  Билет №" + ticketNum);
+
         return "ticket";
     }
 
@@ -98,7 +100,7 @@ public class TicketController {
         long incorrectCount = 0;
         for (Question question : ticketDto.getQuestionList()) {
             for (Answer answer : question.getAnswers()) {
-                if(answer.isCorrect() != answer.isChecked()){
+                if (answer.isCorrect() != answer.isChecked()) {
                     incorrectCount++;
                     break;
                 }
@@ -113,6 +115,8 @@ public class TicketController {
         model.addAttribute("ticketDto", ticketDto);
         model.addAttribute("test", ts.getTest(ticketDto.getTestId()));
         model.addAttribute("ticketChecked", true);
+        model.addAttribute("htmlTitle", " Билет №" + ticketNum);
+
         return "ticket";
     }
 

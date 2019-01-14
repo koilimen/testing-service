@@ -41,6 +41,8 @@ public class CourseController {
             model.addAttribute("newSection", new Section(course));
         }
         prepareModel(course, model, pageable);
+        model.addAttribute("htmlTitle", course.getName());
+
         return "course";
     }
 

@@ -43,6 +43,7 @@ public class RootController {
     public String main(Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         model.addAttribute("newCourse", new Course());
         model.addAttribute("showNav", true);
+        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности");
         prepareMainModel(model, pageable);
         return "main";
     }
@@ -50,30 +51,37 @@ public class RootController {
     @RequestMapping(value = "/attestation-organization", method = RequestMethod.GET)
     public String attestationOrganization(Model model) {
         model.addAttribute("showNav", true);
+        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Организация аттестации");
+
         return "attestation-organization";
     }
 
     @RequestMapping(value = "/state-tax", method = RequestMethod.GET)
     public String stateTax(Model model) {
         model.addAttribute("showNav", true);
+        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Государственная пошлина");
+
         return "state-tax";
     }
 
     @RequestMapping(value = "/attestation-order", method = RequestMethod.GET)
     public String attestationOrder(Model model) {
         model.addAttribute("showNav", true);
+        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Порядок аттестации");
         return "attestation-order";
     }
 
     @RequestMapping(value = "/commission-creation", method = RequestMethod.GET)
     public String commissionCreation(Model model) {
         model.addAttribute("showNav", true);
+        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Пример создания комиссии по проверке знаний (аттестационной)");
         return "commission-creation";
     }
 
     @RequestMapping(value = "/contacts", method = RequestMethod.GET)
     public String contacts(Model model) {
         model.addAttribute("showNav", true);
+        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Контакты");
         return "contacts";
     }
 

@@ -41,6 +41,7 @@ public class FileController {
                           @RequestParam(value = "id", required = false) Long openFolderId
 
     ) {
+        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Нормативная документация");
         Folder rootFolder = IStorageService.getRootFolder();
         model.addAttribute("folderExists", folderExists);
         model.addAttribute("emptyTitle", emptyFolderTitle);

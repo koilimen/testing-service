@@ -289,6 +289,9 @@ $(document).ready(function () {
         });
     })
 
+    $body.on('click', '.sidebar-toggler', function(e){
+        $('.left-sidebar').toggleClass("shown");
+    })
 
     $body.on('click', '.sort-up', function (e) {
         e.preventDefault();

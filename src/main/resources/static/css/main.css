@@ -8,8 +8,59 @@
     color: rgba(52, 52, 52, 0.87);
 
 }
+@media all and (min-width: 1200px)  {
+    .sidebar-toggler {
+        display: none;
+    }
 
-@media all and (max-width: 1199px) {
+    .wrapper {
+        width: 1024px;
+    }
+
+    .header__main {
+        width: 605px;
+        font-size: 16px;
+    }
+
+    .header__main strong {
+        font-size: 20px;
+    }
+
+    .content {
+        width: 761px;
+    }
+
+    .content-main {
+        width: 720px;
+
+    }
+
+    .footer__main {
+        width: 984px;
+        height: 272px;
+    }
+
+    .footer__main-col1 {
+        width: 240px;
+    }
+
+    .footer__main-col3 {
+        margin-left: 72px;
+    }
+
+    .copyright {
+        width: 984px;
+    }
+
+    .left-sidebar {
+        width: 260px;
+        float: left;
+
+    }
+}
+
+
+@media all and (max-width: 1199px)  {
     .sidebar-toggler {
         display: none;
     }
@@ -63,6 +114,11 @@
 @media all and (max-width: 991px) {
     .sidebar-toggler {
         display: none;
+    }
+    .left-sidebar {
+        width: 260px;
+        float: left;
+
     }
 
     .wrapper {
@@ -223,6 +279,72 @@
     .tickets .list {
         width: 181px !important;
     }
+}
+
+@media all and (max-width: 360px) {
+    .header__main {
+        display:none;
+    }
+
+
+    .wrapper {
+        margin-top: 0 !important;
+        width: 100%;
+    }
+
+    .left-sidebar {
+        display: none;
+    }
+
+    .left-sidebar.shown {
+        display: block;
+        width: 100%;
+        box-shadow: 0px 6px 0px #E1E1E1;
+    }
+
+    .content, .content-main {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .footer__main {
+        width: 100%;
+        padding: 5px;
+        height: 480px;
+    }
+
+    .footer__main-col1 {
+        width: 50%;
+    }
+
+    .footer__main-col3 {
+        margin-left: 0;
+        width:100%;
+        clear:both;
+    }
+
+    .copyright {
+        width: 100%;
+    }
+
+    .sidebar-toggler {
+        display: block;
+        height: 30px;
+        text-align: center;
+        padding-top: 5px;
+        background: #F7F7F7;
+    }
+
+    .tickets .list {
+        width: 181px !important;
+        margin: auto !important;
+        float: none !important;
+    }
+    .quote__text{
+        height:auto !important;
+    }
+
+
 }
 
 h1, h2, h3, h4, h5 {
@@ -1418,4 +1540,7 @@ footer, .footer__sub {
 .insta-soc-col {
     background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
     font-weight: 100;
+}
+.social a {
+    text-decoration: none !important;
 }

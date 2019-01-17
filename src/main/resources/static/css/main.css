@@ -9,6 +9,11 @@
 
 }
 @media all and (min-width: 1200px)  {
+
+    header{
+        width:1024px !important;
+    }
+
     .sidebar-toggler {
         display: none;
     }
@@ -61,6 +66,9 @@
 
 
 @media all and (max-width: 1199px)  {
+    header{
+        width:1024px !important;
+    }
     .sidebar-toggler {
         display: none;
     }

@@ -136,7 +136,7 @@ public class TestsController {
 
         prepareCollsCounts(model, test);
 
-        model.addAttribute("htmlTitle", test.getTitle());
+        model.addAttribute("htmlTitle", test.getDescriptionTitle());
 
         model.addAttribute("test", test);
         model.addAttribute("ticketsCount", test.getTicketsCount());

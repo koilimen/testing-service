@@ -23,9 +23,18 @@ public class Question {
     @Column(name="orderr")
     private Integer order;
 
+    private transient boolean correctForProtocol ;
 
 
     public Question() {
+    }
+
+    public boolean isCorrectForProtocol() {
+        return correctForProtocol;
+    }
+
+    public void setCorrectForProtocol(boolean correctForProtocol) {
+        this.correctForProtocol = correctForProtocol;
     }
 
     public Question(Test test) {

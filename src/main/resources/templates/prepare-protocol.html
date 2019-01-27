@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      >
+<th:block th:fragment="prepare-protocol">
+
+        <div class="form-field-inline" style="width:546px;">
+            <label for="name">ФИО</label>
+            <input type="text" th:field="*{fio}" id="name" class="form-control"/>
+        </div>
+        <div class="form-field-inline" style="width:546px;">
+            <label for="organization">Организация</label>
+            <input type="text" th:field="*{organization}" id="organization" class="form-control"/>
+        </div>
+        <div class="form-field-inline" style="width:546px;">
+            <label for="unit">Подразделение</label>
+            <input type="text" id="unit" th:field="*{unit}" class="form-control"/>
+        </div>
+        <div class="form-field-inline" style="width:546px;">
+            <label for="position">Должность</label>
+            <input type="text" id="position" th:field="*{position}" class="form-control"/>
+        </div>
+        <div class="form-field-inline" style="width:546px;">
+            <label for="test-subkect">Предмет тестирования</label>
+            <input type="text" readonly id="test-subkect" th:field="*{subject}" class="form-control readonly" th:value="${test.code +' '+test.title}"/>
+        </div>
+        <button style="width: 200px" type="submit" class="btn btn-primary">Сформировать протокол</button>
+</th:block>
+</html>

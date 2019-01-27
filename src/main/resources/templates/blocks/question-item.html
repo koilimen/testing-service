@@ -32,6 +32,9 @@
                         th:if="${ticketChecked and (answer.checked and answer.correct or (not answer.checked) and answer.correct)}">
                     <div class="checkbox checkbox-green-checked ">
                         <label>
+                            <input type="hidden"
+                                   th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"
+                                   th:value="${answer.checked}">
                             <input type="checkbox"
                                    th:disabled="${true}"
                                    th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"
@@ -44,6 +47,9 @@
                 <th:block th:if="${ticketChecked and answer.checked and not answer.correct}">
                     <div class="checkbox checkbox-red">
                         <label>
+                            <input type="hidden"
+                                   th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"
+                                   th:value="${answer.checked}">
                             <input type="checkbox"
                                    th:disabled="${true}"
                                    th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"
@@ -56,6 +62,9 @@
                 <th:block th:if="${ticketChecked and not answer.checked and not answer.correct}">
                     <div class="checkbox">
                         <label>
+                            <input type="hidden"
+                                   th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"
+                                   th:value="${answer.checked}">
                             <input type="checkbox"
                                    th:disabled="${true}"
                                    th:name="'questionList['+${index}+'].answers['+${answIter.index}+'].checked'"

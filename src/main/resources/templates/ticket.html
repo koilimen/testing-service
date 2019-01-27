@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
@@ -21,6 +22,7 @@
         <p class="success-heading"> Тест сдан.</p>
         <p th:text="'Правильных ответов: '+${checkedCorrect}+' из '+${corrects}"></p>
     </div>
+
     <div class="row " th:if="${ticketChecked and incorrectCount > ticketDto.errorsCount }">
         <p class="errors-heading"> Тест не пройден! Вы совершили более
             <th:block th:text="${ticketDto.errorsCount}"></th:block>
@@ -28,14 +30,17 @@
         </p>
         <p th:text="'Правильных ответов: '+${checkedCorrect}+' из '+${corrects}"></p>
     </div>
-    <form th:action="@{/ticket/check(ticketNum=${ticketNum})}" th:method="post" th:object="${ticketDto}">
-        <input type="hidden" th:field="${ticketDto.testId}"/>
+    <form th:attr="action=${formAction}" th:method="post" th:object="${ticketDto}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <input type="hidden" th:field="${ticketDto.testId}"/>
         <input type="hidden" th:field="${ticketDto.errorsCount}"/>
+        <div class="row" th:if="${ticketChecked and protocol}">
+            <th:block th:replace="prepare-protocol::prepare-protocol"></th:block>
+        </div>
         <div class="ticket-table">
             <th:block th:each="question, questIter : *{questionList}">
                 <th:block
-                        th:replace="blocks/question-item :: question-item(${question}, ${questIter.index})"></th:block>
+                        th:replace="blocks/question-item :: question-item(${question}, ${questIter.index})"/>
 
             </th:block>
 
@@ -43,7 +48,14 @@
         <button type="submit" class="btn btn-primary"
                 style="float:right; margin-right:0;"
                 th:if="${not ticketChecked}">Проверить</button>
-        <a th:href="@{/tests/{id}(id=${ticketDto.testId})}">Назад к билетам</a>
+        <a  th:href="@{/tests/{id}(id=${ticketDto.testId})}" class="back-href">Назад к билетам</a>
+        <div class="checkbox protocol-checkbox" th:if="${not ticketChecked}" sec:authorize="${hasRole('ROLE_ADMIN')}" >
+            <label for="protocol">
+                <input type="checkbox" th:field="${ticketDto.formProtocol}" id="protocol">
+                <div class="check"></div>
+                <span class="label">Сформировать протокол</span>
+            </label>
+        </div>
 
 
     </form>

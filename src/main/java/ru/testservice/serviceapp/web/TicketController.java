@@ -80,8 +80,8 @@ public class TicketController {
         model.addAttribute("ticketDto", ticketDTO);
         model.addAttribute("test", test);
         model.addAttribute("ticketChecked", false);
-        model.addAttribute("htmlTitle",  "  Билет №" + ticketNum);
-
+        model.addAttribute("htmlTitle", "  Билет №" + ticketNum);
+        model.addAttribute("formAction", "/ticket/check?ticketNum=" + ticketNum);
         return "ticket";
     }
 
@@ -96,7 +96,6 @@ public class TicketController {
     @RequestMapping(value = "/check", method = RequestMethod.POST)
     public String checkTicket(@ModelAttribute TicketDTO ticketDto, @RequestParam("ticketNum") Integer ticketNum, Model model) {
         Collection<Answer> ticketAnswers = getAnswersList(ticketDto.getQuestionList());
-//        long incorrectCount = ticketAnswers.stream().filter(a -> a.isCorrect() != a.isChecked()).count();
         long incorrectCount = 0;
         for (Question question : ticketDto.getQuestionList()) {
             for (Answer answer : question.getAnswers()) {
@@ -113,10 +112,13 @@ public class TicketController {
         model.addAttribute("ticketNum", ticketNum);
         model.addAttribute("incorrectCount", incorrectCount);
         model.addAttribute("ticketDto", ticketDto);
-        model.addAttribute("test", ts.getTest(ticketDto.getTestId()));
+        Test test = ts.getTest(ticketDto.getTestId());
+        model.addAttribute("test", test);
         model.addAttribute("ticketChecked", true);
         model.addAttribute("htmlTitle", " Билет №" + ticketNum);
-
+        model.addAttribute("protocol", ticketDto.isFormProtocol());
+        model.addAttribute("formAction", ticketDto.isFormProtocol() ? "/protocol" : "");
+        ticketDto.setSubject(String.format("%s %s", test.getCode(), test.getTitle()));
         return "ticket";
     }
 

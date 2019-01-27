@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Тестирование по промышленной, электробезопасности</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="Generator" content="Microsoft Word 10 (filtered)">
+    <style type="text/css">
+        * {
+            font-family: Arial;
+            font-size: x-small;
+        }
+
+        h1 {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 22px;
+            font-weight: normal;
+        }
+
+        table * {
+            font-weight: normal;
+        }
+
+        body {
+            padding: 20px 10px;
+            margin: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            border: solid 1px black;
+            border-bottom: 0;
+            border-right: 0;
+            margin: 10px 0;
+        }
+
+        table tr th,
+        table tr td {
+            border-right: solid 1px black;
+            border-bottom: solid 1px black;
+            padding: 3px;
+        }
+
+        .separated-line {
+            margin: 20px 0;
+        }
+
+        @media print {
+            button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${ticketDTO.fio}"></h1>
+<div>
+    <span>Организация:</span>
+    <span th:text="${ticketDTO.organization}"></span>
+</div>
+<div>
+    <span>Должность:</span>
+    <span th:text="${ticketDTO.position}"></span>
+</div>
+<div>
+    <span>Предмет тестирования:</span>
+    <span th:text="${ticketDTO.subject}"></span>
+</div>
+<div>
+    <span>Дата и время проведения тестирования:</span>
+    <span th:text="${#dates.format(#dates.createNow(), 'dd.MM.yyyy HH:mm:ss')}">23.01.2019 14:46:23</span>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Вопрос</th>
+        <th>Ответ</th>
+        <th>Результат</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="question, qiter : ${ticketDTO.questionList}">
+        <td th:text="${qiter.index + 1}">1</td>
+        <td>
+            <div th:text="${question.questionText}">Что из перечисленного нельзя использовать в качестве естественных
+                заземлителей?
+            </div>
+        </td>
+        <td>
+            <th:block th:each="ans : ${question.answers}">
+                <div th:text="${ans.answerText}"></div>
+                <br/>
+            </th:block>
+        </td>
+        <td th:text="${question.correctForProtocol ? 'Правильный ответ': 'Неправильный ответ'}">
+            Неправильный ответ
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="font-weight: bold;">
+    <span>Допустимое количество ошибок:</span>
+    <span>____</span>
+</div>
+<div style="font-weight: bold;">
+    <span>Допущено ошибок:</span>
+    <span>____</span>
+</div>
+<div>
+    <span>Результат тестирования:</span>
+    <span>____</span>
+</div>
+<div class="separated-line">При проведении тестирования нарушений его порядка не зафиксировано</div>
+<div class="separated-line">
+    <span>Ответственный за проведение тестирования,</span>
+    <span>__________________</span>
+    <span>/</span>
+    <span>
+        __________________________________
+    </span>
+    <span>/</span>
+</div>
+<div class="separated-line">
+    <span>Тестируемый</span>
+    <span>__________________</span>
+    <span>/</span>
+    <span th:text="${ticketDTO.fio}">
+
+    </span>
+    <span>/</span>
+</div>
+
+<div class="separated-line">
+    <button onclick="window.print()">Печать</button>
+</div>
+
+</body>
+
+</html>

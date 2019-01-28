@@ -49,7 +49,7 @@
                 style="float:right; margin-right:0;"
                 th:if="${not ticketChecked}">Проверить</button>
         <a  th:href="@{/tests/{id}(id=${ticketDto.testId})}" class="back-href">Назад к билетам</a>
-        <div class="checkbox protocol-checkbox" th:if="${not ticketChecked}" sec:authorize="${hasRole('ROLE_ADMIN')}" >
+        <div class="checkbox protocol-checkbox" th:if="${not ticketChecked}" >
             <label for="protocol">
                 <input type="checkbox" th:field="${ticketDto.formProtocol}" id="protocol">
                 <div class="check"></div>

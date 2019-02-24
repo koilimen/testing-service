@@ -1565,3 +1565,10 @@ footer, .footer__sub {
 .readonly{
     background: #eee;
 }
+
+.left-sidebar .left-sidebar__ads{
+    margin-top:65px;
+}
+.left-sidebar .left-sidebar__ads:last-child{
+    margin-top:25px;
+}

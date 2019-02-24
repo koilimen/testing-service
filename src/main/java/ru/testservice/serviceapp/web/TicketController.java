@@ -82,6 +82,7 @@ public class TicketController {
         model.addAttribute("ticketChecked", false);
         model.addAttribute("htmlTitle", "  Билет №" + ticketNum);
         model.addAttribute("formAction", "/ticket/check?ticketNum=" + ticketNum);
+
         return "ticket";
     }
 

@@ -60,17 +60,15 @@
             <th:block th:replace="includes/nav :: nav">
                 <!--empty-->
             </th:block>
-            <th:block sec:authorize="${hasRole('ROLE_ADMIN')}" th:if="${viewName eq 'ticket' or viewName eq 'test-page'}">
                 <div class="left-sidebar__ads" id="yandex_rtb_R-A-351395-2"></div>
                 <div class="left-sidebar__ads" id="yandex_rtb_R-A-351395-1"></div>
-            </th:block>
         </div>
         <!--<div class="content" th:classappend="${viewName eq 'main' or viewName eq 'documents' } ? 'content-main'">-->
         <div class="content content-main">
             <th:block layout:fragment="content">
                 <!--empty-->
             </th:block>
-            <div class="row"  th:if="${viewName ne 'main'}" sec:authorize="${hasRole('ROLE_ADMIN')}">
+            <div class="row"  th:if="${viewName ne 'main'}" >
                 <div id="yandex_rtb_R-A-351395-3"></div>
             </div>
         </div>
@@ -98,7 +96,7 @@
 <script type="application/javascript" src="/js/scripts.js"></script>
 <script type="application/javascript" src="/js/tests.js"></script>
 <script type="application/javascript" src="/js/test-edit.js"></script>
-<th:block th:if="${viewName ne 'main'}" sec:authorize="${hasRole('ROLE_ADMIN')}">
+<th:block th:if="${viewName ne 'main'}" >
     <script type="text/javascript">
         (function(w, d, n, s, t) {
             w[n] = w[n] || [];
@@ -118,7 +116,7 @@
         })(this, this.document, "yandexContextAsyncCallbacks");
     </script>
 </th:block>
-<th:block th:if="${viewName eq 'ticket' or viewName eq 'test-page'}" sec:authorize="${hasRole('ROLE_ADMIN')}">
+<th:block th:if="${viewName eq 'ticket' or viewName eq 'test-page'}">
 
     <script type="text/javascript">
         (function (w, d, n, s, t) {

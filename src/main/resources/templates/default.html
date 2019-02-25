@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -60,15 +60,17 @@
             <th:block th:replace="includes/nav :: nav">
                 <!--empty-->
             </th:block>
+            <th:block th:if="${viewName eq 'test-page'}">
                 <div class="left-sidebar__ads" id="yandex_rtb_R-A-351395-2"></div>
                 <div class="left-sidebar__ads" id="yandex_rtb_R-A-351395-1"></div>
+            </th:block>
         </div>
         <!--<div class="content" th:classappend="${viewName eq 'main' or viewName eq 'documents' } ? 'content-main'">-->
         <div class="content content-main">
             <th:block layout:fragment="content">
                 <!--empty-->
             </th:block>
-            <div class="row"  th:if="${viewName ne 'main'}" >
+            <div class="row" th:if="${viewName ne 'main'}">
                 <div id="yandex_rtb_R-A-351395-3"></div>
             </div>
         </div>
@@ -96,11 +98,11 @@
 <script type="application/javascript" src="/js/scripts.js"></script>
 <script type="application/javascript" src="/js/tests.js"></script>
 <script type="application/javascript" src="/js/test-edit.js"></script>
-<th:block th:if="${viewName ne 'main'}" >
+<th:block th:if="${viewName ne 'main'}">
     <script type="text/javascript">
-        (function(w, d, n, s, t) {
+        (function (w, d, n, s, t) {
             w[n] = w[n] || [];
-            w[n].push(function() {
+            w[n].push(function () {
                 Ya.Context.AdvManager.render({
                     blockId: "R-A-351395-3",
                     renderTo: "yandex_rtb_R-A-351395-3",
@@ -155,5 +157,24 @@
         })(this, this.document, "yandexContextAsyncCallbacks");
     </script>
 </th:block>
+
+<script type="text/javascript" th:if="${viewName eq 'ticket'}">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-351396-1",
+                renderTo: "yandex_rtb_R-A-351396-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
 </body>
 </html>

@@ -1573,3 +1573,15 @@ footer, .footer__sub {
 .left-sidebar .left-sidebar__ads:last-child{
     margin-top:25px;
 }
+
+.form-control-textarea{
+    width: 481px;
+    display: block;
+    margin: 5px 0 5px 38px;
+    background: #fff;
+    height: 120px;
+}
+.form-control-textarea-section{
+    width:534px !important;
+    margin: 5px 0 !important;
+}

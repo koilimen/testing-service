@@ -32,6 +32,9 @@
         <th:block th:replace="blocks/sections-list::sections-list">
         </th:block>
     </div>
+    <div class="row" th:if="${course.text1 ne null}" th:text="${course.text1}">
+
+    </div>
 
 </th:block>
 </html>

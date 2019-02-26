@@ -19,7 +19,11 @@
                 Title errors
             </div>
             <button type="submit" class="btn btn-primary form-control-inline">Сохранить</button>
-            <small>Нажмите на картинку, чтобы добавить значок курса. Рекомендуемый размер - 32x32px, формат - PNG.</small>
+            <textarea id="text1"  th:field="*{text1}" class="form-control-textarea"
+                      style="width:481px;"
+                      th:classappend="${#fields.hasErrors('text1')} ? 'is-invalid': 'is-valid'"
+                      placeholder="Примечание (выводится внизу таблицы разделов на странице курса)"></textarea>
+            <!--<small>Нажмите на картинку, чтобы добавить значок курса. Рекомендуемый размер - 32x32px, формат - PNG.</small>-->
         </form>
     </div>
 </th:block>
@@ -94,6 +98,7 @@
                     Title errors
                 </div>
             </div>
+
             <button type="submit" style="margin:10px 0 0"
                     class="btn btn-primary ">Сохранить
             </button>
@@ -121,7 +126,14 @@
                     Title errors
                 </div>
             </div>
-            <div class="form-field-inline" style="width: 215px"></div>
+            <div class="form-field" >
+                <label for="text1">Примечание</label>
+                <textarea id="text1"  th:field="*{text1}" class="form-control-textarea form-control-textarea-section"
+
+                          th:classappend="${#fields.hasErrors('text1')} ? 'is-invalid': 'is-valid'"
+                          placeholder="Примечание (выводится внизу таблицы разделов на странице раздела)"></textarea>
+            </div>
+
             <div class="form-field-inline" >
                 <button type="submit" class=" btn btn-primary">Сохранить</button>
             </div>

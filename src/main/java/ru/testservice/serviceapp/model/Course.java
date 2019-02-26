@@ -13,6 +13,16 @@ public class Course extends AbstractOrderedEntity {
     @NotEmpty(message = "Название курса не может быть пустым")
     private String name;
 
+    @Column
+    private String text1;
+
+    public String getText1() {
+        return text1;
+    }
+
+    public void setText1(String text1) {
+        this.text1 = text1;
+    }
 
     public String getName() {
         return name;

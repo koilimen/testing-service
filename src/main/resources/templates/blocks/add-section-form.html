@@ -3,7 +3,7 @@
 <th:block th:fragment="add-section-form">
     <div class="row new-course-form " sec:authorize="${hasRole('ROLE_ADMIN')}">
         <!--/*@thymesVar id="newSection" type="ru.testservice.serviceapp.model.Section"*/-->
-        <form action="#" th:action="@{/course{id}(id=${course.id})}" th:object="${newSection}" th:method="put">
+        <form action="#" th:action="@{/course/{id}(id=${course.id})}" th:object="${newSection}" th:method="put">
             <div class="new-course-form__heading">Добавление нового раздела</div>
             <input type="hidden" th:field="*{course.id}">
             <input type="hidden" th:field="*{id}">
@@ -17,6 +17,13 @@
                      th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                     Title errors
                 </div>
+            </div>
+            <div class="form-field" >
+                <label for="text1">Примечание</label>
+                <textarea id="text1"  th:field="*{text1}" class="form-control-textarea form-control-textarea-section"
+
+                          th:classappend="${#fields.hasErrors('text1')} ? 'is-invalid': 'is-valid'"
+                          placeholder="Примечание (выводится внизу таблицы разделов на странице раздела)"></textarea>
             </div>
 
             <div class="form-field-inline" >

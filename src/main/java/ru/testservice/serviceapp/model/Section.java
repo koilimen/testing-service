@@ -16,8 +16,19 @@ public class Section extends AbstractOrderedEntity {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @Column
+    private String text1;
+
 
     public Section() {
+    }
+
+    public String getText1() {
+        return text1;
+    }
+
+    public void setText1(String text1) {
+        this.text1 = text1;
     }
 
     public Section(Course course) {

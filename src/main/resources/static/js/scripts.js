@@ -226,6 +226,7 @@ $(document).ready(function () {
             name: $this.find("#name").val(),
             id: $this.find("#id").val(),
             order: $this.find("#order").val(),
+            text1: $this.find("#text1").val(),
             course: {
                 id: $this.find("#courseId").val()
             }

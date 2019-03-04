@@ -16,18 +16,18 @@ import ru.testservice.serviceapp.service.TestService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
 @RequestMapping("/section")
 public class SectionController {
-    private final CourseService courseService;
     private final SectionService sectionService;
     private final TestService testService;
+    private final static List<Long> AD_SECTIONS = Arrays.asList(86L,59L,60L,62L,66L,67L,74L);
 
     @Autowired
-    public SectionController(CourseService courseService, SectionService sectionService, TestService testService) {
-        this.courseService = courseService;
+    public SectionController( SectionService sectionService, TestService testService) {
         this.sectionService = sectionService;
         this.testService = testService;
     }
@@ -39,7 +39,7 @@ public class SectionController {
         prepareModel(section, model, testEditId, pageable);
         model.addAttribute("newTest", new Test(section));
         model.addAttribute("htmlTitle", section.getName());
-
+        model.addAttribute("showSectionsAd", AD_SECTIONS.contains(id));
         return "section-page";
     }
 

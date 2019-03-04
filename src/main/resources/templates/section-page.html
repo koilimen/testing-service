@@ -152,8 +152,9 @@
             </tbody>
         </table>
     </div>
-    <div class="row" th:if="${section.text1 ne null}" th:text="${section.text1}">
-
+    <div class="row" th:if="${section.text1 ne null}" >
+        <h5 th:text="${section.title1}"></h5>
+        <p th:text="${section.text1}"></p>
     </div>
 
 </th:block>

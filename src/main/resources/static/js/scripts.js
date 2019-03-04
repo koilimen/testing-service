@@ -154,7 +154,8 @@ $(document).ready(function () {
             name: $this.find("#name").val(),
             id: $this.find("#id").val(),
             order: $this.find("#order").val(),
-            text1: $this.find("#text1").val()
+            text1: $this.find("#text1").val(),
+            title1: $this.find("#title1").val()
         };
 
         var _csrf = $(this).find('input[name="_csrf"]').val();
@@ -227,6 +228,7 @@ $(document).ready(function () {
             id: $this.find("#id").val(),
             order: $this.find("#order").val(),
             text1: $this.find("#text1").val(),
+            title1: $this.find("#title1").val(),
             course: {
                 id: $this.find("#courseId").val()
             }

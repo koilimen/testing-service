@@ -18,15 +18,22 @@
                     Title errors
                 </div>
             </div>
-            <div class="form-field" >
+            <div class="form-field-inline" style="width:546px;">
+                <label for="title1">Заголовок примечания</label>
+                <input type="text" id="title1" th:field="*{title1}" class="form-control-inline"
+                       style="width:481px;"
+                       th:classappend="${#fields.hasErrors('title1')} ? 'is-invalid': 'is-valid'"
+                       placeholder="Введите заголовок примечания"/>
+            </div>
+            <div class="form-field">
                 <label for="text1">Примечание</label>
-                <textarea id="text1"  th:field="*{text1}" class="form-control-textarea form-control-textarea-section"
+                <textarea id="text1" th:field="*{text1}" class="form-control-textarea form-control-textarea-section"
 
                           th:classappend="${#fields.hasErrors('text1')} ? 'is-invalid': 'is-valid'"
                           placeholder="Примечание (выводится внизу таблицы разделов на странице раздела)"></textarea>
             </div>
 
-            <div class="form-field-inline" >
+            <div class="form-field-inline">
                 <button type="submit" class=" btn btn-primary">+Добавить</button>
             </div>
         </form>

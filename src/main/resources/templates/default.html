@@ -67,22 +67,11 @@
             <th:block layout:fragment="content">
                 <!--empty-->
             </th:block>
-            <div class="row" th:if="${viewName ne 'main' and viewName ne 'course' and viewName ne 'section-page'}">
+            <div class="row" th:if="${viewName ne 'main' }">
                 <div id="yandex_rtb_R-A-351395-3"></div>
             </div>
         </div>
-        <!--<div class="right-sidebar" th:if="${viewName ne 'main'}">-->
-        <!--<div class="row">-->
-        <!--<div class="ad-block ">-->
-        <!--РЕКЛАМА-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-        <!--<div class="ad-block">-->
-        <!--РЕКЛАМА-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
+
     </div>
     <th:block th:replace="includes/footer :: footer ">
         <!--empty-->

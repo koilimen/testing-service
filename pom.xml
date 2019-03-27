@@ -127,7 +127,7 @@
     </profiles>
 
     <build>
-        <finalName>courseService-app</finalName>
+        <finalName>ROOT</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

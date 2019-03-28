@@ -64,6 +64,25 @@
         </div>
         <!--<div class="content" th:classappend="${viewName eq 'main' or viewName eq 'documents' } ? 'content-main'">-->
         <div class="content content-main">
+            <div class="row" th:if="${viewName ne 'main' and viewName ne 'test-page' and viewName ne 'ticket'}">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({
+                        google_ad_client: "ca-pub-8461088662369825",
+                        enable_page_level_ads: true
+                    });
+                </script>
+
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8461088662369825"
+                     data-ad-slot="8755567939"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script type="text/javascript">
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
             <th:block layout:fragment="content">
                 <!--empty-->
             </th:block>

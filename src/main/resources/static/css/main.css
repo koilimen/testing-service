@@ -748,18 +748,29 @@ header div {
     float: left;
 }
 
-.fb, .vk, .telegram {
+.fb, .vk, .telegram, .ok {
     display: block;
     width: 36px;
     height: 36px;
     cursor: pointer;
     margin: auto;
 }
+.socials__heading{
+    font-size: 12px;
+    color:#fff;
+    display:block;
+    text-align: center;
+}
+
 
 .social {
     padding-top: 25px;
     width: 50px;
     float: left;
+}
+.socials-header .social{
+    padding-top: 9px;
+
 }
 
 .fb {
@@ -1532,7 +1543,7 @@ footer, .footer__sub {
     position: relative;
 }
 
-.insta-soc {
+.insta-soc, .ok {
     width: 36px;
     height: 36px;
     background: rgba(255, 255, 255, 0.25);
@@ -1544,6 +1555,9 @@ footer, .footer__sub {
     display: block;
     margin: auto;
     font-weight: bold;
+}
+.ok {
+    font-weight: normal ;
 }
 
 .insta-soc-col {

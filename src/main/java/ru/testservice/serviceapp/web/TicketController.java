@@ -80,7 +80,7 @@ public class TicketController {
         model.addAttribute("ticketDto", ticketDTO);
         model.addAttribute("test", test);
         model.addAttribute("ticketChecked", false);
-        model.addAttribute("htmlTitle", "  Билет №" + ticketNum);
+        model.addAttribute("htmlTitle", "Prombez24.ru | Билет №" + ticketNum);
         model.addAttribute("formAction", "/ticket/check?ticketNum=" + ticketNum);
 
         return "ticket";

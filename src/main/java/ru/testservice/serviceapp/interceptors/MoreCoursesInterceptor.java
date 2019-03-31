@@ -38,8 +38,16 @@ public class MoreCoursesInterceptor extends HandlerInterceptorAdapter {
         StringBuilder vkShare = new StringBuilder("https://vk.com/share.php?url=");
         StringBuilder fbShare = new StringBuilder("https://www.facebook.com/sharer.php?src=");
         StringBuilder okShare = new StringBuilder("https://connect.ok.ru/offer?url=");
-        String reqURl = request.getRequestURL().append('?').append(request.getQueryString()).toString();
-        StringBuilder common = new StringBuilder().append(URLEncoder.encode(reqURl, "UTF-8")).append("&title=").append(URLEncoder.encode(modelAndView.getModelMap().get("htmlTitle").toString(),"UTF-8"));;
+        StringBuffer reqURl = request.getRequestURL();
+        if(request.getQueryString() != null){
+            reqURl.append('?').append(request.getQueryString());
+        }
+        StringBuilder common = new StringBuilder().append(URLEncoder.encode(reqURl.toString(), "UTF-8")).append("&title=");
+        if(modelAndView.getModelMap().get("htmlTitle") != null){
+                common.append(URLEncoder.encode(modelAndView.getModelMap().get("htmlTitle").toString(),"UTF-8"));;
+        } else {
+                common.append(URLEncoder.encode("PromBez24.ru","UTF-8"));;
+        }
         vkShare.append(common.toString());
         fbShare.append(common.toString());
         okShare.append(common.toString());

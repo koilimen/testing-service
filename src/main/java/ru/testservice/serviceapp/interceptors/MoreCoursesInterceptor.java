@@ -33,27 +33,30 @@ public class MoreCoursesInterceptor extends HandlerInterceptorAdapter {
                 modelAndView.addObject("viewName", "null");
             }
 //
+
+            StringBuilder vkShare = new StringBuilder("https://vk.com/share.php?url=");
+            StringBuilder fbShare = new StringBuilder("https://www.facebook.com/sharer.php?src=");
+            StringBuilder okShare = new StringBuilder("https://connect.ok.ru/offer?url=");
+            StringBuffer reqURl = request.getRequestURL();
+            if (request.getQueryString() != null) {
+                reqURl.append('?').append(request.getQueryString());
+            }
+            StringBuilder common = new StringBuilder().append(URLEncoder.encode(reqURl.toString(), "UTF-8")).append("&title=");
+            if (modelAndView.getModelMap().get("htmlTitle") != null) {
+                common.append(URLEncoder.encode(modelAndView.getModelMap().get("htmlTitle").toString(), "UTF-8"));
+                ;
+            } else {
+                common.append(URLEncoder.encode("PromBez24.ru", "UTF-8"));
+                ;
+            }
+            vkShare.append(common.toString());
+            fbShare.append(common.toString());
+            okShare.append(common.toString());
+            modelAndView.addObject("vkShare", vkShare.toString());
+            modelAndView.addObject("fbShare", fbShare.toString());
+            modelAndView.addObject("okShare", okShare.toString());
         }
 
-        StringBuilder vkShare = new StringBuilder("https://vk.com/share.php?url=");
-        StringBuilder fbShare = new StringBuilder("https://www.facebook.com/sharer.php?src=");
-        StringBuilder okShare = new StringBuilder("https://connect.ok.ru/offer?url=");
-        StringBuffer reqURl = request.getRequestURL();
-        if(request.getQueryString() != null){
-            reqURl.append('?').append(request.getQueryString());
-        }
-        StringBuilder common = new StringBuilder().append(URLEncoder.encode(reqURl.toString(), "UTF-8")).append("&title=");
-        if(modelAndView.getModelMap().get("htmlTitle") != null){
-                common.append(URLEncoder.encode(modelAndView.getModelMap().get("htmlTitle").toString(),"UTF-8"));;
-        } else {
-                common.append(URLEncoder.encode("PromBez24.ru","UTF-8"));;
-        }
-        vkShare.append(common.toString());
-        fbShare.append(common.toString());
-        okShare.append(common.toString());
-        modelAndView.addObject("vkShare", vkShare.toString());
-        modelAndView.addObject("fbShare", fbShare.toString());
-        modelAndView.addObject("okShare", okShare.toString());
         super.postHandle(request, response, handler, modelAndView);
     }
 }

@@ -35,7 +35,7 @@
     </div>
     <div class="row" th:if="${course.text1 ne null}" >
         <h5 th:text="${course.title1}"></h5>
-        <p th:text="${course.text1}"></p>
+        <p th:utext="${course.text1}"></p>
     </div>
 
 </th:block>

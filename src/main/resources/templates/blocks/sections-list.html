@@ -24,7 +24,7 @@
 
             <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
                 <td>
-                    <a href="javascript:void(0)" th:attr="data-src=@{/section/{id}/edit(id=${section.id})}"
+                    <a href="javascript:void(0)" data-modal="true   " th:attr="data-src=@{/section/{id}/edit(id=${section.id})}"
                        data-fancybox data-type="ajax">
                         <i class="sections-table__control far fa-edit" title="Редактировать"></i>
                     </a>

@@ -17,4 +17,5 @@
    <include file="/liquibase/changelogs/tests-add-description.xml"/>
    <include file="/liquibase/changelogs/remove-file-column.xml"/>
    <include file="/liquibase/changelogs/storages-long-titles.xml"/>
+   <include file="/liquibase/changelogs/courses-make-text1-longer.xml"/>
 </databaseChangeLog>

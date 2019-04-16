@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css"/>
     <link rel="stylesheet" href="/css/tree.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/richtext.min.css" />
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="icon" href="/img/favicon.png" type="image/x-icon">
 
@@ -119,6 +120,27 @@
 <script type="application/javascript" src="/js/scripts.js"></script>
 <script type="application/javascript" src="/js/tests.js"></script>
 <script type="application/javascript" src="/js/test-edit.js"></script>
+<script type="text/javascript" src="/js/jquery.richtext.min.js"></script>
+<th:block th:if="${viewName eq'main' }" sec:authorize="${hasRole('ROLE_ADMIN')}">
+    <script type="text/javascript">
+
+        $('#text1').richText({
+            translations: $.richTextTranslations
+        });
+        $('.richText').css("width","481px").css("margin-left", "38px");
+
+    </script>
+</th:block>
+<th:block th:if="${viewName eq 'course'}" sec:authorize="${hasRole('ROLE_ADMIN')}">
+    <script type="text/javascript">
+
+        $('#text1').richText({
+            translations: $.richTextTranslations
+        });
+        // $('.richText').css("width","481px").css("margin-left", "38px");
+
+    </script>
+</th:block>
 <th:block th:if="${viewName ne 'main'}">
     <script type="text/javascript">
         (function (w, d, n, s, t) {

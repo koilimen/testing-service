@@ -89,7 +89,7 @@
             </button>
         </form>
     </div>
-    <div class="row">
+    <div class="row" th:if="${tests ne null and not #lists.isEmpty(tests)}">
         <table class="table ">
             <thead>
             <tr>
@@ -152,7 +152,7 @@
     </div>
     <div class="row" th:if="${section.text1 ne null}" >
         <h5 th:text="${section.title1}"></h5>
-        <p th:text="${section.text1}"></p>
+        <p th:utext="${section.text1}"></p>
     </div>
 
 </th:block>

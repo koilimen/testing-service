@@ -1,3 +1,68 @@
+$.richTextTranslations = {
+    'title': 'Заголовок',
+    'white': 'Белый',
+    'black': 'Черный',
+    'brown': 'Коричневый',
+    'beige': 'Бежевый',
+    'darkBlue': 'Тёмно синий',
+    'blue': 'Синий',
+    'lightBlue': 'Голубой',
+    'darkRed': 'Темно красный',
+    'red': 'Красный',
+    'darkGreen': 'Темно зеленый',
+    'green': 'Зеленый',
+    'purple': 'Фиолетовый',
+    'darkTurquois': 'Темно бирюзовый',
+    'turquois': 'Бирюзовый',
+    'darkOrange': 'Темно оранжевый',
+    'orange': 'Оранжевый',
+    'yellow': 'Желтый',
+    'imageURL': 'URL Картинки',
+    'fileURL': 'URL файла',
+    'linkText': 'Текст ссылки',
+    'url': 'URL',
+    'size': 'Размер',
+    'responsive': 'Отзывчивый',
+    'text': 'Текст',
+    'openIn': 'Открыть в',
+    'sameTab': 'Той же вкладке',
+    'newTab': 'Новой вкладке',
+    'align': 'Выравнивание',
+    'left': 'Слева',
+    'center': 'По центру',
+    'right': 'Справа',
+    'rows': 'Строки',
+    'columns': 'Колонки',
+    'add': 'Добавить',
+    'pleaseEnterURL': 'Пожалуйста введите URL',
+    'videoURLnotSupported': 'Видео URL не поддерживается',
+    'pleaseSelectImage': 'Пожалуйста выберите картинку',
+    'pleaseSelectFile': 'Пожалуйста выберите файл',
+    'bold': 'Жирный',
+    'italic': 'Курсивный',
+    'underline': 'Подчеркнутый',
+    'alignLeft': 'Выравнять слева',
+    'alignCenter': 'Выравнять по центру',
+    'alignRight': 'Выравнять справа',
+    'addOrderedList': 'Добавить нумерованный список',
+    'addUnorderedList': 'Добавить список',
+    'addHeading': 'Добавить заголвок',
+    'addFont': 'Добавить шрифт',
+    'addFontColor': 'Добавить цвет шрифты',
+    'addFontSize': 'Добавить размер шрифты',
+    'addImage': 'Добавить картинку',
+    'addVideo': 'Добавить видео',
+    'addFile': 'Добавить файл',
+    'addURL': 'Добавить URL',
+    'addTable': 'Добавить таблицуtable',
+    'removeStyles': 'Удалить стили',
+    'code': 'Показать HTML код',
+    'undo': 'Назад',
+    'redo': 'Повторить',
+    'close': 'Заркыть'
+};
+
+
 $(document).ready(function () {
     let $body = $('body');
     $body.on('click', '.ajax-link', function (E) {
@@ -154,7 +219,7 @@ $(document).ready(function () {
             name: $this.find("#name").val(),
             id: $this.find("#id").val(),
             order: $this.find("#order").val(),
-            text1: $this.find("#text1").val(),
+            text1: $this.find("#course-modal-text1").val(),
             title1: $this.find("#title1").val()
         };
 
@@ -205,7 +270,7 @@ $(document).ready(function () {
         var id = $(this).data('id');
         var row = $(this).closest('tr');
         $.ajax({
-            url: "/tests/del-literature/"+id,
+            url: "/tests/del-literature/" + id,
             method: 'DELETE',
             headers: getCSRF(),
             success: function (response) {
@@ -227,7 +292,7 @@ $(document).ready(function () {
             name: $this.find("#name").val(),
             id: $this.find("#id").val(),
             order: $this.find("#order").val(),
-            text1: $this.find("#text1").val(),
+            text1: $this.find("#modal-section-text1").val(),
             title1: $this.find("#title1").val(),
             course: {
                 id: $this.find("#courseId").val()
@@ -293,7 +358,7 @@ $(document).ready(function () {
         });
     })
 
-    $body.on('click', '.sidebar-toggler', function(e){
+    $body.on('click', '.sidebar-toggler', function (e) {
         $('.left-sidebar').toggleClass("shown");
     })
 

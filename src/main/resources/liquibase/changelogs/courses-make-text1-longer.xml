@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="imilienko" id="courses-make-text1-longer" context="prod">
+        <sql dbms="postgresql">
+            ALTER TABLE public.courses ALTER COLUMN text1 TYPE text USING text1::text;
+            ALTER TABLE public.sections ALTER COLUMN text1 TYPE text USING text1::text;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

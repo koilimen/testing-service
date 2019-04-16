@@ -18,7 +18,7 @@
                 </td>
                 <th:block sec:authorize="${hasRole('ROLE_ADMIN')}">
                     <td>
-                        <a data-fancybox data-type="ajax" th:attr="data-src=@{/course/edit/{id}(id=${course.id})}">
+                        <a data-fancybox data-type="ajax" data-modal="true" th:attr="data-src=@{/course/edit/{id}(id=${course.id})}">
                             <i class="courses-table__control far fa-edit" title="Редактировать"></i>
                         </a>
 

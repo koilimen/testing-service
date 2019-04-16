@@ -20,11 +20,13 @@
                    th:classappend="${#fields.hasErrors('title1')} ? 'is-invalid': 'is-valid'"
                    placeholder="Введите заголовок примечания"/>
             <textarea type="text"  th:field="*{text1}" class="form-control-textarea"
+                      id="text1"
                    style="width:481px;"
                    th:classappend="${#fields.hasErrors('text1')} ? 'is-invalid': 'is-valid'"
                       placeholder="Примечание (выводится внизу таблицы разделов на странице курса)"></textarea>
             <!--<small>Нажмите на картинку, чтобы добавить значок курса. Рекомендуемый размер - 32x32px, формат - PNG.</small>-->
         </form>
     </div>
+
 </th:block>
 </html>

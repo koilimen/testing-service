@@ -23,12 +23,19 @@
                    style="width:481px;    margin: 5px 0 5px 38px;"
                    th:classappend="${#fields.hasErrors('title1')} ? 'is-invalid': 'is-valid'"
                    placeholder="Введите заголовок примечания"/>
-            <textarea id="text1"  th:field="*{text1}" class="form-control-textarea"
+            <textarea id="course-modal-text1"  th:field="*{text1}" class="form-control-textarea"
                       style="width:481px;"
                       th:classappend="${#fields.hasErrors('text1')} ? 'is-invalid': 'is-valid'"
                       placeholder="Примечание (выводится внизу таблицы разделов на странице курса)"></textarea>
             <!--<small>Нажмите на картинку, чтобы добавить значок курса. Рекомендуемый размер - 32x32px, формат - PNG.</small>-->
         </form>
+        <script type="text/javascript">
+            $('#course-modal-text1').richText({
+                translations: $.richTextTranslations
+            });
+            $('.richText').css("width","481px").css("margin-left", "38px");
+
+        </script>
     </div>
 </th:block>
 
@@ -138,8 +145,8 @@
                        placeholder="Введите заголовок примечания"/>
             </div>
             <div class="form-field" >
-                <label for="text1">Примечание</label>
-                <textarea id="text1"  th:field="*{text1}" class="form-control-textarea form-control-textarea-section"
+                <label for="modal-section-text1">Примечание</label>
+                <textarea id="modal-section-text1"  th:field="*{text1}" class="form-control-textarea form-control-textarea-section"
 
                           th:classappend="${#fields.hasErrors('text1')} ? 'is-invalid': 'is-valid'"
                           placeholder="Примечание (выводится внизу таблицы разделов на странице раздела)"></textarea>
@@ -149,6 +156,11 @@
                 <button type="submit" class=" btn btn-primary">Сохранить</button>
             </div>
         </form>
+        <script type="text/javascript">
+            $('#modal-section-text1').richText({
+                translations: $.richTextTranslations
+            });
+        </script>
     </div>
 </th:block>
 

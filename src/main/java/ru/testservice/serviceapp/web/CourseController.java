@@ -7,6 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
+import org.thymeleaf.spring5.view.ThymeleafView;
 import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.model.Section;
 import ru.testservice.serviceapp.service.CourseService;
@@ -32,18 +37,23 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String main(@PathVariable Long id, Model model, @PageableDefault(size = 15, sort = {"order"}) Pageable pageable,
-                       HttpServletRequest request) {
+    public ModelAndView main(@PathVariable Long id, Model model, @PageableDefault(size = 15, sort = {"order"}) Pageable pageable,
+                     HttpServletRequest request) {
         Course course = courseService.getById(id);
-        Iterable<Course> allExcept = courseService.getAllExcept(course);
-        model.addAttribute("courses", allExcept);
+
+        List<Section> sections = prepareModel(course, model, pageable);
         if (request.isUserInRole("ROLE_ADMIN")) {
             model.addAttribute("newSection", new Section(course));
         }
-        prepareModel(course, model, pageable);
+        if(sections.size() == 1 && !request.isUserInRole("ROLE_ADMIN")){
+            RedirectView redirectView = new RedirectView("/section/" + sections.get(0).getId());
+            redirectView.setExposeModelAttributes(false);
+            return new ModelAndView(redirectView);
+
+        }
         model.addAttribute("htmlTitle", course.getName());
 
-        return "course";
+        return new ModelAndView("course", model.asMap());
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
@@ -114,9 +124,11 @@ public class CourseController {
     String updateOrder(@RequestParam("ids[]") List<Long> ids, @RequestParam("orders[]") List<Integer> orders) {
         return courseService.uppdateOrders(ids, orders);
     }
-    private void prepareModel(Course course, Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
+    private List<Section> prepareModel(Course course, Model model, @PageableDefault(page = 0, size = 15, sort = {"id"}) Pageable pageable) {
         model.addAttribute("course", course);
-        model.addAttribute("sections", sectionService.getByCourseId(course.getId(), pageable));
+        List<Section> sections = sectionService.getByCourseId(course.getId(), pageable);
+        model.addAttribute("sections", sections);
+        return sections;
     }
 
 }

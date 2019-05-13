@@ -11,6 +11,7 @@ import ru.testservice.serviceapp.model.Test;
 import java.util.List;
 
 public interface QuestionRepository extends PagingAndSortingRepository<Question, Long> {
+    @Query("select q from Question q where q.test.id = :testId order by RANDOM()")
     Page<Question> findAllByTestId(Long testId, Pageable pageable);
     @Query("select q from Question q where q.test = :test and q.id not in :except order by RANDOM()")
     Page<Question> findAllByTestIdExcpet(@Param("test") Test test,

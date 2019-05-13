@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.testservice.serviceapp.model.Answer;
 import ru.testservice.serviceapp.model.Course;
 import ru.testservice.serviceapp.model.Question;
@@ -81,7 +83,7 @@ public class TestsController {
     }
 
     @RequestMapping(value = "/{id}/edit", method = {RequestMethod.PUT})
-    public String saveNewQuestion(Model model, @PathVariable Long id, @ModelAttribute("newQuestion") Question question,
+    public ModelAndView saveNewQuestion(Model model, @PathVariable Long id, @ModelAttribute("newQuestion") Question question,
                                   @PageableDefault(page = 0, size = 15, sort = "order",
                                           direction = Sort.Direction.DESC) Pageable pageable,
                                   BindingResult result) {
@@ -89,7 +91,9 @@ public class TestsController {
         if (!result.hasErrors()) {
             if (question.getId() != null && question.getId() > 0) {
                 qs.save(question);
-                return "redirect:/tests/" + id + "/edit?page=" + pageable.getPageNumber();
+                RedirectView redirectView = new RedirectView("/tests/" + id + "/edit?page=" + pageable.getPageNumber());
+                redirectView.setExposeModelAttributes(false);
+                return new ModelAndView(redirectView);
             }
             question.setId(null);
             question.setTest(test);
@@ -104,10 +108,11 @@ public class TestsController {
             newQuestion.getAnswers().add(new Answer());
             newQuestion.getAnswers().add(new Answer());
             model.addAttribute("newQuestion", newQuestion);
-            return "redirect:/tests/" + id + "/edit";
+            model.addAttribute("pageActive", pageable.getPageNumber());
+            model.addAttribute("questions", qs.getQuestions(id, pageable));
         }
         model.addAttribute("test", test);
-        return "test-edit-page";
+        return new ModelAndView("test-edit-page", model.asMap());
     }
 
     @RequestMapping(value = "/{id}/edit-modal", method = {RequestMethod.GET})
@@ -184,9 +189,11 @@ public class TestsController {
     }
 
     @RequestMapping(value = "/{id}/delete-all-questions", method = RequestMethod.GET)
-    public String deleteTestQuestions(@PathVariable Long id) {
+    public ModelAndView deleteTestQuestions(@PathVariable Long id) {
         qs.deleteByTestId(id);
-        return "redirect:/tests/" + id + "/edit";
+        RedirectView redirectView = new RedirectView("/tests/" + id + "/edit");
+        redirectView.setExposeModelAttributes(false);
+        return new ModelAndView(redirectView);
     }
 
     @RequestMapping(method = RequestMethod.PUT)

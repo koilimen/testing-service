@@ -123,6 +123,15 @@
                 <deploy.url>http://prombez:8080/manager/text</deploy.url>
             </properties>
         </profile>
+        <profile>
+            <id>prod2</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <deploy.server>prombez</deploy.server>
+                <deploy.path>/</deploy.path>
+                <deploy.url>http://prombez2:8080/manager/text</deploy.url>
+            </properties>
+        </profile>
 
     </profiles>
 

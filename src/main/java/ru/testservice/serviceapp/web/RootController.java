@@ -25,6 +25,7 @@ import java.net.MalformedURLException;
 
 @Controller
 public class RootController {
+    private static final String DEFAULT_TITLE = "Тестирование по промышленной и электробезопасности";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final CourseService courseService;
     private final IStorageService IStorageService;
@@ -43,7 +44,7 @@ public class RootController {
     public String main(Model model, @PageableDefault(page = 0, size = 15, sort = {"order"}) Pageable pageable) {
         model.addAttribute("newCourse", new Course());
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности");
+        model.addAttribute("htmlTitle", DEFAULT_TITLE);
         prepareMainModel(model, pageable);
         return "main";
     }
@@ -51,7 +52,7 @@ public class RootController {
     @RequestMapping(value = "/attestation-organization", method = RequestMethod.GET)
     public String attestationOrganization(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Организация аттестации");
+        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Организация аттестации");
 
         return "attestation-organization";
     }
@@ -59,7 +60,7 @@ public class RootController {
     @RequestMapping(value = "/state-tax", method = RequestMethod.GET)
     public String stateTax(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Государственная пошлина");
+        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Государственная пошлина");
 
         return "state-tax";
     }
@@ -67,21 +68,21 @@ public class RootController {
     @RequestMapping(value = "/attestation-order", method = RequestMethod.GET)
     public String attestationOrder(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Порядок аттестации");
+        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Порядок аттестации");
         return "attestation-order";
     }
 
     @RequestMapping(value = "/commission-creation", method = RequestMethod.GET)
     public String commissionCreation(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Пример создания комиссии по проверке знаний (аттестационной)");
+        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Пример создания комиссии по проверке знаний (аттестационной)");
         return "commission-creation";
     }
 
     @RequestMapping(value = "/contacts", method = RequestMethod.GET)
     public String contacts(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной, электробезопасности | Контакты");
+        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Контакты");
         return "contacts";
     }
 
@@ -155,21 +156,21 @@ public class RootController {
     @RequestMapping(value = "/gen-sitemap", method = RequestMethod.GET)
     public void generateSitemap() {
         try {
-            WebSitemapGenerator wsg = new WebSitemapGenerator("https://prombez24.ru", new File("/opt/www/tomcat"));
-            wsg.addUrl("https://prombez24.ru/attestation-organization"); // repeat multiple times
-            wsg.addUrl("https://prombez24.ru/splash"); // repeat multiple times
-            wsg.addUrl("https://prombez24.ru/commission-creation"); // repeat multiple times
-            wsg.addUrl("https://prombez24.ru/contacts"); // repeat multiple times
-            wsg.addUrl("https://prombez24.ru/docs"); // repeat multiple times
+            WebSitemapGenerator wsg = new WebSitemapGenerator("https://prombez24.com", new File("/opt/www/tomcat"));
+            wsg.addUrl("https://prombez24.com/attestation-organization"); // repeat multiple times
+            wsg.addUrl("https://prombez24.com/splash"); // repeat multiple times
+            wsg.addUrl("https://prombez24.com/commission-creation"); // repeat multiple times
+            wsg.addUrl("https://prombez24.com/contacts"); // repeat multiple times
+            wsg.addUrl("https://prombez24.com/docs"); // repeat multiple times
             for (Course course : courseService.getAll()) {
-                wsg.addUrl("https://prombez24.ru/course/" + course.getId()); // repeat multiple times
+                wsg.addUrl("https://prombez24.com/course/" + course.getId()); // repeat multiple times
             }
             for (Section section : sectionService.getAll()) {
-                wsg.addUrl("https://prombez24.ru/section/" + section.getId()); // repeat multiple times
+                wsg.addUrl("https://prombez24.com/section/" + section.getId()); // repeat multiple times
             }
             for (Test test : testService.getTests()) {
-                wsg.addUrl("https://prombez24.ru/tests/" + test.getId()); // repeat multiple times
-                wsg.addUrl("https://prombez24.ru/ticket/?testId=" + test.getId()); // repeat multiple times
+                wsg.addUrl("https://prombez24.com/tests/" + test.getId()); // repeat multiple times
+                wsg.addUrl("https://prombez24.com/ticket/?testId=" + test.getId()); // repeat multiple times
             }
 
             wsg.write();

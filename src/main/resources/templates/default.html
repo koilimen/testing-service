@@ -28,28 +28,6 @@
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="icon" href="/img/favicon.png" type="image/x-icon">
 
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function (m, e, t, r, i, k, a) {
-            m[i] = m[i] || function () {
-                (m[i].a = m[i].a || []).push(arguments)
-            };
-            m[i].l = 1 * new Date();
-            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-        })
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-        ym(51715478, "init", {
-            id: 51715478,
-            clickmap: true,
-            trackLinks: true,
-            accurateTrackBounce: true
-        });
-    </script>
-    <noscript>
-        <div><img src="https://mc.yandex.ru/watch/51715478" style="position:absolute; left:-9999px;" alt=""/></div>
-    </noscript>
-    <!-- /Yandex.Metrika counter -->
 </head>
 <body>
 <div class="container">
@@ -67,41 +45,19 @@
             </th:block>
 
         </div>
-        <!--<div class="content" th:classappend="${viewName eq 'main' or viewName eq 'documents' } ? 'content-main'">-->
+
         <div class="content content-main">
-            <div class="row" th:if="${viewName ne 'main' }">
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({
-                        google_ad_client: "ca-pub-8461088662369825",
-                        enable_page_level_ads: true
-                    });
-                </script>
+            <div class="row adslot" th:if="${viewName ne 'main' }">
+
             </div>
-            <div class="row" th:if="${viewName ne 'main' and viewName ne 'test-page' and viewName ne 'ticket'}">
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- Полоска наверху (all) -->
-                <ins class="adsbygoogle"
-                     style="display:inline-block;width:728px;height:90px"
-                     data-ad-client="ca-pub-8461088662369825"
-                     data-ad-slot="3376372847"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+            <div class="row adslot" th:if="${viewName ne 'main' and viewName ne 'test-page' and viewName ne 'ticket'}">
+
             </div>
             <th:block layout:fragment="content">
                 <!--empty-->
             </th:block>
-            <div class="row" th:if="${viewName ne 'main' }">
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- Полоска внизу (all) -->
-                <ins class="adsbygoogle"
-                     style="display:inline-block;width:728px;height:90px"
-                     data-ad-client="ca-pub-8461088662369825"
-                     data-ad-slot="1201990863"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+            <div class="row adslot" th:if="${viewName ne 'main' }">
+
 
 
             </div>
@@ -142,5 +98,19 @@
 </th:block>
 
 
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(54033940, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/54033940" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </body>
 </html>

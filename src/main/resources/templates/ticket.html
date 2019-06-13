@@ -5,16 +5,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{default.html}">
 <th:block layout:fragment="content">
-    <div class="row">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- Полоска наверху (all) -->
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:728px;height:90px"
-             data-ad-client="ca-pub-8461088662369825"
-             data-ad-slot="3376372847"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+    <div class="row adslot">
+
     </div>
     <div class="row heading" th:text="'Билет №'+${ ticketNum} + '  '+ ${test.code}+' '+${test.title}"></div>
     <div class="row " th:if="${ticketChecked and incorrectCount <= ticketDto.errorsCount }">

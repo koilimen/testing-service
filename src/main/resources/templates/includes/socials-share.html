@@ -1,0 +1,15 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header">
+
+    <div class="social"><a
+            th:href="${vkShare}"
+            target="_blank"><i class="vk"></i></a></div>
+    <div class="social"><a th:href="${fbShare}" target="_blank"> <i class="fb"></i></a></div>
+    <div class="social"><a
+            th:href="${okShare}"
+            target="_blank">
+        <i class="fab fa-odnoklassniki ok"></i>
+    </a></div>
+</th:block>
+</html>

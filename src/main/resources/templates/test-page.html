@@ -76,6 +76,9 @@
             В тесте еще нет вопросов.
         </th:block>
     </div>
+    <div class="row" th:if="${not #strings.isEmpty(test.randomText) }" th:utext="${test.randomText}">
+
+    </div>
     <div class="row" th:if="${testLiterature ne null and testLiterature.size() > 0}">
         <strong><a href="/docs">Литература для подготовки</a></strong>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

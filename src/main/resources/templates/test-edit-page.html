@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="form-field">
-                    <label for="cipher">Описание</label>
+                    <label for="cipher">Шифр</label>
                     <input id="cipher" class="form-control" th:field="*{cipher}"
                            style="width: 100%;"
                            th:classappend="${#fields.hasErrors('cipher')} ? 'is-invalid': 'is-valid'"
@@ -105,12 +105,24 @@
                         Title errors
                     </div>
                 </div>
+                <div class="form-field">
+                    <label for="descr-content">Дополнительный текст</label>
+                    <textarea type="text" class="form-control" th:field="*{randomText}"
+                              style="width:100%"
+                              th:classappend="${#fields.hasErrors('randomText')} ? 'is-invalid': 'is-valid'"
+                              placeholder=""></textarea>
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('randomText')}" th:errors="*{randomText}">
+                        Title errors
+                    </div>
+                </div>
                 <button type="submit" style="margin:10px 0 0"
                         class="btn btn-primary ">Сохранить
                 </button>
             </form>
         </div>
     </div>
+
     <div class="row edit-section-form">
         <strong>2. Список литературы</strong>
         <form method="post" id="add-literature">

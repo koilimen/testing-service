@@ -1,5 +1,9 @@
 $(document).ready(function () {
     var XHR_FILE_UPLOADER;
+    $('#randomText').richText({
+        translations: $.richTextTranslations
+    });
+    // $('.richText').css("width","481px").css("margin-left", "38px");
 
     function validateFiles(fileInput) {
         var files = fileInput[0].files;

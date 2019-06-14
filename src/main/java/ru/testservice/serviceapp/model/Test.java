@@ -52,6 +52,8 @@ public class Test {
     public String descriptionTitle;
     @Column(name="descr_content")
     public String descriptionContent;
+    @Column(name="random_text", columnDefinition = "text")
+    public String randomText;
 
     public Test(String title, String cipher, Long questionsNumber) {
         this.title = title;
@@ -68,6 +70,14 @@ public class Test {
         Test t = new Test();
         t.setId(id);
         return t;
+    }
+
+    public String getRandomText() {
+        return randomText;
+    }
+
+    public void setRandomText(String randomText) {
+        this.randomText = randomText;
     }
 
     public String getDescriptionTitle() {

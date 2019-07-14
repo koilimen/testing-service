@@ -25,7 +25,7 @@ import java.net.MalformedURLException;
 
 @Controller
 public class RootController {
-    private static final String DEFAULT_TITLE = "Тестирование по промышленной и электробезопасности";
+    private static final String DEFAULT_TITLE = "Тесты Ростехнадзора по промышленной безопасности и электробезопасности";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final CourseService courseService;
     private final IStorageService IStorageService;

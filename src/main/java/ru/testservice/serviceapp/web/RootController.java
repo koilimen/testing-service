@@ -52,7 +52,7 @@ public class RootController {
     @RequestMapping(value = "/attestation-organization", method = RequestMethod.GET)
     public String attestationOrganization(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Организация аттестации");
+        model.addAttribute("htmlTitle", DEFAULT_TITLE + " | Организация аттестации");
 
         return "attestation-organization";
     }
@@ -60,7 +60,7 @@ public class RootController {
     @RequestMapping(value = "/state-tax", method = RequestMethod.GET)
     public String stateTax(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Государственная пошлина");
+        model.addAttribute("htmlTitle", DEFAULT_TITLE + " | Государственная пошлина");
 
         return "state-tax";
     }
@@ -68,21 +68,21 @@ public class RootController {
     @RequestMapping(value = "/attestation-order", method = RequestMethod.GET)
     public String attestationOrder(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Порядок аттестации");
+        model.addAttribute("htmlTitle", DEFAULT_TITLE + " | Порядок аттестации");
         return "attestation-order";
     }
 
     @RequestMapping(value = "/commission-creation", method = RequestMethod.GET)
     public String commissionCreation(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Пример создания комиссии по проверке знаний (аттестационной)");
+        model.addAttribute("htmlTitle", DEFAULT_TITLE + " | Пример создания комиссии по проверке знаний (аттестационной)");
         return "commission-creation";
     }
 
     @RequestMapping(value = "/contacts", method = RequestMethod.GET)
     public String contacts(Model model) {
         model.addAttribute("showNav", true);
-        model.addAttribute("htmlTitle", "Тестирование по промышленной и электробезопасности | Контакты");
+        model.addAttribute("htmlTitle", DEFAULT_TITLE + " | Контакты");
         return "contacts";
     }
 
@@ -144,8 +144,9 @@ public class RootController {
     public String uikit(Model model) {
         return "ui-kit";
     }
+
     @RequestMapping(value = "/confidentials", method = RequestMethod.GET)
-    public String confidentials(Model model){
+    public String confidentials(Model model) {
         model.addAttribute("showNav", true);
 
         return "confid-policy";
